@@ -14,12 +14,12 @@ import net.minecraft.world.level.storage.loot.LootContext;
 
 public class AllayVexTrigger extends SimpleCriterionTrigger<AllayVexTrigger.@org.jetbrains.annotations.NotNull Conditions> {
 
-    public void trigger(ServerPlayer player, Vex vex, Allay allay) {
+    public void trigger(ServerPlayer Silian_player, Vex Silian_vex, Allay Silian_allay) {
 
-        LootContext vexLootContext = EntityPredicate.createContext(player, vex);
-        LootContext allayLootContext = EntityPredicate.createContext(player, allay);
+        LootContext Silian_vexLootContext = EntityPredicate.createContext(Silian_player, Silian_vex);
+        LootContext Silian_allayLootContext = EntityPredicate.createContext(Silian_player, Silian_allay);
 
-        trigger(player, conditions -> conditions.matches(vexLootContext, allayLootContext));
+        trigger(Silian_player, Silian_conditions -> Silian_conditions.matches(Silian_vexLootContext, Silian_allayLootContext));
     }
 
     @Override
@@ -31,20 +31,20 @@ public class AllayVexTrigger extends SimpleCriterionTrigger<AllayVexTrigger.@org
                                     Optional<ContextAwarePredicate> allay) implements SimpleCriterionTrigger.SimpleInstance {
 
         public static final Codec<AllayVexTrigger.Conditions> CODEC = RecordCodecBuilder.create(
-                instance -> instance.group(
+                Silian_instance -> Silian_instance.group(
                         Codec.optionalField("player", EntityPredicate.ADVANCEMENT_CODEC, false)
                                 .forGetter(AllayVexTrigger.Conditions::player),
                         Codec.optionalField("vex", EntityPredicate.ADVANCEMENT_CODEC, false)
                                 .forGetter(AllayVexTrigger.Conditions::vex),
                         Codec.optionalField("allay", EntityPredicate.ADVANCEMENT_CODEC, false)
                                 .forGetter(AllayVexTrigger.Conditions::allay))
-                        .apply(instance, AllayVexTrigger.Conditions::new));
+                        .apply(Silian_instance, AllayVexTrigger.Conditions::new));
 
-        public boolean matches(LootContext vexContext, LootContext allayContext) {
-            boolean vexMatches = vex.map(v -> v.matches(vexContext)).orElse(true); // Defaults to true if no predicate
-            boolean allayMatches = allay.map(a -> a.matches(allayContext)).orElse(true); // Defaults to true if no predicate
+        public boolean matches(LootContext Silian_vexContext, LootContext Silian_allayContext) {
+            boolean Silian_vexMatches = vex.map(Silian_v -> Silian_v.matches(Silian_vexContext)).orElse(true); // Defaults to true if no predicate
+            boolean Silian_allayMatches = allay.map(Silian_a -> Silian_a.matches(Silian_allayContext)).orElse(true); // Defaults to true if no predicate
 
-            return vexMatches && allayMatches;
+            return Silian_vexMatches && Silian_allayMatches;
         }
     }
 }

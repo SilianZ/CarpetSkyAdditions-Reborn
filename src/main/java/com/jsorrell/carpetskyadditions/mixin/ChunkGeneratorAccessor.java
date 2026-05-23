@@ -23,7 +23,7 @@ public interface ChunkGeneratorAccessor {
     Function<Holder<Biome>, BiomeGenerationSettings> getGenerationSettingsGetter();
 
     @Invoker("getWritableArea")
-    static BoundingBox getWritableArea(ChunkAccess chunk) {
+    static BoundingBox getWritableArea(ChunkAccess Silian_chunk) {
         throw new AssertionError();
     }
 }

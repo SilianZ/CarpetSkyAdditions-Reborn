@@ -23,42 +23,42 @@ import org.spongepowered.asm.mixin.Unique;
 
 @Mixin(Spider.class)
 public abstract class SpiderMixin extends Monster {
-    protected SpiderMixin(EntityType<? extends Monster> entityType, Level level) {
-        super(entityType, level);
+    protected SpiderMixin(EntityType<? extends Monster> Silian_entityType, Level Silian_level) {
+        super(Silian_entityType, Silian_level);
     }
 
     @Unique
     @SuppressWarnings("ConstantConditions")
     private Spider asSpider() {
-        if ((Monster) this instanceof Spider spider) {
-            return spider;
+        if ((Monster) this instanceof Spider Silian_spider) {
+            return Silian_spider;
         } else {
             throw new AssertionError("Not spider");
         }
     }
 
     @Override
-    protected @NotNull InteractionResult mobInteract(Player player, InteractionHand hand) {
+    protected @NotNull InteractionResult mobInteract(Player Silian_player, InteractionHand Silian_hand) {
         if (SkyAdditionsSettings.poisonousPotatoesConvertSpiders) {
-            ItemStack handStack = player.getItemInHand(hand);
-            if (handStack.is(Items.POISONOUS_POTATO) && getType() == EntityType.SPIDER) {
-                if (!player.getAbilities().instabuild) {
-                    handStack.shrink(1);
+            ItemStack Silian_handStack = Silian_player.getItemInHand(Silian_hand);
+            if (Silian_handStack.is(Items.POISONOUS_POTATO) && getType() == EntityType.SPIDER) {
+                if (!Silian_player.getAbilities().instabuild) {
+                    Silian_handStack.shrink(1);
                 }
 
-                CaveSpider spawnedSpider = asSpider().convertTo(EntityType.CAVE_SPIDER, ConversionParams.single(asSpider(), true, true), caveSpider -> {
+                CaveSpider Silian_spawnedSpider = asSpider().convertTo(EntityType.CAVE_SPIDER, ConversionParams.single(asSpider(), true, true), Silian_caveSpider -> {
 
                 });
 
 
                 // Copy status effects
-                if (spawnedSpider != null) {
-                    getActiveEffects().forEach(spawnedSpider::addEffect);
+                if (Silian_spawnedSpider != null) {
+                    getActiveEffects().forEach(Silian_spawnedSpider::addEffect);
                     // Add particles
-                    spawnedSpider.addEffect(new MobEffectInstance(MobEffects.NAUSEA, 200, 0));
+                    Silian_spawnedSpider.addEffect(new MobEffectInstance(MobEffects.NAUSEA, 200, 0));
 
-                    if (player instanceof ServerPlayer serverPlayer) {
-                        SkyAdditionsCriteriaTriggers.CONVERT_SPIDER.trigger(serverPlayer, asSpider(), spawnedSpider);
+                    if (Silian_player instanceof ServerPlayer Silian_serverPlayer) {
+                        SkyAdditionsCriteriaTriggers.CONVERT_SPIDER.trigger(Silian_serverPlayer, asSpider(), Silian_spawnedSpider);
                     }
                     playSound(
                         SoundEvents.ZOMBIE_VILLAGER_CURE, 1.0f + random.nextFloat(), random.nextFloat() * 0.7f + 0.3f);
@@ -66,6 +66,6 @@ public abstract class SpiderMixin extends Monster {
                 return InteractionResult.SUCCESS;
             }
         }
-        return super.mobInteract(player, hand);
+        return super.mobInteract(Silian_player, Silian_hand);
     }
 }

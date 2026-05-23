@@ -42,120 +42,120 @@ public class SkyIslandCommand {
     private static final SimpleCommandExceptionType ISLAND_NOT_CREATED =
             new SimpleCommandExceptionType(SkyAdditionsText.translatable("commands.skyisland.not_created"));
 
-    public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
-        int maxIslandNum = SkyIslandPositionContainer.getNumIslands();
+    public static void register(CommandDispatcher<CommandSourceStack> Silian_dispatcher) {
+        int Silian_maxIslandNum = SkyIslandPositionContainer.getNumIslands();
 
-        LiteralArgumentBuilder<CommandSourceStack> command = literal("skyisland")
-                .requires(source -> CommandHelper.canUseCommand(source, SkyAdditionsSettings.commandSkyIsland))
-                .then(literal("new").executes(c -> newIsland(c.getSource())))
+        LiteralArgumentBuilder<CommandSourceStack> Silian_command = literal("skyisland")
+                .requires(Silian_source -> CommandHelper.canUseCommand(Silian_source, SkyAdditionsSettings.commandSkyIsland))
+                .then(literal("new").executes(Silian_c -> newIsland(Silian_c.getSource())))
                 .then(literal("join")
-                        .then(argument("num", IntegerArgumentType.integer(1, maxIslandNum))
-                                .executes(c -> joinIsland(
-                                        c.getSource(),
-                                        c.getSource().getPlayerOrException(),
-                                        IntegerArgumentType.getInteger(c, "num")))
+                        .then(argument("num", IntegerArgumentType.integer(1, Silian_maxIslandNum))
+                                .executes(Silian_c -> joinIsland(
+                                        Silian_c.getSource(),
+                                        Silian_c.getSource().getPlayerOrException(),
+                                        IntegerArgumentType.getInteger(Silian_c, "num")))
                                 .then(argument("player", EntityArgument.player())
-                                        .executes(c -> joinIsland(
-                                                c.getSource(),
-                                                EntityArgument.getPlayer(c, "player"),
-                                                IntegerArgumentType.getInteger(c, "num"))))))
+                                        .executes(Silian_c -> joinIsland(
+                                                Silian_c.getSource(),
+                                                EntityArgument.getPlayer(Silian_c, "player"),
+                                                IntegerArgumentType.getInteger(Silian_c, "num"))))))
                 .then(literal("locate")
-                        .then(argument("num", IntegerArgumentType.integer(1, maxIslandNum))
-                                .executes(c -> locateIsland(c.getSource(), IntegerArgumentType.getInteger(c, "num")))));
+                        .then(argument("num", IntegerArgumentType.integer(1, Silian_maxIslandNum))
+                                .executes(Silian_c -> locateIsland(Silian_c.getSource(), IntegerArgumentType.getInteger(Silian_c, "num")))));
 
-        dispatcher.register(command);
+        Silian_dispatcher.register(Silian_command);
     }
 
-    private static int locateIsland(CommandSourceStack source, int islandNum) throws CommandSyntaxException {
-        ChunkPos chunkPos = SkyIslandPositionContainer.getChunk(islandNum);
-        int x = chunkPos.getMiddleBlockX();
-        int z = chunkPos.getMiddleBlockZ();
-        ChunkAccess chunk = source.getLevel().getChunk(chunkPos.x(), chunkPos.z(), ChunkStatus.EMPTY);
-        if (chunk.getPersistedStatus() != ChunkStatus.FULL) {
+    private static int locateIsland(CommandSourceStack Silian_source, int Silian_islandNum) throws CommandSyntaxException {
+        ChunkPos Silian_chunkPos = SkyIslandPositionContainer.getChunk(Silian_islandNum);
+        int Silian_x = Silian_chunkPos.getMiddleBlockX();
+        int Silian_z = Silian_chunkPos.getMiddleBlockZ();
+        ChunkAccess Silian_chunk = Silian_source.getLevel().getChunk(Silian_chunkPos.x(), Silian_chunkPos.z(), ChunkStatus.EMPTY);
+        if (Silian_chunk.getPersistedStatus() != ChunkStatus.FULL) {
             throw ISLAND_NOT_CREATED.create();
         }
 
-        MutableComponent text = ComponentUtils.wrapInSquareBrackets(
-                        SkyAdditionsText.translatable("commands.skyisland.locate.coordinates", x, z))
-                .withStyle(style -> style.withColor(ChatFormatting.GREEN)
-                        .withClickEvent(new ClickEvent.SuggestCommand("/tp @s " + x + " ~ " + z))
+        MutableComponent Silian_text = ComponentUtils.wrapInSquareBrackets(
+                        SkyAdditionsText.translatable("commands.skyisland.locate.coordinates", Silian_x, Silian_z))
+                .withStyle(Silian_style -> Silian_style.withColor(ChatFormatting.GREEN)
+                        .withClickEvent(new ClickEvent.SuggestCommand("/tp @s " + Silian_x + " ~ " + Silian_z))
                         .withHoverEvent(new HoverEvent.ShowText(Component.translatable("chat.coordinates.tooltip"))));
-        source.sendSuccess(
-                () -> SkyAdditionsText.translatable("commands.skyisland.locate.success", islandNum, text), false);
+        Silian_source.sendSuccess(
+                () -> SkyAdditionsText.translatable("commands.skyisland.locate.success", Silian_islandNum, Silian_text), false);
 
-        BlockPos sourcePos = BlockPos.containing(source.getPosition());
-        int xOff = sourcePos.getX() - x;
-        int zOff = sourcePos.getZ() - z;
-        return Mth.floor(Mth.sqrt(xOff * xOff + zOff * zOff));
+        BlockPos Silian_sourcePos = BlockPos.containing(Silian_source.getPosition());
+        int Silian_xOff = Silian_sourcePos.getX() - Silian_x;
+        int Silian_zOff = Silian_sourcePos.getZ() - Silian_z;
+        return Mth.floor(Mth.sqrt(Silian_xOff * Silian_xOff + Silian_zOff * Silian_zOff));
     }
 
 
-    private static int newIsland(CommandSourceStack source) {
-        int max = SkyIslandPositionContainer.getNumIslands();
-        Optional<ImmutablePair<Integer, ChunkPos>> islandOpt = IntStream.range(1, max)
-                .mapToObj(i -> ImmutablePair.of(i, SkyIslandPositionContainer.getChunk(i)))
-                .filter(i -> {
-                    ChunkAccess chunk = source.getLevel().getChunk(i.right.x(), i.right.z(), ChunkStatus.EMPTY);
-                    return chunk.getPersistedStatus() == ChunkStatus.EMPTY;
+    private static int newIsland(CommandSourceStack Silian_source) {
+        int Silian_max = SkyIslandPositionContainer.getNumIslands();
+        Optional<ImmutablePair<Integer, ChunkPos>> Silian_islandOpt = IntStream.range(1, Silian_max)
+                .mapToObj(Silian_i -> ImmutablePair.of(Silian_i, SkyIslandPositionContainer.getChunk(Silian_i)))
+                .filter(Silian_i -> {
+                    ChunkAccess Silian_chunk = Silian_source.getLevel().getChunk(Silian_i.right.x(), Silian_i.right.z(), ChunkStatus.EMPTY);
+                    return Silian_chunk.getPersistedStatus() == ChunkStatus.EMPTY;
                 })
                 .findFirst();
-        if (islandOpt.isEmpty()) {
-            source.sendSuccess(() -> SkyAdditionsText.translatable("commands.skyisland.new.no_valid_positions"), true);
+        if (Silian_islandOpt.isEmpty()) {
+            Silian_source.sendSuccess(() -> SkyAdditionsText.translatable("commands.skyisland.new.no_valid_positions"), true);
             return 0;
         }
-        ImmutablePair<Integer, ChunkPos> island = islandOpt.get();
-        ChunkPos chunkPos = island.right;
-        int x = chunkPos.getMiddleBlockX();
-        int z = chunkPos.getMiddleBlockZ();
+        ImmutablePair<Integer, ChunkPos> Silian_island = Silian_islandOpt.get();
+        ChunkPos Silian_chunkPos = Silian_island.right;
+        int Silian_x = Silian_chunkPos.getMiddleBlockX();
+        int Silian_z = Silian_chunkPos.getMiddleBlockZ();
 
         // Load the target area
-        source.getLevel().getChunkSource().addTicketWithRadius(TicketType.UNKNOWN, chunkPos, 2);
-        Registry<ConfiguredFeature<?, ?>> configuredFeatureRegistry =
-                source.getServer().registryAccess().lookupOrThrow(Registries.CONFIGURED_FEATURE);
+        Silian_source.getLevel().getChunkSource().addTicketWithRadius(TicketType.UNKNOWN, Silian_chunkPos, 2);
+        Registry<ConfiguredFeature<?, ?>> Silian_configuredFeatureRegistry =
+                Silian_source.getServer().registryAccess().lookupOrThrow(Registries.CONFIGURED_FEATURE);
 
         //ConfiguredFeature<?, ?> skyIslandFeature = getIslandFeature(configuredFeatureRegistry);
-        WorldgenRandom random = new WorldgenRandom(new LegacyRandomSource(0));
-        random.setLargeFeatureSeed(source.getLevel().getSeed(), chunkPos.x(), chunkPos.z());
+        WorldgenRandom Silian_random = new WorldgenRandom(new LegacyRandomSource(0));
+        Silian_random.setLargeFeatureSeed(Silian_source.getLevel().getSeed(), Silian_chunkPos.x(), Silian_chunkPos.z());
 
-        Holder.Reference<ConfiguredFeature<?, ?>> skyIslandFeature = source.getServer().overworld().registryAccess()
+        Holder.Reference<ConfiguredFeature<?, ?>> Silian_skyIslandFeature = Silian_source.getServer().overworld().registryAccess()
             .lookupOrThrow(Registries.CONFIGURED_FEATURE)
             .get(SkyAdditionsConfiguredFeatures.SPAWN_PLATFORM).get();
 
-        if (!skyIslandFeature.value().place(source.getServer().overworld(), source.getServer().overworld().getChunkSource().getGenerator(), random, new BlockPos(x, 0, z))) {
+        if (!Silian_skyIslandFeature.value().place(Silian_source.getServer().overworld(), Silian_source.getServer().overworld().getChunkSource().getGenerator(), Silian_random, new BlockPos(Silian_x, 0, Silian_z))) {
             SkyAdditionsSettings.LOG.error("Couldn't generate new island");
         }
 
-        Supplier<Component> feedback =
-                () -> SkyAdditionsText.translatable("commands.skyisland.new.success", island.getLeft(), x, z);
-        source.sendSuccess(feedback, true);
-        return island.getLeft();
+        Supplier<Component> Silian_feedback =
+                () -> SkyAdditionsText.translatable("commands.skyisland.new.success", Silian_island.getLeft(), Silian_x, Silian_z);
+        Silian_source.sendSuccess(Silian_feedback, true);
+        return Silian_island.getLeft();
     }
 
-    private static int joinIsland(CommandSourceStack source, ServerPlayer player, int islandNum)
+    private static int joinIsland(CommandSourceStack Silian_source, ServerPlayer Silian_player, int Silian_islandNum)
             throws CommandSyntaxException {
-        ChunkPos chunkPos = SkyIslandPositionContainer.getChunk(islandNum);
-        int x = chunkPos.getMiddleBlockX();
-        int z = chunkPos.getMiddleBlockZ();
-        joinIsland(source, player, x, z);
+        ChunkPos Silian_chunkPos = SkyIslandPositionContainer.getChunk(Silian_islandNum);
+        int Silian_x = Silian_chunkPos.getMiddleBlockX();
+        int Silian_z = Silian_chunkPos.getMiddleBlockZ();
+        joinIsland(Silian_source, Silian_player, Silian_x, Silian_z);
         return 1;
     }
 
-    private static void joinIsland(CommandSourceStack source, ServerPlayer player, int x, int z)
+    private static void joinIsland(CommandSourceStack Silian_source, ServerPlayer Silian_player, int Silian_x, int Silian_z)
             throws CommandSyntaxException {
-        BlockPos pos = new BlockPos(x, 0, z);
-        ChunkPos chunkPos = ChunkPos.containing(pos);
-        ChunkAccess chunk = source.getLevel().getChunk(chunkPos.x(), chunkPos.z(), ChunkStatus.EMPTY);
-        int y;
-        Supplier<Integer> spawnHeight = () -> chunk.getHeight(Heightmap.Types.MOTION_BLOCKING, x, z) + 1;
-        if (chunk.getPersistedStatus() != ChunkStatus.FULL || (y = spawnHeight.get()) <= chunk.getMinY()) {
+        BlockPos Silian_pos = new BlockPos(Silian_x, 0, Silian_z);
+        ChunkPos Silian_chunkPos = ChunkPos.containing(Silian_pos);
+        ChunkAccess Silian_chunk = Silian_source.getLevel().getChunk(Silian_chunkPos.x(), Silian_chunkPos.z(), ChunkStatus.EMPTY);
+        int Silian_y;
+        Supplier<Integer> Silian_spawnHeight = () -> Silian_chunk.getHeight(Heightmap.Types.MOTION_BLOCKING, Silian_x, Silian_z) + 1;
+        if (Silian_chunk.getPersistedStatus() != ChunkStatus.FULL || (Silian_y = Silian_spawnHeight.get()) <= Silian_chunk.getMinY()) {
             throw ISLAND_NOT_CREATED.create();
         }
-        player.teleportTo(x + 0.5, y, z + 0.5);
-        if (!player.isFallFlying()) {
-            player.setDeltaMovement(player.getDeltaMovement().multiply(1.0, 0.0, 1.0));
-            player.setOnGround(true);
+        Silian_player.teleportTo(Silian_x + 0.5, Silian_y, Silian_z + 0.5);
+        if (!Silian_player.isFallFlying()) {
+            Silian_player.setDeltaMovement(Silian_player.getDeltaMovement().multiply(1.0, 0.0, 1.0));
+            Silian_player.setOnGround(true);
         }
-        player.setRespawnPosition(new ServerPlayer.RespawnConfig(new LevelData.RespawnData(new GlobalPos(player.level().dimension(),new BlockPos(x, y, z)),0f, 0f), false), false);
+        Silian_player.setRespawnPosition(new ServerPlayer.RespawnConfig(new LevelData.RespawnData(new GlobalPos(Silian_player.level().dimension(),new BlockPos(Silian_x, Silian_y, Silian_z)),0f, 0f), false), false);
     }
 
     public abstract static class SkyIslandPositionContainer {
@@ -180,20 +180,20 @@ public class SkyIslandCommand {
         }
 
         // 1 indexed
-        public static ChunkPos getChunk(int i) {
-            return ISLAND_CHUNKS.get(ORDERING[i - 1]);
+        public static ChunkPos getChunk(int Silian_i) {
+            return ISLAND_CHUNKS.get(ORDERING[Silian_i - 1]);
         }
 
-        private static ArrayList<ChunkPos> getIslandsInRing(int radius, int num, double offetAngle) {
-            ArrayList<ChunkPos> islands = new ArrayList<>();
+        private static ArrayList<ChunkPos> getIslandsInRing(int Silian_radius, int Silian_num, double Silian_offetAngle) {
+            ArrayList<ChunkPos> Silian_islands = new ArrayList<>();
 
-            for (int i = 0; i < num; i++) {
-                double angle = offetAngle + i * (2 * Math.PI) / num;
-                double x = Math.sin(angle) * radius;
-                double z = Math.cos(angle) * radius;
-                islands.add(new ChunkPos((int) x, (int) z));
+            for (int Silian_i = 0; Silian_i < Silian_num; Silian_i++) {
+                double Silian_angle = Silian_offetAngle + Silian_i * (2 * Math.PI) / Silian_num;
+                double Silian_x = Math.sin(Silian_angle) * Silian_radius;
+                double Silian_z = Math.cos(Silian_angle) * Silian_radius;
+                Silian_islands.add(new ChunkPos((int) Silian_x, (int) Silian_z));
             }
-            return islands;
+            return Silian_islands;
         }
     }
 }

@@ -21,17 +21,17 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class DispensePotionBehaviorMixin {
     @Inject(method = "execute", at = @At(value = "HEAD"), cancellable = true)
     private void addDeepslateConversionBehavior(
-            BlockSource pointer, ItemStack stack, CallbackInfoReturnable<ItemStack> cir) {
+            BlockSource Silian_pointer, ItemStack Silian_stack, CallbackInfoReturnable<ItemStack> Silian_cir) {
         if (SkyAdditionsSettings.doRenewableDeepslate) {
-            PotionContents potionContents = stack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY);
+            PotionContents Silian_potionContents = Silian_stack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY);
 
-            if (potionContents.is(DeepslateConversionHelper.CONVERSION_POTION)) {
-                ServerLevel level = pointer.level();
-                BlockPos dispenserPos = pointer.pos();
-                Direction dispenserFacing = pointer.state().getValue(DispenserBlock.FACING);
-                BlockPos targetPos = dispenserPos.relative(dispenserFacing);
-                if (DeepslateConversionHelper.convertDeepslateWithBottle(level, targetPos, dispenserPos)) {
-                    cir.setReturnValue(new ItemStack(Items.GLASS_BOTTLE));
+            if (Silian_potionContents.is(DeepslateConversionHelper.CONVERSION_POTION)) {
+                ServerLevel Silian_level = Silian_pointer.level();
+                BlockPos Silian_dispenserPos = Silian_pointer.pos();
+                Direction Silian_dispenserFacing = Silian_pointer.state().getValue(DispenserBlock.FACING);
+                BlockPos Silian_targetPos = Silian_dispenserPos.relative(Silian_dispenserFacing);
+                if (DeepslateConversionHelper.convertDeepslateWithBottle(Silian_level, Silian_targetPos, Silian_dispenserPos)) {
+                    Silian_cir.setReturnValue(new ItemStack(Items.GLASS_BOTTLE));
                 }
             }
         }

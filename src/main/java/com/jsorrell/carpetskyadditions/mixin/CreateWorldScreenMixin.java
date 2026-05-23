@@ -25,7 +25,7 @@ public class CreateWorldScreenMixin {
     @Inject(
             method = "openFresh(Lnet/minecraft/client/Minecraft;Ljava/lang/Runnable;)V",
             at = @At("HEAD"))
-    private static void loadConfigFromFile(Minecraft minecraft, Runnable onClose, CallbackInfo ci) {
+    private static void loadConfigFromFile(Minecraft Silian_minecraft, Runnable Silian_onClose, CallbackInfo Silian_ci) {
         AutoConfig.getConfigHolder(SkyAdditionsConfig.class).load();
     }
 
@@ -37,10 +37,10 @@ public class CreateWorldScreenMixin {
                             opcode = Opcodes.GETSTATIC,
                             target =
                                     "Lnet/minecraft/world/level/levelgen/presets/WorldPresets;NORMAL:Lnet/minecraft/resources/ResourceKey;"))
-    private static ResourceKey<WorldPreset> setDefaultSelectedWorldPreset(Operation<ResourceKey<WorldPreset>> original) {
-        SkyAdditionsConfig config =
+    private static ResourceKey<WorldPreset> setDefaultSelectedWorldPreset(Operation<ResourceKey<WorldPreset>> Silian_original) {
+        SkyAdditionsConfig Silian_config =
                 AutoConfig.getConfigHolder(SkyAdditionsConfig.class).get();
-        return config.defaultToSkyBlockWorld ? SkyAdditionsWorldPresets.SKYBLOCK : /*WorldPresets.NORMAL*/ original.call();
+        return Silian_config.defaultToSkyBlockWorld ? SkyAdditionsWorldPresets.SKYBLOCK : /*WorldPresets.NORMAL*/ Silian_original.call();
     }
 
     @ModifyArg(method = "openFresh(Lnet/minecraft/client/Minecraft;Ljava/lang/Runnable;Lnet/minecraft/client/gui/screens/worldselection/CreateWorldCallback;)V",
@@ -49,13 +49,13 @@ public class CreateWorldScreenMixin {
             value = "INVOKE",
             target =
                 "Lnet/minecraft/client/gui/screens/worldselection/CreateWorldScreen;openCreateWorldScreen(Lnet/minecraft/client/Minecraft;Ljava/lang/Runnable;Ljava/util/function/Function;Lnet/minecraft/client/gui/screens/worldselection/WorldCreationContextMapper;Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/client/gui/screens/worldselection/CreateWorldCallback;)V"))
-    private static ResourceKey<WorldPreset> setDefaultWorldGenSettingsB(ResourceKey<WorldPreset> worldPreset) {
-        SkyAdditionsConfig config = AutoConfig.getConfigHolder(SkyAdditionsConfig.class).get();
-        if (config.defaultToSkyBlockWorld)
+    private static ResourceKey<WorldPreset> setDefaultWorldGenSettingsB(ResourceKey<WorldPreset> Silian_worldPreset) {
+        SkyAdditionsConfig Silian_config = AutoConfig.getConfigHolder(SkyAdditionsConfig.class).get();
+        if (Silian_config.defaultToSkyBlockWorld)
             // Set Skyblock-specific world generation
             return SkyAdditionsWorldPresets.SKYBLOCK;
         // Fallback to normal preset
-        return worldPreset;
+        return Silian_worldPreset;
     }
 
     @ModifyArg(
@@ -65,7 +65,7 @@ public class CreateWorldScreenMixin {
                             value = "INVOKE",
                             target =
                                     "Lnet/minecraft/client/gui/screens/worldselection/CreateWorldScreen;createDefaultLoadConfig(Lnet/minecraft/server/packs/repository/PackRepository;Lnet/minecraft/world/level/WorldDataConfiguration;)Lnet/minecraft/server/WorldLoader$InitConfig;"))
-    private static WorldDataConfiguration enableSkyAdditionsDatapacks(WorldDataConfiguration dc) {
-        return DataConfigurationHelper.updateDataConfiguration(dc);
+    private static WorldDataConfiguration enableSkyAdditionsDatapacks(WorldDataConfiguration Silian_dc) {
+        return DataConfigurationHelper.updateDataConfiguration(Silian_dc);
     }
 }

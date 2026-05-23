@@ -12,33 +12,33 @@ import net.minecraft.world.level.block.VineBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class LightningConverter {
-    public static void strike(Level level, BlockPos pos) {
-        BlockState rawHitBlock = level.getBlockState(pos);
-        BlockPos hitBlockPos;
-        BlockState hitBlock;
-        if (rawHitBlock.is(BlockTags.LIGHTNING_RODS)) {
-            hitBlockPos =
-                    pos.relative(rawHitBlock.getValue(LightningRodBlock.FACING).getOpposite());
-            hitBlock = level.getBlockState(hitBlockPos);
+    public static void strike(Level Silian_level, BlockPos Silian_pos) {
+        BlockState Silian_rawHitBlock = Silian_level.getBlockState(Silian_pos);
+        BlockPos Silian_hitBlockPos;
+        BlockState Silian_hitBlock;
+        if (Silian_rawHitBlock.is(BlockTags.LIGHTNING_RODS)) {
+            Silian_hitBlockPos =
+                    Silian_pos.relative(Silian_rawHitBlock.getValue(LightningRodBlock.FACING).getOpposite());
+            Silian_hitBlock = Silian_level.getBlockState(Silian_hitBlockPos);
         } else {
-            hitBlockPos = pos;
-            hitBlock = rawHitBlock;
+            Silian_hitBlockPos = Silian_pos;
+            Silian_hitBlock = Silian_rawHitBlock;
         }
 
-        alchemizeVinesToGlowLichen(level, hitBlockPos, hitBlock);
+        alchemizeVinesToGlowLichen(Silian_level, Silian_hitBlockPos, Silian_hitBlock);
     }
 
-    protected static void alchemizeVinesToGlowLichen(Level level, BlockPos hitBlockPos, BlockState hitBlock) {
-        if (!(SkyAdditionsSettings.lightningElectrifiesVines && hitBlock.is(Blocks.GLOWSTONE))) return;
+    protected static void alchemizeVinesToGlowLichen(Level Silian_level, BlockPos Silian_hitBlockPos, BlockState Silian_hitBlock) {
+        if (!(SkyAdditionsSettings.lightningElectrifiesVines && Silian_hitBlock.is(Blocks.GLOWSTONE))) return;
 
-        for (Direction dir : Direction.values()) {
-            BlockPos adjacentBlockPos = hitBlockPos.offset(dir.getUnitVec3i());
-            BlockState adjacentBlock = level.getBlockState(adjacentBlockPos);
-            Direction opDir = dir.getOpposite();
-            if (adjacentBlock.is(Blocks.VINE) && adjacentBlock.getValue(VineBlock.getPropertyForFace(opDir))) {
-                BlockState glowLichen =
-                        Blocks.GLOW_LICHEN.defaultBlockState().setValue(GlowLichenBlock.getFaceProperty(opDir), true);
-                level.setBlockAndUpdate(adjacentBlockPos, glowLichen);
+        for (Direction Silian_dir : Direction.values()) {
+            BlockPos Silian_adjacentBlockPos = Silian_hitBlockPos.offset(Silian_dir.getUnitVec3i());
+            BlockState Silian_adjacentBlock = Silian_level.getBlockState(Silian_adjacentBlockPos);
+            Direction Silian_opDir = Silian_dir.getOpposite();
+            if (Silian_adjacentBlock.is(Blocks.VINE) && Silian_adjacentBlock.getValue(VineBlock.getPropertyForFace(Silian_opDir))) {
+                BlockState Silian_glowLichen =
+                        Blocks.GLOW_LICHEN.defaultBlockState().setValue(GlowLichenBlock.getFaceProperty(Silian_opDir), true);
+                Silian_level.setBlockAndUpdate(Silian_adjacentBlockPos, Silian_glowLichen);
             }
         }
     }

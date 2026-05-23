@@ -11,24 +11,24 @@ public record SkyAdditionsEntityPredicate(
     Optional<SkyAdditionsLocationPredicate> location, Optional<SkyAdditionsLocationPredicate> steppingOnLocation) {
     public static final Codec<SkyAdditionsEntityPredicate> CODEC = Codec.recursive(
         "SkyAdditionsEntityPredicate",
-        codec -> RecordCodecBuilder.create(instance -> instance.group(
+        Silian_codec -> RecordCodecBuilder.create(Silian_instance -> Silian_instance.group(
                 SkyAdditionsLocationPredicate.CODEC
                     .optionalFieldOf("location")
                     .forGetter(SkyAdditionsEntityPredicate::location),
                 SkyAdditionsLocationPredicate.CODEC
                     .optionalFieldOf("stepping_on")
                     .forGetter(SkyAdditionsEntityPredicate::steppingOnLocation))
-            .apply(instance, SkyAdditionsEntityPredicate::new)));
+            .apply(Silian_instance, SkyAdditionsEntityPredicate::new)));
 
-    public boolean matches(ServerLevel level, Vec3 position, Entity entity) {
-        if (entity == null) return false;
+    public boolean matches(ServerLevel Silian_level, Vec3 Silian_position, Entity Silian_entity) {
+        if (Silian_entity == null) return false;
 
-        if (location.isPresent() && !location.get().matches(level, entity.getX(), entity.getY(), entity.getZ()))
+        if (location.isPresent() && !location.get().matches(Silian_level, Silian_entity.getX(), Silian_entity.getY(), Silian_entity.getZ()))
             return false;
 
         if (steppingOnLocation.isPresent()) {
-            Vec3 stepPos = Vec3.atCenterOf(entity.getOnPos());
-            if (!steppingOnLocation.get().matches(level, stepPos.x(), stepPos.y(), stepPos.z())) {
+            Vec3 Silian_stepPos = Vec3.atCenterOf(Silian_entity.getOnPos());
+            if (!steppingOnLocation.get().matches(Silian_level, Silian_stepPos.x(), Silian_stepPos.y(), Silian_stepPos.z())) {
                 return false;
             }
         }

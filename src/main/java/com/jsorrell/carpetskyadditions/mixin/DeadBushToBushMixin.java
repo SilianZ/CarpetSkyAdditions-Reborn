@@ -34,36 +34,36 @@ public class DeadBushToBushMixin {
         method = "useOn",
         at = @At("TAIL")
     )
-    private InteractionResult convertDeadBushToBush(InteractionResult original, UseOnContext context) {
+    private InteractionResult convertDeadBushToBush(InteractionResult Silian_original, UseOnContext Silian_context) {
         if (SkyAdditionsSettings.doDeadBushToBush) {
-            ItemStack itemStack = context.getItemInHand();
+            ItemStack Silian_itemStack = Silian_context.getItemInHand();
 
-            PotionContents potionContents = itemStack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY);
+            PotionContents Silian_potionContents = Silian_itemStack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY);
 
-            if (potionContents.is(Potions.WATER)) {
-                Level level = context.getLevel();
-                BlockPos blockPos = context.getClickedPos();
-                Player playerEntity = context.getPlayer();
-                BlockState blockState = level.getBlockState(blockPos);
+            if (Silian_potionContents.is(Potions.WATER)) {
+                Level Silian_level = Silian_context.getLevel();
+                BlockPos Silian_blockPos = Silian_context.getClickedPos();
+                Player Silian_playerEntity = Silian_context.getPlayer();
+                BlockState Silian_blockState = Silian_level.getBlockState(Silian_blockPos);
 
-                if (context.getClickedFace() != Direction.DOWN && blockState.is(Blocks.DEAD_BUSH)) {
-                    level.playSound(null, blockPos, SoundEvents.GENERIC_SPLASH, SoundSource.PLAYERS, 1.0f, 1.0f);
-                    Objects.requireNonNull(playerEntity)
+                if (Silian_context.getClickedFace() != Direction.DOWN && Silian_blockState.is(Blocks.DEAD_BUSH)) {
+                    Silian_level.playSound(null, Silian_blockPos, SoundEvents.GENERIC_SPLASH, SoundSource.PLAYERS, 1.0f, 1.0f);
+                    Objects.requireNonNull(Silian_playerEntity)
                         .setItemInHand(
-                            context.getHand(),
+                            Silian_context.getHand(),
                             ItemUtils.createFilledResult(
-                                itemStack, playerEntity, new ItemStack(Items.GLASS_BOTTLE)));
-                    playerEntity.awardStat(Stats.ITEM_USED.get(itemStack.getItem()));
-                    level.setBlock(blockPos, Blocks.BUSH.defaultBlockState(),0);
+                                Silian_itemStack, Silian_playerEntity, new ItemStack(Items.GLASS_BOTTLE)));
+                    Silian_playerEntity.awardStat(Stats.ITEM_USED.get(Silian_itemStack.getItem()));
+                    Silian_level.setBlock(Silian_blockPos, Blocks.BUSH.defaultBlockState(),0);
 
-                    AABB criteriaTriggerBox = new AABB(blockPos).inflate(50, 20, 50);
-                    level.getEntitiesOfClass(ServerPlayer.class, criteriaTriggerBox)
+                    AABB Silian_criteriaTriggerBox = new AABB(Silian_blockPos).inflate(50, 20, 50);
+                    Silian_level.getEntitiesOfClass(ServerPlayer.class, Silian_criteriaTriggerBox)
                         .forEach(SkyAdditionsCriteriaTriggers.DEAD_BUSH_TO_BUSH::trigger);
 
                     return InteractionResult.SUCCESS;
                 }
             }
         }
-        return original;
+        return Silian_original;
     }
 }

@@ -36,10 +36,10 @@ public class VexAllayer implements InstantListener.InstantListenerConfig {
     private boolean vexAllayed = false;
     private final Vex vex;
 
-    public VexAllayer(Vex vex) {
-        this.vex = vex;
+    public VexAllayer(Vex Silian_vex) {
+        this.vex = Silian_vex;
         gameEventHandler = new DynamicGameEventListener<>(
-                new InstantListener(new EntityPositionSource(vex, vex.getEyeHeight()), 16, this));
+                new InstantListener(new EntityPositionSource(Silian_vex, Silian_vex.getEyeHeight()), 16, this));
         conversionRandom = new LegacyRandomSource(0);
     }
 
@@ -60,9 +60,9 @@ public class VexAllayer implements InstantListener.InstantListenerConfig {
     }
 
     protected void convertToAllay() {
-        Allay spawnedAllay = vex.convertTo(EntityType.ALLAY, ConversionParams.single(vex, true, true), allay -> {
-            if (allay != null) {
-                float pitch =
+        Allay Silian_spawnedAllay = vex.convertTo(EntityType.ALLAY, ConversionParams.single(vex, true, true), Silian_allay -> {
+            if (Silian_allay != null) {
+                float Silian_pitch =
                     2.6f + (vex.level().getRandom().nextFloat() - vex.level().getRandom().nextFloat()) * 0.8f;
                 vex.level()
                     .playSound(
@@ -73,20 +73,20 @@ public class VexAllayer implements InstantListener.InstantListenerConfig {
                         SoundEvents.ZOMBIE_VILLAGER_CURE,
                         SoundSource.HOSTILE,
                         0.5f,
-                        pitch);
+                        Silian_pitch);
 
-                AABB criteriaTriggerBox = vex.getBoundingBox().inflate(20, 10, 20);
+                AABB Silian_criteriaTriggerBox = vex.getBoundingBox().inflate(20, 10, 20);
                 vex.level()
-                    .getEntitiesOfClass(ServerPlayer.class, criteriaTriggerBox)
-                    .forEach(p -> SkyAdditionsCriteriaTriggers.ALLAY_VEX.trigger(p, vex, allay));
+                    .getEntitiesOfClass(ServerPlayer.class, Silian_criteriaTriggerBox)
+                    .forEach(Silian_p -> SkyAdditionsCriteriaTriggers.ALLAY_VEX.trigger(Silian_p, vex, Silian_allay));
             }
         });
 
     }
 
-    public int getNote(int noteNum) {
+    public int getNote(int Silian_noteNum) {
         conversionRandom.setSeed(vex.getUUID().getLeastSignificantBits());
-        conversionRandom.consumeCount(noteNum);
+        conversionRandom.consumeCount(Silian_noteNum);
         return conversionRandom.nextInt(12);
     }
 
@@ -99,67 +99,67 @@ public class VexAllayer implements InstantListener.InstantListenerConfig {
         return GameEventTags.ALLAY_CAN_LISTEN;
     }
 
-    protected void listenToNote(ServerLevel level, int note) {
-        if (note % 12 == getNextNote()) {
+    protected void listenToNote(ServerLevel Silian_level, int Silian_note) {
+        if (Silian_note % 12 == getNextNote()) {
             numSuccessfulNotes++;
-            level.sendParticles(
+            Silian_level.sendParticles(
                     ParticleTypes.HEART,
                     vex.getRandomX(1),
                     vex.getRandomY() + 0.5,
                     vex.getRandomZ(1),
                     5,
-                    level.getRandom().nextGaussian() * 0.02,
-                    level.getRandom().nextGaussian() * 0.02,
-                    level.getRandom().nextGaussian() * 0.02,
+                    Silian_level.getRandom().nextGaussian() * 0.02,
+                    Silian_level.getRandom().nextGaussian() * 0.02,
+                    Silian_level.getRandom().nextGaussian() * 0.02,
                     1);
-            level.playSound(
+            Silian_level.playSound(
                     null,
                     vex,
                     SoundEvents.ALLAY_AMBIENT_WITHOUT_ITEM,
                     SoundSource.HOSTILE,
                     0.1f * (float) numSuccessfulNotes,
-                    (level.getRandom().nextFloat() - level.getRandom().nextFloat()) * 0.2f + 1.0f);
+                    (Silian_level.getRandom().nextFloat() - Silian_level.getRandom().nextFloat()) * 0.2f + 1.0f);
 
             if (5 <= numSuccessfulNotes) {
                 vexAllayed = true;
             }
         } else {
-            level.sendParticles(
+            Silian_level.sendParticles(
                     ParticleTypes.CRIT,
                     vex.getRandomX(1),
                     vex.getRandomY() + 1,
                     vex.getRandomZ(1),
                     5,
-                    level.getRandom().nextGaussian() * 0.02,
-                    level.getRandom().nextGaussian() * 0.02,
-                    level.getRandom().nextGaussian() * 0.02,
+                    Silian_level.getRandom().nextGaussian() * 0.02,
+                    Silian_level.getRandom().nextGaussian() * 0.02,
+                    Silian_level.getRandom().nextGaussian() * 0.02,
                     0.2);
             numSuccessfulNotes = 0;
         }
     }
 
-    public void readFromNbt(ValueInput valueInput) {
-        numSuccessfulNotes = valueInput.getIntOr(NUM_SUCCESSFUL_NOTES_KEY, 0);
+    public void readFromNbt(ValueInput Silian_valueInput) {
+        numSuccessfulNotes = Silian_valueInput.getIntOr(NUM_SUCCESSFUL_NOTES_KEY, 0);
     }
 
-    public void writeToNbt(ValueOutput valueOutput) {
+    public void writeToNbt(ValueOutput Silian_valueOutput) {
         if (SkyAdditionsSettings.allayableVexes) {
-            valueOutput.putInt(NUM_SUCCESSFUL_NOTES_KEY, numSuccessfulNotes);
+            Silian_valueOutput.putInt(NUM_SUCCESSFUL_NOTES_KEY, numSuccessfulNotes);
         }
     }
 
     @Override
     public void accept(
-            ServerLevel level,
-            GameEventListener listener,
-            Vec3 originPos,
-            GameEvent gameEvent,
-            GameEvent.Context emitter) {
-        if (SkyAdditionsSettings.allayableVexes && gameEvent.equals(GameEvent.NOTE_BLOCK_PLAY.value())) {
-            BlockState noteBlockState = level.getBlockState(BlockPos.containing(originPos));
-            if (noteBlockState.is(Blocks.NOTE_BLOCK)) {
-                int note = noteBlockState.getValue(NoteBlock.NOTE);
-                listenToNote(level, note);
+            ServerLevel Silian_level,
+            GameEventListener Silian_listener,
+            Vec3 Silian_originPos,
+            GameEvent Silian_gameEvent,
+            GameEvent.Context Silian_emitter) {
+        if (SkyAdditionsSettings.allayableVexes && Silian_gameEvent.equals(GameEvent.NOTE_BLOCK_PLAY.value())) {
+            BlockState Silian_noteBlockState = Silian_level.getBlockState(BlockPos.containing(Silian_originPos));
+            if (Silian_noteBlockState.is(Blocks.NOTE_BLOCK)) {
+                int Silian_note = Silian_noteBlockState.getValue(NoteBlock.NOTE);
+                listenToNote(Silian_level, Silian_note);
             }
         }
     }

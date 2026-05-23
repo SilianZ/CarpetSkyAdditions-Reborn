@@ -22,14 +22,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(AbstractHugeMushroomFeature.class)
 public class AbstractHugeMushroomFeatureMixin {
     @Unique
-    private void generateMycelium(WorldGenLevel level, RandomSource random, BlockPos pos) {
-        AlterGroundDecorator decorator = new AlterGroundDecorator(BlockStateProvider.simple(Blocks.MYCELIUM));
-        decorator.place(
+    private void generateMycelium(WorldGenLevel Silian_level, RandomSource Silian_random, BlockPos Silian_pos) {
+        AlterGroundDecorator Silian_decorator = new AlterGroundDecorator(BlockStateProvider.simple(Blocks.MYCELIUM));
+        Silian_decorator.place(
             new TreeDecorator.Context(
-                level,
-                (blockPos, blockState) -> level.setBlock(blockPos, blockState, Block.UPDATE_ALL),
-                random,
-                Set.of(pos),
+                Silian_level,
+                (Silian_blockPos, Silian_blockState) -> Silian_level.setBlock(Silian_blockPos, Silian_blockState, Block.UPDATE_ALL),
+                Silian_random,
+                Set.of(Silian_pos),
                 Set.of(),
                 Set.of()
             )
@@ -38,13 +38,13 @@ public class AbstractHugeMushroomFeatureMixin {
 
     @Inject(method = "place", at = @At("TAIL"))
     private void generateMycelium(
-            CallbackInfoReturnable<Boolean> cir,
-            @Local WorldGenLevel level,
-            @Local RandomSource random,
-            @Local BlockPos pos
+            CallbackInfoReturnable<Boolean> Silian_cir,
+            @Local WorldGenLevel Silian_level,
+            @Local RandomSource Silian_random,
+            @Local BlockPos Silian_pos
     ) {
         if (SkyAdditionsSettings.hugeMushroomsSpreadMycelium) {
-            generateMycelium(level, random, pos);
+            generateMycelium(Silian_level, Silian_random, Silian_pos);
         }
     }
 }

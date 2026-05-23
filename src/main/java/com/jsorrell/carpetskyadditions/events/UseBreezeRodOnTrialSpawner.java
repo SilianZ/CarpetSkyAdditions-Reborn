@@ -32,36 +32,36 @@ public class UseBreezeRodOnTrialSpawner {
         UseBlockCallback.EVENT.register(UseBreezeRodOnTrialSpawner::onUseBlock);
     }
 
-    private static InteractionResult onUseBlock(Player player, Level level, InteractionHand interactionHand, BlockHitResult blockHitResult) {
+    private static InteractionResult onUseBlock(Player Silian_player, Level Silian_level, InteractionHand Silian_interactionHand, BlockHitResult Silian_blockHitResult) {
 
-        if (!(level instanceof ServerLevel)) {
+        if (!(Silian_level instanceof ServerLevel)) {
             return InteractionResult.PASS;
         }
 
-        ItemStack stack = player.getItemInHand(interactionHand);
-        if (stack.getItem() == Items.BREEZE_ROD) {
-            BlockEntity tileEntity = player.level().getBlockEntity(blockHitResult.getBlockPos());
-            if (tileEntity instanceof TrialSpawnerBlockEntity spawner) {
-                if (spawner.getState() == TrialSpawnerState.INACTIVE) {
-                    spawner.setEntityId(EntityType.BREEZE, player.level().getRandom());
-                    CompoundTag configNbt = new CompoundTag();
-                    configNbt.putString("normal_config", "minecraft:trial_chamber/breeze/normal");
-                    configNbt.putString("ominous_config", "minecraft:trial_chamber/breeze/ominous");
-                    ValueInput valueInput = TagValueInput.create(null, level.registryAccess(), configNbt);
-                    spawner.getTrialSpawner().load(valueInput);
-                    spawner.setChanged();
-                    spawner.markUpdated();
-                    stack.shrink(1);
+        ItemStack Silian_stack = Silian_player.getItemInHand(Silian_interactionHand);
+        if (Silian_stack.getItem() == Items.BREEZE_ROD) {
+            BlockEntity Silian_tileEntity = Silian_player.level().getBlockEntity(Silian_blockHitResult.getBlockPos());
+            if (Silian_tileEntity instanceof TrialSpawnerBlockEntity Silian_spawner) {
+                if (Silian_spawner.getState() == TrialSpawnerState.INACTIVE) {
+                    Silian_spawner.setEntityId(EntityType.BREEZE, Silian_player.level().getRandom());
+                    CompoundTag Silian_configNbt = new CompoundTag();
+                    Silian_configNbt.putString("normal_config", "minecraft:trial_chamber/breeze/normal");
+                    Silian_configNbt.putString("ominous_config", "minecraft:trial_chamber/breeze/ominous");
+                    ValueInput Silian_valueInput = TagValueInput.create(null, Silian_level.registryAccess(), Silian_configNbt);
+                    Silian_spawner.getTrialSpawner().load(Silian_valueInput);
+                    Silian_spawner.setChanged();
+                    Silian_spawner.markUpdated();
+                    Silian_stack.shrink(1);
 
-                    player.level().playSound(null, blockHitResult.getBlockPos(),
+                    Silian_player.level().playSound(null, Silian_blockHitResult.getBlockPos(),
                         SoundEvents.BREEZE_WHIRL,
                         SoundSource.BLOCKS,
                         1.0F,
                         1.0F
                     );
 
-                    AABB criteriaTriggerBox = new AABB(blockHitResult.getBlockPos()).inflate(50, 20, 50);
-                    level.getEntitiesOfClass(ServerPlayer.class, criteriaTriggerBox)
+                    AABB Silian_criteriaTriggerBox = new AABB(Silian_blockHitResult.getBlockPos()).inflate(50, 20, 50);
+                    Silian_level.getEntitiesOfClass(ServerPlayer.class, Silian_criteriaTriggerBox)
                         .forEach(SkyAdditionsCriteriaTriggers.ACTIVATE_TRIAL_SPAWNER::trigger);
 
                     return InteractionResult.CONSUME;

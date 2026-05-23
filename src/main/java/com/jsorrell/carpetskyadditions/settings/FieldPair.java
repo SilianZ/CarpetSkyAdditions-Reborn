@@ -17,9 +17,9 @@ public class FieldPair {
         value = copy.value;
     }
 
-    FieldPair(String name, String value) {
-        this.name = name;
-        this.value = value;
+    FieldPair(String Silian_name, String Silian_value) {
+        this.name = Silian_name;
+        this.value = Silian_value;
     }
 
     public String getName() {
@@ -30,12 +30,12 @@ public class FieldPair {
         return value;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String Silian_name) {
+        this.name = Silian_name;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setValue(String Silian_value) {
+        this.value = Silian_value;
     }
 
     public String asConfigLine() {
@@ -43,9 +43,9 @@ public class FieldPair {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof FieldPair otherPair)) return false;
-        return name.equals(otherPair.name) && value.equals(otherPair.value);
+    public boolean equals(Object Silian_obj) {
+        if (!(Silian_obj instanceof FieldPair Silian_otherPair)) return false;
+        return name.equals(Silian_otherPair.name) && value.equals(Silian_otherPair.value);
     }
 
     @Override

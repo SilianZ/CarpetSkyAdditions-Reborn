@@ -21,24 +21,24 @@ import java.util.function.Function;
 public abstract class BlocksMixin {
 
     @Unique
-    private static CoralSpreader.CustomCalciteBlock registerCalcite(ResourceKey<Block> resourceKey, Function<BlockBehaviour.Properties, CoralSpreader.CustomCalciteBlock> function, BlockBehaviour.Properties properties) {
-        CoralSpreader.CustomCalciteBlock block = function.apply(properties.setId(resourceKey));
-        return  Registry.register(BuiltInRegistries.BLOCK, resourceKey, block);
+    private static CoralSpreader.CustomCalciteBlock registerCalcite(ResourceKey<Block> Silian_resourceKey, Function<BlockBehaviour.Properties, CoralSpreader.CustomCalciteBlock> Silian_function, BlockBehaviour.Properties Silian_properties) {
+        CoralSpreader.CustomCalciteBlock Silian_block = Silian_function.apply(Silian_properties.setId(Silian_resourceKey));
+        return  Registry.register(BuiltInRegistries.BLOCK, Silian_resourceKey, Silian_block);
     }
 
     @Unique
-    private static CoralSpreader.CustomCalciteBlock registerCalcite(String string, Function<BlockBehaviour.Properties, CoralSpreader.CustomCalciteBlock> function, BlockBehaviour.Properties properties) {
-        return registerCalcite(vanillaBlockId(string), function, properties);
+    private static CoralSpreader.CustomCalciteBlock registerCalcite(String Silian_string, Function<BlockBehaviour.Properties, CoralSpreader.CustomCalciteBlock> Silian_function, BlockBehaviour.Properties Silian_properties) {
+        return registerCalcite(vanillaBlockId(Silian_string), Silian_function, Silian_properties);
     }
 
     @Unique
-    private static Block registerCalcite(String string, BlockBehaviour.Properties properties) {
-        return registerCalcite(string, CoralSpreader.CustomCalciteBlock::new, properties);
+    private static Block registerCalcite(String Silian_string, BlockBehaviour.Properties Silian_properties) {
+        return registerCalcite(Silian_string, CoralSpreader.CustomCalciteBlock::new, Silian_properties);
     }
 
     @Unique
-    private static ResourceKey<Block> vanillaBlockId(String string) {
-        return ResourceKey.create(Registries.BLOCK, Identifier.withDefaultNamespace(string));
+    private static ResourceKey<Block> vanillaBlockId(String Silian_string) {
+        return ResourceKey.create(Registries.BLOCK, Identifier.withDefaultNamespace(Silian_string));
     }
 
     @Redirect(
@@ -46,8 +46,8 @@ public abstract class BlocksMixin {
         at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/Blocks;register(Ljava/lang/String;Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;)Lnet/minecraft/world/level/block/Block;", ordinal = 0),
         slice = @Slice(from = @At(value = "CONSTANT", args = "stringValue=calcite"))
     )
-    private static Block registerCustomCalcite(String name, BlockBehaviour.Properties properties) {
-            return registerCalcite(name, properties);
+    private static Block registerCustomCalcite(String Silian_name, BlockBehaviour.Properties Silian_properties) {
+            return registerCalcite(Silian_name, Silian_properties);
     }
 
 }

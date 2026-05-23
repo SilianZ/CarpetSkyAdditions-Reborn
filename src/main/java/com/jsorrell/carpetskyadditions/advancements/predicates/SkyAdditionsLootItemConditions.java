@@ -13,10 +13,10 @@ public class SkyAdditionsLootItemConditions {
         register("entity_properties", SkyAdditionsLootItemEntityPropertyCondition.CODEC);
     }
 
-    private static void register(String registryName, MapCodec<? extends LootItemCondition> codec) {
+    private static void register(String Silian_registryName, MapCodec<? extends LootItemCondition> Silian_codec) {
         Registry.register(
                 BuiltInRegistries.LOOT_CONDITION_TYPE,
-                new SkyAdditionsResourceLocation(registryName).getResourceLocation(),
-                codec);
+                new SkyAdditionsResourceLocation(Silian_registryName).getResourceLocation(),
+                Silian_codec);
     }
 }

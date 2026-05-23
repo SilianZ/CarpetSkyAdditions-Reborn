@@ -43,7 +43,7 @@ public abstract class WanderingTraderSpawnerMixin {
     private RandomSource random;
 
     @Shadow
-    protected abstract boolean spawn(ServerLevel level);
+    protected abstract boolean spawn(ServerLevel Silian_level);
 
     @Shadow
     private WanderingTraderData getTraderData() {
@@ -57,10 +57,10 @@ public abstract class WanderingTraderSpawnerMixin {
     }
 
     @Unique
-    private boolean hasEnoughSpace(BlockGetter level, BlockPos pos) {
-        for (BlockPos blockPos : BlockPos.betweenClosed(pos.offset(-1, 0, -1), pos.offset(1, 2, 1))) {
-            if (!level.getBlockState(blockPos)
-                .getCollisionShape(level, blockPos)
+    private boolean hasEnoughSpace(BlockGetter Silian_level, BlockPos Silian_pos) {
+        for (BlockPos Silian_blockPos : BlockPos.betweenClosed(Silian_pos.offset(-1, 0, -1), Silian_pos.offset(1, 2, 1))) {
+            if (!Silian_level.getBlockState(Silian_blockPos)
+                .getCollisionShape(Silian_level, Silian_blockPos)
                 .isEmpty()) {
                 return false;
             }
@@ -71,65 +71,65 @@ public abstract class WanderingTraderSpawnerMixin {
 
     @Inject(method = "spawn", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/npc/wanderingtrader/WanderingTraderSpawner;hasEnoughSpace(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Z"), cancellable = true, locals = LocalCapture.CAPTURE_FAILSOFT)
     private void spawnTrader(
-        ServerLevel serverLevel,
-        CallbackInfoReturnable<Boolean> cir,
-        @Local Player player,
-        @Local(ordinal = 0) BlockPos playerPos,
-        @Local int i,
-        @Local PoiManager poiManager,
-        @Local Optional<BlockPos> optional,
-        @Local(ordinal = 1) BlockPos playerOrMeetingPos,
-        @Local(ordinal = 2) BlockPos spawnPos) {
-        if (!TraderCamelHelper.tradersRideCamelsAt(serverLevel, spawnPos)) {
+        ServerLevel Silian_serverLevel,
+        CallbackInfoReturnable<Boolean> Silian_cir,
+        @Local Player Silian_player,
+        @Local(ordinal = 0) BlockPos Silian_playerPos,
+        @Local int Silian_i,
+        @Local PoiManager Silian_poiManager,
+        @Local Optional<BlockPos> Silian_optional,
+        @Local(ordinal = 1) BlockPos Silian_playerOrMeetingPos,
+        @Local(ordinal = 2) BlockPos Silian_spawnPos) {
+        if (!TraderCamelHelper.tradersRideCamelsAt(Silian_serverLevel, Silian_spawnPos)) {
             return;
         }
 
-        if (hasEnoughSpace(serverLevel, spawnPos)) {
-            if (serverLevel.getBiome(spawnPos).is(BiomeTags.WITHOUT_WANDERING_TRADER_SPAWNS)) {
-                cir.setReturnValue(false);
+        if (hasEnoughSpace(Silian_serverLevel, Silian_spawnPos)) {
+            if (Silian_serverLevel.getBiome(Silian_spawnPos).is(BiomeTags.WITHOUT_WANDERING_TRADER_SPAWNS)) {
+                Silian_cir.setReturnValue(false);
                 return;
             }
 
-            Camel traderCamel = EntityType.CAMEL.spawn(serverLevel, spawnPos, EntitySpawnReason.EVENT);
-            if (traderCamel != null) {
-                WanderingTrader wanderingTrader = EntityType.WANDERING_TRADER.create(serverLevel, EntitySpawnReason.EVENT);
-                if (wanderingTrader != null) {
-                    wanderingTrader.setDespawnDelay(48000);
+            Camel Silian_traderCamel = EntityType.CAMEL.spawn(Silian_serverLevel, Silian_spawnPos, EntitySpawnReason.EVENT);
+            if (Silian_traderCamel != null) {
+                WanderingTrader Silian_wanderingTrader = EntityType.WANDERING_TRADER.create(Silian_serverLevel, EntitySpawnReason.EVENT);
+                if (Silian_wanderingTrader != null) {
+                    Silian_wanderingTrader.setDespawnDelay(48000);
 
-                    traderCamel.equipItemIfPossible(serverLevel, Items.SADDLE.getDefaultInstance());
-                    wanderingTrader.setPos(traderCamel.getX(), traderCamel.getY(), traderCamel.getZ());
-                    wanderingTrader.setYRot(traderCamel.getYRot());
-                    wanderingTrader.setXRot(0.0F);
-                    wanderingTrader.startRiding(traderCamel);
-                    wanderingTrader.setWanderTarget(playerOrMeetingPos);
-                    serverLevel.addFreshEntity(wanderingTrader);
-                    cir.setReturnValue(true);
+                    Silian_traderCamel.equipItemIfPossible(Silian_serverLevel, Items.SADDLE.getDefaultInstance());
+                    Silian_wanderingTrader.setPos(Silian_traderCamel.getX(), Silian_traderCamel.getY(), Silian_traderCamel.getZ());
+                    Silian_wanderingTrader.setYRot(Silian_traderCamel.getYRot());
+                    Silian_wanderingTrader.setXRot(0.0F);
+                    Silian_wanderingTrader.startRiding(Silian_traderCamel);
+                    Silian_wanderingTrader.setWanderTarget(Silian_playerOrMeetingPos);
+                    Silian_serverLevel.addFreshEntity(Silian_wanderingTrader);
+                    Silian_cir.setReturnValue(true);
                     return;
                 }
-                cir.setReturnValue(false);
+                Silian_cir.setReturnValue(false);
             }
         }
     }
 
     @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
-    public void tick(ServerLevel level, boolean spawnEnemies, CallbackInfo ci) {
+    public void tick(ServerLevel Silian_level, boolean Silian_spawnEnemies, CallbackInfo Silian_ci) {
         if (usesDefaultSettings()) {
             return;
         }
 
-        ci.cancel();
+        Silian_ci.cancel();
 
-        if (!level.getGameRules().get(GameRules.SPAWN_WANDERING_TRADERS)) {
+        if (!Silian_level.getGameRules().get(GameRules.SPAWN_WANDERING_TRADERS)) {
             return;
         }
 
-        WanderingTraderData data = getTraderData();
-        int spawnDelay = data.spawnDelay();
+        WanderingTraderData Silian_data = getTraderData();
+        int Silian_spawnDelay = Silian_data.spawnDelay();
 
-        if (SkyAdditionsSettings.wanderingTraderSpawnRate < spawnDelay) {
-            spawnDelay = SkyAdditionsSettings.wanderingTraderSpawnRate;
-            data.setSpawnDelay(spawnDelay);
-            currentSpawnTimer = Math.min(1200, spawnDelay);
+        if (SkyAdditionsSettings.wanderingTraderSpawnRate < Silian_spawnDelay) {
+            Silian_spawnDelay = SkyAdditionsSettings.wanderingTraderSpawnRate;
+            Silian_data.setSpawnDelay(Silian_spawnDelay);
+            currentSpawnTimer = Math.min(1200, Silian_spawnDelay);
             tickDelay = currentSpawnTimer;
         }
 
@@ -137,23 +137,23 @@ public abstract class WanderingTraderSpawnerMixin {
             return;
         }
 
-        spawnDelay -= currentSpawnTimer;
-        boolean trySpawn = spawnDelay <= 0;
+        Silian_spawnDelay -= currentSpawnTimer;
+        boolean Silian_trySpawn = Silian_spawnDelay <= 0;
 
-        spawnDelay = trySpawn ? SkyAdditionsSettings.wanderingTraderSpawnRate : spawnDelay;
-        currentSpawnTimer = Math.min(1200, spawnDelay);
+        Silian_spawnDelay = Silian_trySpawn ? SkyAdditionsSettings.wanderingTraderSpawnRate : Silian_spawnDelay;
+        currentSpawnTimer = Math.min(1200, Silian_spawnDelay);
         tickDelay = currentSpawnTimer;
 
-        data.setSpawnDelay(spawnDelay);
+        Silian_data.setSpawnDelay(Silian_spawnDelay);
 
-        if (trySpawn && level.getGameRules().get(GameRules.SPAWN_MOBS)) {
-            int spawnChance = data.spawnChance();
-            if (random.nextInt(100 < spawnChance ? 1000 : 100) < spawnChance && spawn(level)) {
-                data.setSpawnChance(25);
+        if (Silian_trySpawn && Silian_level.getGameRules().get(GameRules.SPAWN_MOBS)) {
+            int Silian_spawnChance = Silian_data.spawnChance();
+            if (random.nextInt(100 < Silian_spawnChance ? 1000 : 100) < Silian_spawnChance && spawn(Silian_level)) {
+                Silian_data.setSpawnChance(25);
             } else {
-                data.setSpawnChance(
+                Silian_data.setSpawnChance(
                     Mth.clamp(
-                        spawnChance + 25,
+                        Silian_spawnChance + 25,
                         25,
                         (int) Math.round(SkyAdditionsSettings.maxWanderingTraderSpawnChance * 1000d)));
             }

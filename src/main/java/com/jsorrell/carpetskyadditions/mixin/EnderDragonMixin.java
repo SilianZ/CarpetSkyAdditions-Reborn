@@ -24,26 +24,26 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 @Mixin(EnderDragon.class)
 public abstract class EnderDragonMixin extends Mob implements Enemy {
     @Shadow
-    public abstract void kill(ServerLevel level);
+    public abstract void kill(ServerLevel Silian_level);
 
     protected boolean shouldDropHead;
     private static final String SHOULD_DROP_HEAD_KEY = "ShouldDropHead";
 
-    protected EnderDragonMixin(EntityType<? extends Mob> entityType, Level level) {
-        super(entityType, level);
+    protected EnderDragonMixin(EntityType<? extends Mob> Silian_entityType, Level Silian_level) {
+        super(Silian_entityType, Silian_level);
     }
 
     @Inject(method = "readAdditionalSaveData", at = @At("TAIL"))
-    private void readMixinNbt(ValueInput valueInput, CallbackInfo ci) {
+    private void readMixinNbt(ValueInput Silian_valueInput, CallbackInfo Silian_ci) {
 
-        shouldDropHead = valueInput.getBooleanOr(SHOULD_DROP_HEAD_KEY, false);
+        shouldDropHead = Silian_valueInput.getBooleanOr(SHOULD_DROP_HEAD_KEY, false);
 
     }
 
     @Inject(method = "addAdditionalSaveData", at = @At("TAIL"))
-    private void writeMixinNbt(ValueOutput valueOutput, CallbackInfo ci) {
+    private void writeMixinNbt(ValueOutput Silian_valueOutput, CallbackInfo Silian_ci) {
         if (SkyAdditionsSettings.renewableDragonHeads) {
-            valueOutput.putBoolean(SHOULD_DROP_HEAD_KEY, shouldDropHead);
+            Silian_valueOutput.putBoolean(SHOULD_DROP_HEAD_KEY, shouldDropHead);
         }
     }
 
@@ -55,18 +55,18 @@ public abstract class EnderDragonMixin extends Mob implements Enemy {
             ordinal = 1
         )
     )
-    protected void dropDragonHead(CallbackInfo ci, @Local ServerLevel serverLevel) {
+    protected void dropDragonHead(CallbackInfo Silian_ci, @Local ServerLevel Silian_serverLevel) {
         if (SkyAdditionsSettings.renewableDragonHeads && shouldDropHead) {
-            spawnAtLocation(serverLevel, Items.DRAGON_HEAD);
+            spawnAtLocation(Silian_serverLevel, Items.DRAGON_HEAD);
         }
     }
 
     @Override
-    protected void dropCustomDeathLoot(ServerLevel serverLevel, DamageSource damageSource, boolean bl) {
-        super.dropCustomDeathLoot(serverLevel, damageSource, bl);
+    protected void dropCustomDeathLoot(ServerLevel Silian_serverLevel, DamageSource Silian_damageSource, boolean Silian_bl) {
+        super.dropCustomDeathLoot(Silian_serverLevel, Silian_damageSource, Silian_bl);
         if (SkyAdditionsSettings.renewableDragonHeads) {
-            if (damageSource.getEntity() instanceof Creeper killerCreeper) {
-                if (killerCreeper.isPowered()) {
+            if (Silian_damageSource.getEntity() instanceof Creeper Silian_killerCreeper) {
+                if (Silian_killerCreeper.isPowered()) {
                     shouldDropHead = true;
                 }
             }

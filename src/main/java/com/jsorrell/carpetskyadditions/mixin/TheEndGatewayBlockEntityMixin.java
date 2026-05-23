@@ -32,7 +32,7 @@ public class TheEndGatewayBlockEntityMixin {
                             opcode = Opcodes.GETSTATIC,
                             target =
                                     "Lnet/minecraft/data/worldgen/features/EndFeatures;END_ISLAND:Lnet/minecraft/resources/ResourceKey;"))
-    private static ResourceKey<ConfiguredFeature<?, ?>> replaceGeneratedEndIslandFeature(Operation<ResourceKey<ConfiguredFeature<?, ?>>> original) {
+    private static ResourceKey<ConfiguredFeature<?, ?>> replaceGeneratedEndIslandFeature(Operation<ResourceKey<ConfiguredFeature<?, ?>>> Silian_original) {
         if (SkyAdditionsSettings.gatewaysSpawnChorus) {
             return SkyAdditionsConfiguredFeatures.GATEWAY_ISLAND;
         } else {
@@ -58,16 +58,16 @@ public class TheEndGatewayBlockEntityMixin {
             locals = LocalCapture.CAPTURE_FAILSOFT
     )
     private static void forceExitPortalPos(
-            ServerLevel level,
-            BlockPos pos,
-            CallbackInfoReturnable<BlockPos> cir,
-            @Local Vec3 teleportLocation,
-            @Local LevelChunk portalChunk,
-            @Local(ordinal = 1) BlockPos blockPos,
-            @Local(ordinal = 2) BlockPos islandCenterPos) {
+            ServerLevel Silian_level,
+            BlockPos Silian_pos,
+            CallbackInfoReturnable<BlockPos> Silian_cir,
+            @Local Vec3 Silian_teleportLocation,
+            @Local LevelChunk Silian_portalChunk,
+            @Local(ordinal = 1) BlockPos Silian_blockPos,
+            @Local(ordinal = 2) BlockPos Silian_islandCenterPos) {
         if (SkyAdditionsSettings.gatewaysSpawnChorus) {
-            BlockPos portalPos = EndGatewayIslandFeature.findGatewayLocation(level, islandCenterPos);
-            cir.setReturnValue(portalPos);
+            BlockPos Silian_portalPos = EndGatewayIslandFeature.findGatewayLocation(Silian_level, Silian_islandCenterPos);
+            Silian_cir.setReturnValue(Silian_portalPos);
         }
     }
 }

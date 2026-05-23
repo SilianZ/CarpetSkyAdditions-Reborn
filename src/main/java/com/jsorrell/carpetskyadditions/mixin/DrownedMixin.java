@@ -18,13 +18,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Drowned.class)
 public class DrownedMixin extends Zombie {
-    public DrownedMixin(Level level) {
-        super(level);
+    public DrownedMixin(Level Silian_level) {
+        super(Silian_level);
     }
 
     @Inject(method = "finalizeSpawn", at = @At("TAIL"))
     private void holdSnifferEgg(
-        ServerLevelAccessor serverLevelAccessor, DifficultyInstance difficultyInstance, EntitySpawnReason entitySpawnReason, SpawnGroupData spawnGroupData, CallbackInfoReturnable<SpawnGroupData> cir) {
+        ServerLevelAccessor Silian_serverLevelAccessor, DifficultyInstance Silian_difficultyInstance, EntitySpawnReason Silian_entitySpawnReason, SpawnGroupData Silian_spawnGroupData, CallbackInfoReturnable<SpawnGroupData> Silian_cir) {
         if (SkyAdditionsSettings.sniffersFromDrowneds
                 && getItemBySlot(EquipmentSlot.OFFHAND).isEmpty()
                 && random.nextFloat() < 0.01F) {

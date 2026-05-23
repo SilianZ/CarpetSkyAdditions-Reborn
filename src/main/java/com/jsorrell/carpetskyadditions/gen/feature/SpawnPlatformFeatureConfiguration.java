@@ -7,10 +7,10 @@ import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfigur
 public record SpawnPlatformFeatureConfiguration(
         LocatableStructureFeatureConfiguration platformConfig, boolean spawnRelative) implements FeatureConfiguration {
     public static final Codec<SpawnPlatformFeatureConfiguration> CODEC =
-            RecordCodecBuilder.create(instance -> instance.group(
+            RecordCodecBuilder.create(Silian_instance -> Silian_instance.group(
                             LocatableStructureFeatureConfiguration.CODEC
                                     .fieldOf("platform")
-                                    .forGetter(config -> config.platformConfig),
-                            Codec.BOOL.fieldOf("spawn_relative").forGetter(config -> config.spawnRelative))
-                    .apply(instance, SpawnPlatformFeatureConfiguration::new));
+                                    .forGetter(Silian_config -> Silian_config.platformConfig),
+                            Codec.BOOL.fieldOf("spawn_relative").forGetter(Silian_config -> Silian_config.spawnRelative))
+                    .apply(Silian_instance, SpawnPlatformFeatureConfiguration::new));
 }

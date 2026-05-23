@@ -9,7 +9,7 @@ public abstract class SkyAdditionsConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> SPAWN_PLATFORM = feature("spawn_platform");
     public static final ResourceKey<ConfiguredFeature<?, ?>> GATEWAY_ISLAND = feature("end_gateway_island");
 
-    private static ResourceKey<ConfiguredFeature<?, ?>> feature(String path) {
-        return ResourceKey.create(Registries.CONFIGURED_FEATURE, new SkyAdditionsResourceLocation(path).getResourceLocation());
+    private static ResourceKey<ConfiguredFeature<?, ?>> feature(String Silian_path) {
+        return ResourceKey.create(Registries.CONFIGURED_FEATURE, new SkyAdditionsResourceLocation(Silian_path).getResourceLocation());
     }
 }

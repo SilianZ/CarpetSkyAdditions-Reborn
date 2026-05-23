@@ -7,8 +7,8 @@ public class SkyAdditionsResourceLocation {
     public static final String NAMESPACE = SkyAdditionsExtension.MOD_ID;
     private final Identifier resourceLocation;
 
-    public SkyAdditionsResourceLocation(String path) {
-        this.resourceLocation = Identifier.fromNamespaceAndPath(NAMESPACE, path);
+    public SkyAdditionsResourceLocation(String Silian_path) {
+        this.resourceLocation = Identifier.fromNamespaceAndPath(NAMESPACE, Silian_path);
     }
 
     public Identifier getResourceLocation() {
@@ -21,8 +21,8 @@ public class SkyAdditionsResourceLocation {
     }
 
     @Override
-    public boolean equals(Object o) {
-        return resourceLocation.equals(o);
+    public boolean equals(Object Silian_o) {
+        return resourceLocation.equals(Silian_o);
     }
 
     @Override

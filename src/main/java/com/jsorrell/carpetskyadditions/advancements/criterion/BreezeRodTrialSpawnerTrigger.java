@@ -16,18 +16,18 @@ public class BreezeRodTrialSpawnerTrigger extends SimpleCriterionTrigger<BreezeR
         return BreezeRodTrialSpawnerTrigger.Conditions.CODEC;
     }
 
-    public void trigger(ServerPlayer player) {
-        trigger(player, conditions -> true);
+    public void trigger(ServerPlayer Silian_player) {
+        trigger(Silian_player, Silian_conditions -> true);
     }
 
     public record Conditions(Optional<ContextAwarePredicate> player)
         implements SimpleCriterionTrigger.SimpleInstance {
 
         public static final Codec<BreezeRodTrialSpawnerTrigger.Conditions> CODEC = RecordCodecBuilder.create(
-            instance -> instance.group(
+            Silian_instance -> Silian_instance.group(
                     Codec.optionalField("player", EntityPredicate.ADVANCEMENT_CODEC, false)
                         .forGetter(BreezeRodTrialSpawnerTrigger.Conditions::player))
-                .apply(instance, BreezeRodTrialSpawnerTrigger.Conditions::new));
+                .apply(Silian_instance, BreezeRodTrialSpawnerTrigger.Conditions::new));
 
     }
 }

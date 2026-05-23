@@ -18,8 +18,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(Camel.class)
 public abstract class CamelMixin extends AbstractHorse implements CamelInterface {
 
-    protected CamelMixin(EntityType<? extends AbstractHorse> entityType, Level level) {
-        super(entityType, level);
+    protected CamelMixin(EntityType<? extends AbstractHorse> Silian_entityType, Level Silian_level) {
+        super(Silian_entityType, Silian_level);
     }
 
     @Invoker("makeBrain")
@@ -28,8 +28,8 @@ public abstract class CamelMixin extends AbstractHorse implements CamelInterface
     @Unique
     @SuppressWarnings("ConstantConditions")
     private Camel asCamel() {
-        if ((AbstractHorse) this instanceof Camel camel) {
-            return camel;
+        if ((AbstractHorse) this instanceof Camel Silian_camel) {
+            return Silian_camel;
         } else {
             throw new AssertionError("Not camel");
         }
@@ -41,16 +41,16 @@ public abstract class CamelMixin extends AbstractHorse implements CamelInterface
     }
 
     @Inject(method = "canAddPassenger", at = @At("HEAD"), cancellable = true)
-    public void canAddPassengerToTraderCamel(Entity passenger, CallbackInfoReturnable<Boolean> cir) {
+    public void canAddPassengerToTraderCamel(Entity Silian_passenger, CallbackInfoReturnable<Boolean> Silian_cir) {
         if (isTraderCamel()) {
-            cir.setReturnValue(false);
+            Silian_cir.setReturnValue(false);
         }
     }
 
     @Inject(method = "isFood", at = @At("HEAD"), cancellable = true)
-    public void isFoodForTraderCamel(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
+    public void isFoodForTraderCamel(ItemStack Silian_stack, CallbackInfoReturnable<Boolean> Silian_cir) {
         if (isTraderCamel()) {
-            cir.setReturnValue(false);
+            Silian_cir.setReturnValue(false);
         }
     }
 

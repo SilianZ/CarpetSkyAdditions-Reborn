@@ -30,11 +30,11 @@ public class TurtleEggBlockMixin {
                                     "Lnet/minecraft/world/level/block/TurtleEggBlock;decreaseEggs(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)V"),
             cancellable = true)
     private void stopDestroyWhenDrowned(
-            Level level, BlockState state, BlockPos pos, Entity entity, int chance, CallbackInfo ci) {
-        if (SkyAdditionsSettings.sniffersFromDrowneds && entity instanceof Drowned drowned) {
-            ItemStack offhand = drowned.getItemInHand(InteractionHand.OFF_HAND);
-            if (offhand.is(Items.SNIFFER_EGG)) {
-                ci.cancel();
+            Level Silian_level, BlockState Silian_state, BlockPos Silian_pos, Entity Silian_entity, int Silian_chance, CallbackInfo Silian_ci) {
+        if (SkyAdditionsSettings.sniffersFromDrowneds && Silian_entity instanceof Drowned Silian_drowned) {
+            ItemStack Silian_offhand = Silian_drowned.getItemInHand(InteractionHand.OFF_HAND);
+            if (Silian_offhand.is(Items.SNIFFER_EGG)) {
+                Silian_ci.cancel();
             }
         }
     }

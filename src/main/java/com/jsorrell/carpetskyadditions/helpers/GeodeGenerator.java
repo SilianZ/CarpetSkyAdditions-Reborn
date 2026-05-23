@@ -9,56 +9,56 @@ public class GeodeGenerator {
     // 1/CONVERSION_RATE chance per random tick
     public static final int CONVERSION_RATE = 100;
 
-    public static boolean checkGeodeFormation(Level level, BlockPos lavaCenter) {
-        return Blocks.LAVA.equals(level.getBlockState(lavaCenter).getBlock())
-                && level.getBlockState(lavaCenter).getValue(LiquidBlock.LEVEL) == 0
+    public static boolean checkGeodeFormation(Level Silian_level, BlockPos Silian_lavaCenter) {
+        return Blocks.LAVA.equals(Silian_level.getBlockState(Silian_lavaCenter).getBlock())
+                && Silian_level.getBlockState(Silian_lavaCenter).getValue(LiquidBlock.LEVEL) == 0
                 &&
                 // Calcite
-                Blocks.CALCITE.equals(level.getBlockState(lavaCenter.above()).getBlock())
-                && Blocks.CALCITE.equals(level.getBlockState(lavaCenter.below()).getBlock())
-                && Blocks.CALCITE.equals(level.getBlockState(lavaCenter.north()).getBlock())
-                && Blocks.CALCITE.equals(level.getBlockState(lavaCenter.south()).getBlock())
-                && Blocks.CALCITE.equals(level.getBlockState(lavaCenter.east()).getBlock())
-                && Blocks.CALCITE.equals(level.getBlockState(lavaCenter.west()).getBlock())
+                Blocks.CALCITE.equals(Silian_level.getBlockState(Silian_lavaCenter.above()).getBlock())
+                && Blocks.CALCITE.equals(Silian_level.getBlockState(Silian_lavaCenter.below()).getBlock())
+                && Blocks.CALCITE.equals(Silian_level.getBlockState(Silian_lavaCenter.north()).getBlock())
+                && Blocks.CALCITE.equals(Silian_level.getBlockState(Silian_lavaCenter.south()).getBlock())
+                && Blocks.CALCITE.equals(Silian_level.getBlockState(Silian_lavaCenter.east()).getBlock())
+                && Blocks.CALCITE.equals(Silian_level.getBlockState(Silian_lavaCenter.west()).getBlock())
                 &&
                 // Smooth Basalt
                 Blocks.SMOOTH_BASALT.equals(
-                        level.getBlockState(lavaCenter.above(2)).getBlock())
+                        Silian_level.getBlockState(Silian_lavaCenter.above(2)).getBlock())
                 && Blocks.SMOOTH_BASALT.equals(
-                        level.getBlockState(lavaCenter.below(2)).getBlock())
+                        Silian_level.getBlockState(Silian_lavaCenter.below(2)).getBlock())
                 && Blocks.SMOOTH_BASALT.equals(
-                        level.getBlockState(lavaCenter.north(2)).getBlock())
+                        Silian_level.getBlockState(Silian_lavaCenter.north(2)).getBlock())
                 && Blocks.SMOOTH_BASALT.equals(
-                        level.getBlockState(lavaCenter.south(2)).getBlock())
+                        Silian_level.getBlockState(Silian_lavaCenter.south(2)).getBlock())
                 && Blocks.SMOOTH_BASALT.equals(
-                        level.getBlockState(lavaCenter.east(2)).getBlock())
+                        Silian_level.getBlockState(Silian_lavaCenter.east(2)).getBlock())
                 && Blocks.SMOOTH_BASALT.equals(
-                        level.getBlockState(lavaCenter.west(2)).getBlock())
+                        Silian_level.getBlockState(Silian_lavaCenter.west(2)).getBlock())
                 &&
                 // Diagonal Smooth Basalt
                 Blocks.SMOOTH_BASALT.equals(
-                        level.getBlockState(lavaCenter.offset(0, 1, 1)).getBlock())
+                        Silian_level.getBlockState(Silian_lavaCenter.offset(0, 1, 1)).getBlock())
                 && Blocks.SMOOTH_BASALT.equals(
-                        level.getBlockState(lavaCenter.offset(0, 1, -1)).getBlock())
+                        Silian_level.getBlockState(Silian_lavaCenter.offset(0, 1, -1)).getBlock())
                 && Blocks.SMOOTH_BASALT.equals(
-                        level.getBlockState(lavaCenter.offset(0, -1, 1)).getBlock())
+                        Silian_level.getBlockState(Silian_lavaCenter.offset(0, -1, 1)).getBlock())
                 && Blocks.SMOOTH_BASALT.equals(
-                        level.getBlockState(lavaCenter.offset(0, -1, -1)).getBlock())
+                        Silian_level.getBlockState(Silian_lavaCenter.offset(0, -1, -1)).getBlock())
                 && Blocks.SMOOTH_BASALT.equals(
-                        level.getBlockState(lavaCenter.offset(1, 0, 1)).getBlock())
+                        Silian_level.getBlockState(Silian_lavaCenter.offset(1, 0, 1)).getBlock())
                 && Blocks.SMOOTH_BASALT.equals(
-                        level.getBlockState(lavaCenter.offset(1, 0, -1)).getBlock())
+                        Silian_level.getBlockState(Silian_lavaCenter.offset(1, 0, -1)).getBlock())
                 && Blocks.SMOOTH_BASALT.equals(
-                        level.getBlockState(lavaCenter.offset(-1, 0, 1)).getBlock())
+                        Silian_level.getBlockState(Silian_lavaCenter.offset(-1, 0, 1)).getBlock())
                 && Blocks.SMOOTH_BASALT.equals(
-                        level.getBlockState(lavaCenter.offset(-1, 0, -1)).getBlock())
+                        Silian_level.getBlockState(Silian_lavaCenter.offset(-1, 0, -1)).getBlock())
                 && Blocks.SMOOTH_BASALT.equals(
-                        level.getBlockState(lavaCenter.offset(1, 1, 0)).getBlock())
+                        Silian_level.getBlockState(Silian_lavaCenter.offset(1, 1, 0)).getBlock())
                 && Blocks.SMOOTH_BASALT.equals(
-                        level.getBlockState(lavaCenter.offset(1, -1, 0)).getBlock())
+                        Silian_level.getBlockState(Silian_lavaCenter.offset(1, -1, 0)).getBlock())
                 && Blocks.SMOOTH_BASALT.equals(
-                        level.getBlockState(lavaCenter.offset(-1, 1, 0)).getBlock())
+                        Silian_level.getBlockState(Silian_lavaCenter.offset(-1, 1, 0)).getBlock())
                 && Blocks.SMOOTH_BASALT.equals(
-                        level.getBlockState(lavaCenter.offset(-1, -1, 0)).getBlock());
+                        Silian_level.getBlockState(Silian_lavaCenter.offset(-1, -1, 0)).getBlock());
     }
 }

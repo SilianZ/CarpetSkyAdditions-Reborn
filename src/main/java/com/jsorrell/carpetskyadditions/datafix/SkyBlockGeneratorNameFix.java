@@ -12,43 +12,43 @@ import net.minecraft.util.datafix.fixes.References;
 public class SkyBlockGeneratorNameFix extends DataFix {
     private static final String NAME = "SkyBlockGeneratorNameFix";
 
-    public SkyBlockGeneratorNameFix(Schema outputSchema) {
-        super(outputSchema, true);
+    public SkyBlockGeneratorNameFix(Schema Silian_outputSchema) {
+        super(Silian_outputSchema, true);
     }
 
     @Override
     protected TypeRewriteRule makeRule() {
-        Type<?> inputType = getInputSchema().getType(References.WORLD_GEN_SETTINGS);
-        OpticFinder<?> inputDimensionsField = inputType.findField("dimensions");
-        Type<?> outputType = getOutputSchema().getType(References.WORLD_GEN_SETTINGS);
-        Type<?> outputDimensionsFieldType = outputType.findFieldType("dimensions");
+        Type<?> Silian_inputType = getInputSchema().getType(References.WORLD_GEN_SETTINGS);
+        OpticFinder<?> Silian_inputDimensionsField = Silian_inputType.findField("dimensions");
+        Type<?> Silian_outputType = getOutputSchema().getType(References.WORLD_GEN_SETTINGS);
+        Type<?> Silian_outputDimensionsFieldType = Silian_outputType.findFieldType("dimensions");
         return fixTypeEverywhereTyped(
                 NAME,
-                inputType,
-                outputType,
-                inputWorldGenSettings -> inputWorldGenSettings.updateTyped(
-                        inputDimensionsField, outputDimensionsFieldType, inputDimensions -> {
-                            Dynamic<?> dynamicDimensions = inputDimensions
+                Silian_inputType,
+                Silian_outputType,
+                Silian_inputWorldGenSettings -> Silian_inputWorldGenSettings.updateTyped(
+                        Silian_inputDimensionsField, Silian_outputDimensionsFieldType, Silian_inputDimensions -> {
+                            Dynamic<?> Silian_dynamicDimensions = Silian_inputDimensions
                                     .write()
                                     .result()
                                     .orElseThrow(
                                             () -> new IllegalStateException("Malformed WorldGenSettings.dimensions"));
-                            dynamicDimensions =
-                                    dynamicDimensions.updateMapValues(pair -> pair.mapSecond(dimensionDynamic ->
-                                            dimensionDynamic.update("generator", dimensionGeneratorDynamic -> {
-                                                String generatorType = dimensionGeneratorDynamic
+                            Silian_dynamicDimensions =
+                                    Silian_dynamicDimensions.updateMapValues(Silian_pair -> Silian_pair.mapSecond(Silian_dimensionDynamic ->
+                                            Silian_dimensionDynamic.update("generator", Silian_dimensionGeneratorDynamic -> {
+                                                String Silian_generatorType = Silian_dimensionGeneratorDynamic
                                                         .get("type")
                                                         .asString("");
-                                                if ("minecraft:skyblock".equals(generatorType)) {
-                                                    return dimensionGeneratorDynamic.update(
+                                                if ("minecraft:skyblock".equals(Silian_generatorType)) {
+                                                    return Silian_dimensionGeneratorDynamic.update(
                                                             "type",
-                                                            generatorTypeDynamic -> generatorTypeDynamic.createString(
+                                                            Silian_generatorTypeDynamic -> Silian_generatorTypeDynamic.createString(
                                                                     "skyblock:skyblock"));
                                                 }
-                                                return dimensionGeneratorDynamic;
+                                                return Silian_dimensionGeneratorDynamic;
                                             })));
-                            return outputDimensionsFieldType
-                                    .readTyped(dynamicDimensions)
+                            return Silian_outputDimensionsFieldType
+                                    .readTyped(Silian_dynamicDimensions)
                                     .result()
                                     .orElseThrow(() -> new IllegalStateException(NAME + " failed."))
                                     .getFirst();

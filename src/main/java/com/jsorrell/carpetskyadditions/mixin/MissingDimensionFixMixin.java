@@ -12,8 +12,8 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin(MissingDimensionFix.class)
 public abstract class MissingDimensionFixMixin extends DataFix {
-    public MissingDimensionFixMixin(Schema outputSchema, boolean changesType) {
-        super(outputSchema, changesType);
+    public MissingDimensionFixMixin(Schema Silian_outputSchema, boolean Silian_changesType) {
+        super(Silian_outputSchema, Silian_changesType);
     }
 
     @ModifyArg(
@@ -26,7 +26,7 @@ public abstract class MissingDimensionFixMixin extends DataFix {
                             ordinal = 1),
             index = 2,
             remap = false)
-    private Map<String, Type<?>> modifyTypes(Map<String, Type<?>> types) {
-        return DuplicateMapKey.duplicateMapKey("minecraft:noise", "minecraft:skyblock", types);
+    private Map<String, Type<?>> modifyTypes(Map<String, Type<?>> Silian_types) {
+        return DuplicateMapKey.duplicateMapKey("minecraft:noise", "minecraft:skyblock", Silian_types);
     }
 }

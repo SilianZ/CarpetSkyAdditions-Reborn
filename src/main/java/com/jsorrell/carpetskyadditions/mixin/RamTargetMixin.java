@@ -39,10 +39,10 @@ public abstract class RamTargetMixin<E extends PathfinderMob> extends Behavior<E
     private Function<Goat, SoundEvent> getImpactSound;
 
     @Shadow
-    protected abstract void finishRam(ServerLevel level, Goat goat);
+    protected abstract void finishRam(ServerLevel Silian_level, Goat Silian_goat);
 
-    public RamTargetMixin(Map<MemoryModuleType<?>, MemoryStatus> memories) {
-        super(memories);
+    public RamTargetMixin(Map<MemoryModuleType<?>, MemoryStatus> Silian_memories) {
+        super(Silian_memories);
     }
 
     @Inject(
@@ -54,32 +54,32 @@ public abstract class RamTargetMixin<E extends PathfinderMob> extends Behavior<E
                 "Lnet/minecraft/world/entity/ai/Brain;getMemory(Lnet/minecraft/world/entity/ai/memory/MemoryModuleType;)Ljava/util/Optional;",
             ordinal = 0),
         cancellable = true)
-    private void breakOpenNetherWart(ServerLevel level, Goat rammer, long gameTime, CallbackInfo ci) {
-        if (SkyAdditionsSettings.rammingWart && level.getGameRules().get(GameRules.MOB_GRIEFING)) {
-            Optional<BlockPos> optionalWartPos = shouldBreakNetherWart(level, rammer);
-            if (optionalWartPos.isPresent()) {
-                BlockPos wartPos = optionalWartPos.get();
-                level.playSound(null, rammer, getImpactSound.apply(rammer), SoundSource.HOSTILE, 1.0f, 1.0f);
+    private void breakOpenNetherWart(ServerLevel Silian_level, Goat Silian_rammer, long Silian_gameTime, CallbackInfo Silian_ci) {
+        if (SkyAdditionsSettings.rammingWart && Silian_level.getGameRules().get(GameRules.MOB_GRIEFING)) {
+            Optional<BlockPos> Silian_optionalWartPos = shouldBreakNetherWart(Silian_level, Silian_rammer);
+            if (Silian_optionalWartPos.isPresent()) {
+                BlockPos Silian_wartPos = Silian_optionalWartPos.get();
+                Silian_level.playSound(null, Silian_rammer, getImpactSound.apply(Silian_rammer), SoundSource.HOSTILE, 1.0f, 1.0f);
 
-                boolean blockRemoved = level.removeBlock(wartPos, false);
-                if (blockRemoved) {
-                    if (!level.isClientSide()) {
+                boolean Silian_blockRemoved = Silian_level.removeBlock(Silian_wartPos, false);
+                if (Silian_blockRemoved) {
+                    if (!Silian_level.isClientSide()) {
                         Block.popResource(
-                                level, wartPos, new ItemStack(Items.NETHER_WART, level.getRandom().nextInt(2) + 1));
+                                Silian_level, Silian_wartPos, new ItemStack(Items.NETHER_WART, Silian_level.getRandom().nextInt(2) + 1));
                     }
-                    level.gameEvent(rammer, GameEvent.BLOCK_DESTROY, wartPos);
-                    level.playSound(null, wartPos, SoundEvents.WART_BLOCK_BREAK, SoundSource.BLOCKS, 1.0f, 1.0f);
+                    Silian_level.gameEvent(Silian_rammer, GameEvent.BLOCK_DESTROY, Silian_wartPos);
+                    Silian_level.playSound(null, Silian_wartPos, SoundEvents.WART_BLOCK_BREAK, SoundSource.BLOCKS, 1.0f, 1.0f);
                 }
-                finishRam(level, rammer);
-                ci.cancel();
+                finishRam(Silian_level, Silian_rammer);
+                Silian_ci.cancel();
             }
         }
     }
 
     @Unique
-    private Optional<BlockPos> shouldBreakNetherWart(ServerLevel level, Goat goat) {
-        Vec3 movementVector = goat.getDeltaMovement().multiply(1, 0, 1).normalize();
-        BlockPos hitPos = BlockPos.containing(goat.position().add(movementVector));
-        return level.getBlockState(hitPos).is(Blocks.NETHER_WART_BLOCK) ? Optional.of(hitPos) : Optional.empty();
+    private Optional<BlockPos> shouldBreakNetherWart(ServerLevel Silian_level, Goat Silian_goat) {
+        Vec3 Silian_movementVector = Silian_goat.getDeltaMovement().multiply(1, 0, 1).normalize();
+        BlockPos Silian_hitPos = BlockPos.containing(Silian_goat.position().add(Silian_movementVector));
+        return Silian_level.getBlockState(Silian_hitPos).is(Blocks.NETHER_WART_BLOCK) ? Optional.of(Silian_hitPos) : Optional.empty();
     }
 }

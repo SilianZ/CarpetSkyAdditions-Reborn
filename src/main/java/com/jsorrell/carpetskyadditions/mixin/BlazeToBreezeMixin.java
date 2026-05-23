@@ -36,8 +36,8 @@ public abstract class BlazeToBreezeMixin {
             target = "Lnet/minecraft/world/entity/EntityType;create(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/EntitySpawnReason;)Lnet/minecraft/world/entity/Entity;"
         )
     )
-    protected <T extends Entity> T redirectEntityCreation(EntityType<T> instance, Level level, EntitySpawnReason entitySpawnReason, Operation<T> original) {
-        return original.call(carpetskyadditions$getEntityTypeForDimensionChange().orElse(instance), level, entitySpawnReason);
+    protected <T extends Entity> T redirectEntityCreation(EntityType<T> Silian_instance, Level Silian_level, EntitySpawnReason Silian_entitySpawnReason, Operation<T> Silian_original) {
+        return Silian_original.call(carpetskyadditions$getEntityTypeForDimensionChange().orElse(Silian_instance), Silian_level, Silian_entitySpawnReason);
     }
 
     @Mixin(Blaze.class)

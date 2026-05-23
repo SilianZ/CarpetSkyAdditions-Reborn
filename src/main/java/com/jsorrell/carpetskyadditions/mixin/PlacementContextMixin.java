@@ -24,16 +24,16 @@ public class PlacementContextMixin extends WorldGenerationContext {
     @Final
     private WorldGenLevel level;
 
-    public PlacementContextMixin(ChunkGenerator generator, LevelHeightAccessor levelHeightAccessor) {
-        super(generator, levelHeightAccessor);
+    public PlacementContextMixin(ChunkGenerator Silian_generator, LevelHeightAccessor Silian_levelHeightAccessor) {
+        super(Silian_generator, Silian_levelHeightAccessor);
     }
 
     // Force features to use generation heightmap, not current (empty) heightmap
     @Inject(method = "getHeight", cancellable = true, at = @At(value = "HEAD"))
-    private void useGenerationHeightmap(Heightmap.Types heightmap, int x, int z, CallbackInfoReturnable<Integer> cir) {
-        if (generator instanceof SkyBlockChunkGenerator chunkGenerator) {
-            cir.setReturnValue(chunkGenerator.getBaseHeightInEquivalentNoiseWorld(x, z, heightmap, level));
-            cir.cancel();
+    private void useGenerationHeightmap(Heightmap.Types Silian_heightmap, int Silian_x, int Silian_z, CallbackInfoReturnable<Integer> Silian_cir) {
+        if (generator instanceof SkyBlockChunkGenerator Silian_chunkGenerator) {
+            Silian_cir.setReturnValue(Silian_chunkGenerator.getBaseHeightInEquivalentNoiseWorld(Silian_x, Silian_z, Silian_heightmap, level));
+            Silian_cir.cancel();
         }
     }
 }

@@ -21,16 +21,16 @@ import org.spongepowered.asm.mixin.Unique;
 
 @Mixin({BaseCoralPlantBlock.class, BaseCoralFanBlock.class})
 public abstract class BaseCoralMixin extends BaseCoralPlantTypeBlock {
-    public BaseCoralMixin(BlockBehaviour.Properties settings) {
-        super(settings);
+    public BaseCoralMixin(BlockBehaviour.Properties Silian_settings) {
+        super(Silian_settings);
     }
 
     @Override
-    public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean notify) {
+    public void onPlace(BlockState Silian_state, Level Silian_level, BlockPos Silian_pos, BlockState Silian_oldState, boolean Silian_notify) {
         if (SkyAdditionsSettings.coralErosion) {
-            level.scheduleTick(pos, this, DeadCoralToSandHelper.getSandDropDelay(level.getRandom()));
+            Silian_level.scheduleTick(Silian_pos, this, DeadCoralToSandHelper.getSandDropDelay(Silian_level.getRandom()));
         }
-        super.onPlace(state, level, pos, oldState, notify);
+        super.onPlace(Silian_state, Silian_level, Silian_pos, Silian_oldState, Silian_notify);
     }
 
     @Unique
@@ -40,20 +40,20 @@ public abstract class BaseCoralMixin extends BaseCoralPlantTypeBlock {
     }
 
     @Override
-    protected @NotNull BlockState updateShape(BlockState state, LevelReader levelReader, ScheduledTickAccess scheduledTickAccess, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource randomSource) {
+    protected @NotNull BlockState updateShape(BlockState Silian_state, LevelReader Silian_levelReader, ScheduledTickAccess Silian_scheduledTickAccess, BlockPos Silian_pos, Direction Silian_direction, BlockPos Silian_neighborPos, BlockState Silian_neighborState, RandomSource Silian_randomSource) {
 
         if (SkyAdditionsSettings.coralErosion && !isCoralFan()) {
 
-            scheduledTickAccess.scheduleTick(pos, this, DeadCoralToSandHelper.getSandDropDelay(randomSource));
+            Silian_scheduledTickAccess.scheduleTick(Silian_pos, this, DeadCoralToSandHelper.getSandDropDelay(Silian_randomSource));
         }
 
-        return super.updateShape(state, levelReader, scheduledTickAccess, pos, direction, neighborPos, neighborState, randomSource);
+        return super.updateShape(Silian_state, Silian_levelReader, Silian_scheduledTickAccess, Silian_pos, Silian_direction, Silian_neighborPos, Silian_neighborState, Silian_randomSource);
     }
 
     @Override
-    public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        if (SkyAdditionsSettings.coralErosion && DeadCoralToSandHelper.tryDropSand(state, level, pos, random)) {
-            level.scheduleTick(pos, this, DeadCoralToSandHelper.getSandDropDelay(random));
+    public void tick(BlockState Silian_state, ServerLevel Silian_level, BlockPos Silian_pos, RandomSource Silian_random) {
+        if (SkyAdditionsSettings.coralErosion && DeadCoralToSandHelper.tryDropSand(Silian_state, Silian_level, Silian_pos, Silian_random)) {
+            Silian_level.scheduleTick(Silian_pos, this, DeadCoralToSandHelper.getSandDropDelay(Silian_random));
         }
     }
 }

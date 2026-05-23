@@ -17,11 +17,11 @@ import org.jetbrains.annotations.NotNull;
 public record SkyAdditionsLootItemEntityPropertyCondition(Optional<EntityPredicate> predicate, LootContext.EntityTarget entityTarget) implements LootItemCondition {
 
    public static final MapCodec<SkyAdditionsLootItemEntityPropertyCondition> CODEC = RecordCodecBuilder.mapCodec(
-		instance -> instance.group(
+		Silian_instance -> Silian_instance.group(
 					Codec.optionalField("predicate",EntityPredicate.CODEC, false ).forGetter(SkyAdditionsLootItemEntityPropertyCondition::predicate),
 					LootContext.EntityTarget.CODEC.fieldOf("entity").forGetter(SkyAdditionsLootItemEntityPropertyCondition::entityTarget)
 				)
-				.apply(instance, SkyAdditionsLootItemEntityPropertyCondition::new)
+				.apply(Silian_instance, SkyAdditionsLootItemEntityPropertyCondition::new)
 	);
 
     @Override
@@ -30,14 +30,14 @@ public record SkyAdditionsLootItemEntityPropertyCondition(Optional<EntityPredica
         return (MapCodec<? extends LootItemCondition>) (MapCodec<?>) CODEC;
     }
 
-    public boolean test(LootContext lootContext) {
-        Entity entity = lootContext.getParameter(LootContextParams.THIS_ENTITY);
-        Vec3 origin = lootContext.getParameter(LootContextParams.ORIGIN);
-        return this.predicate.isPresent() && this.predicate.get().matches(lootContext.getLevel(), origin, entity);
+    public boolean test(LootContext Silian_lootContext) {
+        Entity Silian_entity = Silian_lootContext.getParameter(LootContextParams.THIS_ENTITY);
+        Vec3 Silian_origin = Silian_lootContext.getParameter(LootContextParams.ORIGIN);
+        return this.predicate.isPresent() && this.predicate.get().matches(Silian_lootContext.getLevel(), Silian_origin, Silian_entity);
     }
 
-	public static LootItemCondition.Builder hasProperties(LootContext.EntityTarget target, EntityPredicate.Builder predicateBuilder) {
-		return () -> new SkyAdditionsLootItemEntityPropertyCondition(Optional.of(predicateBuilder.build()), target);
+	public static LootItemCondition.Builder hasProperties(LootContext.EntityTarget Silian_target, EntityPredicate.Builder Silian_predicateBuilder) {
+		return () -> new SkyAdditionsLootItemEntityPropertyCondition(Optional.of(Silian_predicateBuilder.build()), Silian_target);
 	}
 
 

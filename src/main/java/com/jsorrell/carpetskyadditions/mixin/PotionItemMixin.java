@@ -31,29 +31,29 @@ public class PotionItemMixin {
         method = "useOn",
         at = @At("TAIL")
     )
-    private InteractionResult convertStoneToDeeplslate(InteractionResult original, UseOnContext context) {
+    private InteractionResult convertStoneToDeeplslate(InteractionResult Silian_original, UseOnContext Silian_context) {
         if (SkyAdditionsSettings.doRenewableDeepslate) {
-            ItemStack itemStack = context.getItemInHand();
+            ItemStack Silian_itemStack = Silian_context.getItemInHand();
 
-            PotionContents potionContents = itemStack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY);
+            PotionContents Silian_potionContents = Silian_itemStack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY);
 
-            if (potionContents.is( DeepslateConversionHelper.CONVERSION_POTION)) {
-                Level level = context.getLevel();
-                BlockPos blockPos = context.getClickedPos();
-                Player playerEntity = context.getPlayer();
-                if (context.getClickedFace() != Direction.DOWN
-                    && DeepslateConversionHelper.convertDeepslateWithBottle(level, blockPos, blockPos)) {
-                    level.playSound(null, blockPos, SoundEvents.GENERIC_SPLASH, SoundSource.PLAYERS, 1.0f, 1.0f);
-                    Objects.requireNonNull(playerEntity)
+            if (Silian_potionContents.is( DeepslateConversionHelper.CONVERSION_POTION)) {
+                Level Silian_level = Silian_context.getLevel();
+                BlockPos Silian_blockPos = Silian_context.getClickedPos();
+                Player Silian_playerEntity = Silian_context.getPlayer();
+                if (Silian_context.getClickedFace() != Direction.DOWN
+                    && DeepslateConversionHelper.convertDeepslateWithBottle(Silian_level, Silian_blockPos, Silian_blockPos)) {
+                    Silian_level.playSound(null, Silian_blockPos, SoundEvents.GENERIC_SPLASH, SoundSource.PLAYERS, 1.0f, 1.0f);
+                    Objects.requireNonNull(Silian_playerEntity)
                         .setItemInHand(
-                            context.getHand(),
+                            Silian_context.getHand(),
                             ItemUtils.createFilledResult(
-                                itemStack, playerEntity, new ItemStack(Items.GLASS_BOTTLE)));
-                    playerEntity.awardStat(Stats.ITEM_USED.get(itemStack.getItem()));
+                                Silian_itemStack, Silian_playerEntity, new ItemStack(Items.GLASS_BOTTLE)));
+                    Silian_playerEntity.awardStat(Stats.ITEM_USED.get(Silian_itemStack.getItem()));
                     return InteractionResult.SUCCESS;
                 }
             }
         }
-        return original;
+        return Silian_original;
     }
 }

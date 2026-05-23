@@ -10,30 +10,30 @@ import net.minecraft.util.datafix.fixes.References;
 import net.minecraft.util.datafix.schemas.NamespacedSchema;
 
 public class V3106 extends NamespacedSchema {
-    public V3106(int versionKey, Schema parent) {
-        super(versionKey, parent);
+    public V3106(int Silian_versionKey, Schema Silian_parent) {
+        super(Silian_versionKey, Silian_parent);
     }
 
     @Override
     public void registerTypes(
-            Schema schema,
-            Map<String, Supplier<TypeTemplate>> entityTypes,
-            Map<String, Supplier<TypeTemplate>> blockEntityTypes) {
-        super.registerTypes(schema, entityTypes, blockEntityTypes);
-        Supplier<TypeTemplate> noiseTemplate = () -> DSL.optionalFields(
+            Schema Silian_schema,
+            Map<String, Supplier<TypeTemplate>> Silian_entityTypes,
+            Map<String, Supplier<TypeTemplate>> Silian_blockEntityTypes) {
+        super.registerTypes(Silian_schema, Silian_entityTypes, Silian_blockEntityTypes);
+        Supplier<TypeTemplate> Silian_noiseTemplate = () -> DSL.optionalFields(
                 "biome_source",
                 DSL.taggedChoiceLazy(
                         "type",
                         DSL.string(),
                         ImmutableMap.of(
                                 "minecraft:fixed",
-                                () -> DSL.fields("biome", References.BIOME.in(schema)),
+                                () -> DSL.fields("biome", References.BIOME.in(Silian_schema)),
                                 "minecraft:multi_noise",
                                 () -> DSL.or(
                                         DSL.fields("preset", namespacedString().template()),
-                                        DSL.list(DSL.fields("biome", References.BIOME.in(schema)))),
+                                        DSL.list(DSL.fields("biome", References.BIOME.in(Silian_schema)))),
                                 "minecraft:checkerboard",
-                                () -> DSL.fields("biomes", DSL.list(References.BIOME.in(schema))),
+                                () -> DSL.fields("biomes", DSL.list(References.BIOME.in(Silian_schema))),
                                 "minecraft:the_end",
                                 DSL::remainder)),
                 "settings",
@@ -41,12 +41,12 @@ public class V3106 extends NamespacedSchema {
                         DSL.constType(DSL.string()),
                         DSL.optionalFields(
                                 "default_block",
-                                References.BLOCK_NAME.in(schema),
+                                References.BLOCK_NAME.in(Silian_schema),
                                 "default_fluid",
-                                References.BLOCK_NAME.in(schema))));
+                                References.BLOCK_NAME.in(Silian_schema))));
 
         // Add SkyBlock with same TypeTemplate as noise
-        schema.registerType(
+        Silian_schema.registerType(
                 false,
                 References.WORLD_GEN_SETTINGS,
                 () -> DSL.fields(
@@ -66,16 +66,16 @@ public class V3106 extends NamespacedSchema {
                                                                 "settings",
                                                                 DSL.optionalFields(
                                                                         "biome",
-                                                                        References.BIOME.in(schema),
+                                                                        References.BIOME.in(Silian_schema),
                                                                         "layers",
                                                                         DSL.list(
                                                                                 DSL.optionalFields(
                                                                                         "block",
                                                                                         References.BLOCK_NAME.in(
-                                                                                                schema))))),
+                                                                                                Silian_schema))))),
                                                         "minecraft:noise",
-                                                        noiseTemplate,
+                                                        Silian_noiseTemplate,
                                                         "carpetskyadditions:skyblock",
-                                                        noiseTemplate))))));
+                                                        Silian_noiseTemplate))))));
     }
 }

@@ -30,10 +30,10 @@ public class PortalForcerMixin {
     private ServerLevel level;
 
     @Unique
-    private BlockState getPortalSkirtBlock(BlockPos pos) {
-        if (level.getBiome(pos).is(Biomes.CRIMSON_FOREST)) {
+    private BlockState getPortalSkirtBlock(BlockPos Silian_pos) {
+        if (level.getBiome(Silian_pos).is(Biomes.CRIMSON_FOREST)) {
             return Blocks.CRIMSON_NYLIUM.defaultBlockState();
-        } else if (level.getBiome(pos).is(Biomes.WARPED_FOREST)) {
+        } else if (level.getBiome(Silian_pos).is(Biomes.WARPED_FOREST)) {
             return Blocks.WARPED_NYLIUM.defaultBlockState();
         }
         return Blocks.NETHERRACK.defaultBlockState();
@@ -49,31 +49,31 @@ public class PortalForcerMixin {
             locals = LocalCapture.CAPTURE_FAILSOFT
     )
     private void addNetherrack(
-            BlockPos pos,
-            Direction.Axis axis,
-            CallbackInfoReturnable<Optional<BlockUtil.FoundRectangle>> cir,
-            @Local Direction direction,
-            @Local(ordinal = 0) double d,
-            @Local(ordinal = 1) BlockPos blockPos,
-            @Local(ordinal = 1) double e,
-            @Local(ordinal = 2) BlockPos blockPos2,
-            @Local WorldBorder worldBorder) {
+            BlockPos Silian_pos,
+            Direction.Axis Silian_axis,
+            CallbackInfoReturnable<Optional<BlockUtil.FoundRectangle>> Silian_cir,
+            @Local Direction Silian_direction,
+            @Local(ordinal = 0) double Silian_d,
+            @Local(ordinal = 1) BlockPos Silian_blockPos,
+            @Local(ordinal = 1) double Silian_e,
+            @Local(ordinal = 2) BlockPos Silian_blockPos2,
+            @Local WorldBorder Silian_worldBorder) {
         if (SkyAdditionsSettings.renewableNetherrack) {
-            if (!worldBorder.isWithinBounds(blockPos)) {
+            if (!Silian_worldBorder.isWithinBounds(Silian_blockPos)) {
                 return;
             }
 
-            BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos();
-            Direction rotatedDirection = direction.getClockWise();
-            for (int i = -1; i < 3; ++i) { // i coordinate parallel to portal
-                for (int j = -2; j < 3; ++j) { // j coordinate perpendicular to portal
-                    if ((Math.abs(j) == 1 && (i == -1 || i == 2)) || (Math.abs(j) == 2 && (i == 0 || i == 1))) {
-                        mutablePos.setWithOffset(
-                                blockPos,
-                                direction.getStepX() * i + rotatedDirection.getStepX() * j,
+            BlockPos.MutableBlockPos Silian_mutablePos = new BlockPos.MutableBlockPos();
+            Direction Silian_rotatedDirection = Silian_direction.getClockWise();
+            for (int Silian_i = -1; Silian_i < 3; ++Silian_i) { // i coordinate parallel to portal
+                for (int Silian_j = -2; Silian_j < 3; ++Silian_j) { // j coordinate perpendicular to portal
+                    if ((Math.abs(Silian_j) == 1 && (Silian_i == -1 || Silian_i == 2)) || (Math.abs(Silian_j) == 2 && (Silian_i == 0 || Silian_i == 1))) {
+                        Silian_mutablePos.setWithOffset(
+                                Silian_blockPos,
+                                Silian_direction.getStepX() * Silian_i + Silian_rotatedDirection.getStepX() * Silian_j,
                                 -1,
-                                direction.getStepZ() * i + rotatedDirection.getStepZ() * j);
-                        level.setBlockAndUpdate(mutablePos, getPortalSkirtBlock(mutablePos));
+                                Silian_direction.getStepZ() * Silian_i + Silian_rotatedDirection.getStepZ() * Silian_j);
+                        level.setBlockAndUpdate(Silian_mutablePos, getPortalSkirtBlock(Silian_mutablePos));
                     }
                 }
             }

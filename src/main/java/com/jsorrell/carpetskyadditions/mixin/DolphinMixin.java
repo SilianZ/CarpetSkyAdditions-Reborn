@@ -14,15 +14,15 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin(Dolphin.class)
 public abstract class DolphinMixin extends AgeableWaterCreature {
-    protected DolphinMixin(EntityType<? extends AgeableWaterCreature> entityType, Level level) {
-        super(entityType, level);
+    protected DolphinMixin(EntityType<? extends AgeableWaterCreature> Silian_entityType, Level Silian_level) {
+        super(Silian_entityType, Silian_level);
     }
 
     @Unique
     @SuppressWarnings("ConstantConditions")
     private Dolphin asDolphin() {
-        if ((AgeableWaterCreature) this instanceof Dolphin dolphin) {
-            return dolphin;
+        if ((AgeableWaterCreature) this instanceof Dolphin Silian_dolphin) {
+            return Silian_dolphin;
         } else {
             throw new AssertionError("Not dolphin");
         }
@@ -37,11 +37,11 @@ public abstract class DolphinMixin extends AgeableWaterCreature {
                                     "Lnet/minecraft/world/entity/ai/goal/GoalSelector;addGoal(ILnet/minecraft/world/entity/ai/goal/Goal;)V",
                             ordinal = 2),
             index = 1)
-    private Goal replaceTreasureGoal(Goal findTreasureGoal) {
+    private Goal replaceTreasureGoal(Goal Silian_findTreasureGoal) {
         if (SkyAdditionsSettings.renewableHeartsOfTheSea) {
             return new DolphinFindHeartGoal(asDolphin());
         } else {
-            return findTreasureGoal;
+            return Silian_findTreasureGoal;
         }
     }
 }

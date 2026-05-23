@@ -32,7 +32,7 @@ public record SkyAdditionsLocationPredicate(
     Optional<MinMaxBounds.Doubles> coralSuitability,
     Optional<Boolean> smallDripleafCanSpread) {
     public static final Codec<SkyAdditionsLocationPredicate> CODEC =
-        RecordCodecBuilder.create(instance -> instance.group(
+        RecordCodecBuilder.create(Silian_instance -> Silian_instance.group(
                 Codec.BOOL
                     .optionalFieldOf("is_desert_pyramid_blue_terracotta")
                     .forGetter(SkyAdditionsLocationPredicate::desertPyramidCheck),
@@ -45,23 +45,23 @@ public record SkyAdditionsLocationPredicate(
                 Codec.BOOL
                     .optionalFieldOf("small_dripleaf_spreadable")
                     .forGetter(SkyAdditionsLocationPredicate::smallDripleafCanSpread))
-            .apply(instance, SkyAdditionsLocationPredicate::new));
+            .apply(Silian_instance, SkyAdditionsLocationPredicate::new));
 
-    private boolean doDesertPyramidCheck(ServerLevel level, BlockPos blueTerracottaPos, boolean sendDebugMessage) {
-        StructureTemplate template = level.getServer()
+    private boolean doDesertPyramidCheck(ServerLevel Silian_level, BlockPos Silian_blueTerracottaPos, boolean Silian_sendDebugMessage) {
+        StructureTemplate Silian_template = Silian_level.getServer()
             .getStructureManager()
             .get(new SkyAdditionsResourceLocation("desert_pyramid").getResourceLocation())
             .orElseThrow();
-        BlockPos centerOffset = new BlockPos(
-            template.getSize().getX() / 2, 0, template.getSize().getZ() / 2);
-        BlockPos structureOrigin = blueTerracottaPos.subtract(centerOffset);
+        BlockPos Silian_centerOffset = new BlockPos(
+            Silian_template.getSize().getX() / 2, 0, Silian_template.getSize().getZ() / 2);
+        BlockPos Silian_structureOrigin = Silian_blueTerracottaPos.subtract(Silian_centerOffset);
 
-        StructurePlaceSettings placeSettings = new StructurePlaceSettings().setRotationPivot(centerOffset);
+        StructurePlaceSettings Silian_placeSettings = new StructurePlaceSettings().setRotationPivot(Silian_centerOffset);
 
-        return Arrays.stream(Rotation.values()).anyMatch(r -> {
-            placeSettings.setRotation(r);
+        return Arrays.stream(Rotation.values()).anyMatch(Silian_r -> {
+            Silian_placeSettings.setRotation(Silian_r);
 
-            for (Block block : new Block[] {
+            for (Block Silian_block : new Block[] {
                 Blocks.BLUE_TERRACOTTA,
                 Blocks.ORANGE_TERRACOTTA,
                 Blocks.SANDSTONE,
@@ -70,46 +70,46 @@ public record SkyAdditionsLocationPredicate(
                 Blocks.SANDSTONE_STAIRS,
                 Blocks.SANDSTONE_SLAB
             }) {
-                List<StructureTemplate.StructureBlockInfo> requiredBlocks =
-                    template.filterBlocks(structureOrigin, placeSettings, block);
-                for (StructureTemplate.StructureBlockInfo requiredBlock : requiredBlocks) {
-                    BlockState requiredState = requiredBlock.state();
-                    BlockState currentState = level.getBlockState(requiredBlock.pos());
-                    if (currentState != requiredState) {
+                List<StructureTemplate.StructureBlockInfo> Silian_requiredBlocks =
+                    Silian_template.filterBlocks(Silian_structureOrigin, Silian_placeSettings, Silian_block);
+                for (StructureTemplate.StructureBlockInfo Silian_requiredBlock : Silian_requiredBlocks) {
+                    BlockState Silian_requiredState = Silian_requiredBlock.state();
+                    BlockState Silian_currentState = Silian_level.getBlockState(Silian_requiredBlock.pos());
+                    if (Silian_currentState != Silian_requiredState) {
                         // Use terracotta to determine location and rotation
-                        if (sendDebugMessage && !requiredState.is(BlockTags.TERRACOTTA)) {
+                        if (Silian_sendDebugMessage && !Silian_requiredState.is(BlockTags.TERRACOTTA)) {
                             // Help players within 10 blocks of bounding box debug builds
-                            AABB buildersBox = AABB.of(template.getBoundingBox(placeSettings, structureOrigin)
+                            AABB Silian_buildersBox = AABB.of(Silian_template.getBoundingBox(Silian_placeSettings, Silian_structureOrigin)
                                 .inflatedBy(10));
-                            List<ServerPlayer> playersToNotify =
-                                level.getPlayers(serverPlayer -> buildersBox.contains(serverPlayer.position()));
-                            MutableComponent message;
-                            if (currentState.getBlock() == requiredState.getBlock()) {
-                                Value<?> incorrect =
-                                    requiredState
+                            List<ServerPlayer> Silian_playersToNotify =
+                                Silian_level.getPlayers(Silian_serverPlayer -> Silian_buildersBox.contains(Silian_serverPlayer.position()));
+                            MutableComponent Silian_message;
+                            if (Silian_currentState.getBlock() == Silian_requiredState.getBlock()) {
+                                Value<?> Silian_incorrect =
+                                    Silian_requiredState
                                         .getValues()
                                         .filter(
-                                            v ->
-                                                currentState.getValue(v.property()) != v.value())
+                                            Silian_v ->
+                                                Silian_currentState.getValue(Silian_v.property()) != Silian_v.value())
                                         .findAny()
                                         .orElseThrow();
-                                message = SkyAdditionsText.translatable(
+                                Silian_message = SkyAdditionsText.translatable(
                                     "message.desert_pyramid_incorrect_state",
-                                    requiredBlock.pos().getX(),
-                                    requiredBlock.pos().getY(),
-                                    requiredBlock.pos().getZ(),
-                                    incorrect.property().getName(),
-                                    incorrect.value());
+                                    Silian_requiredBlock.pos().getX(),
+                                    Silian_requiredBlock.pos().getY(),
+                                    Silian_requiredBlock.pos().getZ(),
+                                    Silian_incorrect.property().getName(),
+                                    Silian_incorrect.value());
                             } else {
-                                message = SkyAdditionsText.translatable(
+                                Silian_message = SkyAdditionsText.translatable(
                                     "message.desert_pyramid_incorrect_block",
-                                    requiredBlock.pos().getX(),
-                                    requiredBlock.pos().getY(),
-                                    requiredBlock.pos().getZ(),
-                                    requiredState.getBlock().getName());
+                                    Silian_requiredBlock.pos().getX(),
+                                    Silian_requiredBlock.pos().getY(),
+                                    Silian_requiredBlock.pos().getZ(),
+                                    Silian_requiredState.getBlock().getName());
                             }
-                            playersToNotify.forEach(
-                                player -> player.sendSystemMessage(message.withStyle(ChatFormatting.DARK_RED)));
+                            Silian_playersToNotify.forEach(
+                                Silian_player -> Silian_player.sendSystemMessage(Silian_message.withStyle(ChatFormatting.DARK_RED)));
                         }
                         return false;
                     }
@@ -119,28 +119,28 @@ public record SkyAdditionsLocationPredicate(
         });
     }
 
-    public boolean matches(ServerLevel level, double x, double y, double z) {
-        BlockPos blockPos = BlockPos.containing(x, y, z);
+    public boolean matches(ServerLevel Silian_level, double Silian_x, double Silian_y, double Silian_z) {
+        BlockPos Silian_blockPos = BlockPos.containing(Silian_x, Silian_y, Silian_z);
         if (desertPyramidCheck.isPresent()) {
-            if (doDesertPyramidCheck(level, blockPos, desertPyramidCheck.get()) != desertPyramidCheck.get()) {
+            if (doDesertPyramidCheck(Silian_level, Silian_blockPos, desertPyramidCheck.get()) != desertPyramidCheck.get()) {
                 return false;
             }
         }
 
         if (coralConvertible.isPresent()) {
-            if (CoralSpreader.isConvertible(level, blockPos) != coralConvertible.get()) {
+            if (CoralSpreader.isConvertible(Silian_level, Silian_blockPos) != coralConvertible.get()) {
                 return false;
             }
         }
 
         if (coralSuitability.isPresent()) {
-            if (!coralSuitability.get().matches(CoralSpreader.calculateCoralSuitability(level, blockPos))) {
+            if (!coralSuitability.get().matches(CoralSpreader.calculateCoralSuitability(Silian_level, Silian_blockPos))) {
                 return false;
             }
         }
 
         if (smallDripleafCanSpread.isPresent()) {
-            if (SmallDripleafSpreader.canSpreadFrom(level.getBlockState(blockPos), level, blockPos)
+            if (SmallDripleafSpreader.canSpreadFrom(Silian_level.getBlockState(Silian_blockPos), Silian_level, Silian_blockPos)
                 != smallDripleafCanSpread.get()) {
                 return false;
             }

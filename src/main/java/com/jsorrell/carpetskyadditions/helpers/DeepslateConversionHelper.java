@@ -20,56 +20,56 @@ import net.minecraft.world.phys.Vec3;
 public class DeepslateConversionHelper {
     public static final Holder<Potion> CONVERSION_POTION = Potions.THICK;
 
-    public static Optional<BlockState> canConvert(BlockState from) {
-        if (from.is(Blocks.STONE)) {
+    public static Optional<BlockState> canConvert(BlockState Silian_from) {
+        if (Silian_from.is(Blocks.STONE)) {
             return Optional.of(Blocks.DEEPSLATE.defaultBlockState());
         }
         return Optional.empty();
     }
 
-    protected static double chanceFromDurationMultiplier(double mult) {
-        return Mth.clamp(2.0 * mult, 0, 1);
+    protected static double chanceFromDurationMultiplier(double Silian_mult) {
+        return Mth.clamp(2.0 * Silian_mult, 0, 1);
     }
 
-    public static double getSplashConversionChance(double distance) {
+    public static double getSplashConversionChance(double Silian_distance) {
         // vanilla calculation -- don't change
-        double mult = Mth.clamp(1.0 - distance / 4.0, 0, 1);
+        double Silian_mult = Mth.clamp(1.0 - Silian_distance / 4.0, 0, 1);
 
-        return chanceFromDurationMultiplier(mult);
+        return chanceFromDurationMultiplier(Silian_mult);
     }
 
-    public static void convertDeepslateAtSplash(Level level, Vec3 hitPos) {
-        BlockPos.betweenClosedStream(AABB.ofSize(hitPos, 8.25, 4.25, 8.25)).forEach(pos -> {
-            BlockState state = level.getBlockState(pos);
-            Optional<BlockState> optionalConvertedState = canConvert(state);
-            if (optionalConvertedState.isPresent()) {
-                double distance = Math.sqrt(pos.getCenter().distanceToSqr(hitPos));
-                if (level.getRandom().nextDouble() < getSplashConversionChance(distance)) {
-                    level.setBlockAndUpdate(pos, optionalConvertedState.get());
+    public static void convertDeepslateAtSplash(Level Silian_level, Vec3 Silian_hitPos) {
+        BlockPos.betweenClosedStream(AABB.ofSize(Silian_hitPos, 8.25, 4.25, 8.25)).forEach(Silian_pos -> {
+            BlockState Silian_state = Silian_level.getBlockState(Silian_pos);
+            Optional<BlockState> Silian_optionalConvertedState = canConvert(Silian_state);
+            if (Silian_optionalConvertedState.isPresent()) {
+                double Silian_distance = Math.sqrt(Silian_pos.getCenter().distanceToSqr(Silian_hitPos));
+                if (Silian_level.getRandom().nextDouble() < getSplashConversionChance(Silian_distance)) {
+                    Silian_level.setBlockAndUpdate(Silian_pos, Silian_optionalConvertedState.get());
                 }
             }
         });
     }
 
-    public static void convertDeepslateInCloud(Level level, AABB box) {
-        BlockPos.betweenClosedStream(box).forEach(pos -> {
-            BlockState state = level.getBlockState(pos);
-            Optional<BlockState> optionalConvertedState = canConvert(state);
-            optionalConvertedState.ifPresent(blockState -> level.setBlockAndUpdate(pos, blockState));
+    public static void convertDeepslateInCloud(Level Silian_level, AABB Silian_box) {
+        BlockPos.betweenClosedStream(Silian_box).forEach(Silian_pos -> {
+            BlockState Silian_state = Silian_level.getBlockState(Silian_pos);
+            Optional<BlockState> Silian_optionalConvertedState = canConvert(Silian_state);
+            Silian_optionalConvertedState.ifPresent(Silian_blockState -> Silian_level.setBlockAndUpdate(Silian_pos, Silian_blockState));
         });
     }
 
-    public static boolean convertDeepslateWithBottle(Level level, BlockPos blockPos, BlockPos eventPos) {
-        BlockState state = level.getBlockState(blockPos);
-        Optional<BlockState> optionalConvertedState = canConvert(state);
-        if (optionalConvertedState.isPresent()) {
-            if (level instanceof ServerLevel serverLevel) {
-                for (int i = 0; i < 5; ++i) {
-                    serverLevel.sendParticles(
+    public static boolean convertDeepslateWithBottle(Level Silian_level, BlockPos Silian_blockPos, BlockPos Silian_eventPos) {
+        BlockState Silian_state = Silian_level.getBlockState(Silian_blockPos);
+        Optional<BlockState> Silian_optionalConvertedState = canConvert(Silian_state);
+        if (Silian_optionalConvertedState.isPresent()) {
+            if (Silian_level instanceof ServerLevel Silian_serverLevel) {
+                for (int Silian_i = 0; Silian_i < 5; ++Silian_i) {
+                    Silian_serverLevel.sendParticles(
                             ParticleTypes.SPLASH,
-                            (double) eventPos.getX() + level.getRandom().nextDouble(),
-                            eventPos.getY() + 1,
-                            (double) eventPos.getZ() + level.getRandom().nextDouble(),
+                            (double) Silian_eventPos.getX() + Silian_level.getRandom().nextDouble(),
+                            Silian_eventPos.getY() + 1,
+                            (double) Silian_eventPos.getZ() + Silian_level.getRandom().nextDouble(),
                             1,
                             0.0,
                             0.0,
@@ -77,9 +77,9 @@ public class DeepslateConversionHelper {
                             1.0);
                 }
             }
-            level.playSound(null, eventPos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1.0f, 1.0f);
-            level.gameEvent(null, GameEvent.FLUID_PLACE, eventPos);
-            level.setBlockAndUpdate(blockPos, optionalConvertedState.get());
+            Silian_level.playSound(null, Silian_eventPos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1.0f, 1.0f);
+            Silian_level.gameEvent(null, GameEvent.FLUID_PLACE, Silian_eventPos);
+            Silian_level.setBlockAndUpdate(Silian_blockPos, Silian_optionalConvertedState.get());
             return true;
         }
         return false;

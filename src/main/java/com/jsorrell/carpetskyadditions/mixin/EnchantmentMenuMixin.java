@@ -45,29 +45,29 @@ public class EnchantmentMenuMixin {
         )
     )
     private List<EnchantmentInstance> addSwiftSneak(
-        RandomSource randomSource, ItemStack stack,
-        int i, Stream<Holder<Enchantment>> stream,
-        Operation<List<EnchantmentInstance>> original
+        RandomSource Silian_randomSource, ItemStack Silian_stack,
+        int Silian_i, Stream<Holder<Enchantment>> Silian_stream,
+        Operation<List<EnchantmentInstance>> Silian_original
     ) {
         if (SkyAdditionsSettings.renewableSwiftSneak) {
-            boolean hasWardenNearby = access.evaluate((world, blockPos) -> {
-                    AABB box = new AABB(blockPos).inflate(MAX_WARDEN_DISTANCE_FOR_SWIFT_SNEAK);
-                    Vec3 tablePos = Vec3.atBottomCenterOf(blockPos).relative(Direction.UP, 0.375);
-                    Predicate<Warden> rangePredicate =
-                        e -> e.position().closerThan(tablePos, MAX_WARDEN_DISTANCE_FOR_SWIFT_SNEAK);
-                    List<Warden> wardenEntities = world.getEntitiesOfClass(Warden.class, box, rangePredicate);
-                    return !wardenEntities.isEmpty();
+            boolean Silian_hasWardenNearby = access.evaluate((Silian_world, Silian_blockPos) -> {
+                    AABB Silian_box = new AABB(Silian_blockPos).inflate(MAX_WARDEN_DISTANCE_FOR_SWIFT_SNEAK);
+                    Vec3 Silian_tablePos = Vec3.atBottomCenterOf(Silian_blockPos).relative(Direction.UP, 0.375);
+                    Predicate<Warden> Silian_rangePredicate =
+                        Silian_e -> Silian_e.position().closerThan(Silian_tablePos, MAX_WARDEN_DISTANCE_FOR_SWIFT_SNEAK);
+                    List<Warden> Silian_wardenEntities = Silian_world.getEntitiesOfClass(Warden.class, Silian_box, Silian_rangePredicate);
+                    return !Silian_wardenEntities.isEmpty();
                 })
                 .orElseThrow();
 
-            if (hasWardenNearby) {
-                stack = stack.copy();
-                CustomData customData = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
-                CompoundTag tag = customData.copyTag();
-                tag.putBoolean("SWIFT_SNEAK_ENCHANTABLE", true);
-                stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
+            if (Silian_hasWardenNearby) {
+                Silian_stack = Silian_stack.copy();
+                CustomData Silian_customData = Silian_stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
+                CompoundTag Silian_tag = Silian_customData.copyTag();
+                Silian_tag.putBoolean("SWIFT_SNEAK_ENCHANTABLE", true);
+                Silian_stack.set(DataComponents.CUSTOM_DATA, CustomData.of(Silian_tag));
             }
         }
-        return original.call(randomSource, stack, i, stream);
+        return Silian_original.call(Silian_randomSource, Silian_stack, Silian_i, Silian_stream);
     }
 }

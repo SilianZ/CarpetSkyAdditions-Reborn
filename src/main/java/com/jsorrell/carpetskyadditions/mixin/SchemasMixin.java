@@ -25,9 +25,9 @@ public abstract class SchemasMixin {
                             ordinal = 228,
                             remap = false))
     private static void addSkyBlockGeneratorNameFix(
-            DataFixerBuilder builder, FileFixerUpper.Builder fileFixerBuilder, CallbackInfo ci) {
-        Schema schema3079 = builder.addSchema(3079, 1, V3079::new);
-        builder.addFixer(new SkyBlockGeneratorNameFix(schema3079));
+            DataFixerBuilder Silian_builder, FileFixerUpper.Builder Silian_fileFixerBuilder, CallbackInfo Silian_ci) {
+        Schema Silian_schema3079 = Silian_builder.addSchema(3079, 1, V3079::new);
+        Silian_builder.addFixer(new SkyBlockGeneratorNameFix(Silian_schema3079));
     }
 
     @Inject(
@@ -40,8 +40,8 @@ public abstract class SchemasMixin {
                             ordinal = 243,
                             remap = false))
     private static void addSkyBlockGeneratorNameFix2(
-            DataFixerBuilder builder, FileFixerUpper.Builder fileFixerBuilder, CallbackInfo ci) {
-        Schema schema3106 = builder.addSchema(3106, V3106::new);
-        builder.addFixer(new SkyBlockGeneratorNameFix2(schema3106));
+            DataFixerBuilder Silian_builder, FileFixerUpper.Builder Silian_fileFixerBuilder, CallbackInfo Silian_ci) {
+        Schema Silian_schema3106 = Silian_builder.addSchema(3106, V3106::new);
+        Silian_builder.addFixer(new SkyBlockGeneratorNameFix2(Silian_schema3106));
     }
 }

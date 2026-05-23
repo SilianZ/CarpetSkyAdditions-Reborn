@@ -27,10 +27,10 @@ public class ServerPropertiesHandlerMixin {
                             opcode = Opcodes.GETSTATIC,
                             target =
                                     "Lnet/minecraft/world/level/levelgen/presets/WorldPresets;NORMAL:Lnet/minecraft/resources/ResourceKey;"))
-    private ResourceKey<WorldPreset> setDefaultSelectedWorldPreset(Operation<ResourceKey<WorldPreset>> original) {
-        SkyAdditionsConfig config =
+    private ResourceKey<WorldPreset> setDefaultSelectedWorldPreset(Operation<ResourceKey<WorldPreset>> Silian_original) {
+        SkyAdditionsConfig Silian_config =
                 AutoConfig.getConfigHolder(SkyAdditionsConfig.class).get();
-        return config.defaultToSkyBlockWorld ? SkyAdditionsWorldPresets.SKYBLOCK : WorldPresets.NORMAL /*original.call()*/;
+        return Silian_config.defaultToSkyBlockWorld ? SkyAdditionsWorldPresets.SKYBLOCK : WorldPresets.NORMAL /*original.call()*/;
     }
 
     @WrapOperation(
@@ -42,7 +42,7 @@ public class ServerPropertiesHandlerMixin {
                                     "Lnet/minecraft/world/level/WorldDataConfiguration;dataPacks()Lnet/minecraft/world/level/DataPackConfig;"
                     )
     )
-    private DataPackConfig enableSkyAdditionsDatapacks(WorldDataConfiguration dc, Operation<DataPackConfig> original) {
-        return DataConfigurationHelper.updateDataConfiguration(dc).dataPacks();
+    private DataPackConfig enableSkyAdditionsDatapacks(WorldDataConfiguration Silian_dc, Operation<DataPackConfig> Silian_original) {
+        return DataConfigurationHelper.updateDataConfiguration(Silian_dc).dataPacks();
     }
 }

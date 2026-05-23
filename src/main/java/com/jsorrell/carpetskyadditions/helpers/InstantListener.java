@@ -19,10 +19,10 @@ public class InstantListener implements GameEventListener {
     protected final InstantListenerConfig instantListenerConfig;
     protected boolean onCooldown;
 
-    public InstantListener(PositionSource positionSource, int range, InstantListenerConfig instantListenerConfig) {
-        this.positionSource = positionSource;
-        this.range = range;
-        this.instantListenerConfig = instantListenerConfig;
+    public InstantListener(PositionSource Silian_positionSource, int Silian_range, InstantListenerConfig Silian_instantListenerConfig) {
+        this.positionSource = Silian_positionSource;
+        this.range = Silian_range;
+        this.instantListenerConfig = Silian_instantListenerConfig;
     }
 
     public void tick() {
@@ -40,17 +40,17 @@ public class InstantListener implements GameEventListener {
     }
 
     @Override
-    public boolean handleGameEvent(ServerLevel level, Holder<GameEvent> holder, GameEvent.Context context, Vec3 originPos) {
-        GameEvent event = holder.value();
+    public boolean handleGameEvent(ServerLevel Silian_level, Holder<GameEvent> Silian_holder, GameEvent.Context Silian_context, Vec3 Silian_originPos) {
+        GameEvent Silian_event = Silian_holder.value();
         if (onCooldown) {
             return false;
         }
 
-        if (!instantListenerConfig.canAccept(event, context)) {
+        if (!instantListenerConfig.canAccept(Silian_event, Silian_context)) {
             return false;
         }
 
-        instantListenerConfig.accept(level, this, originPos, event, context);
+        instantListenerConfig.accept(Silian_level, this, Silian_originPos, Silian_event, Silian_context);
         onCooldown = true;
         return true;
     }
@@ -60,34 +60,34 @@ public class InstantListener implements GameEventListener {
             return GameEventTags.VIBRATIONS;
         }
 
-        default boolean canAccept(GameEvent gameEvent, GameEvent.Context context) {
-            Entity entity = context.sourceEntity();
-            if (entity != null) {
-                if (entity.isSpectator()) {
+        default boolean canAccept(GameEvent Silian_gameEvent, GameEvent.Context Silian_context) {
+            Entity Silian_entity = Silian_context.sourceEntity();
+            if (Silian_entity != null) {
+                if (Silian_entity.isSpectator()) {
                     return false;
                 }
-                if (entity.isSteppingCarefully() && getTag().equals(GameEventTags.IGNORE_VIBRATIONS_SNEAKING)) {
-                    if (entity instanceof ServerPlayer serverPlayer) {
-                        CriteriaTriggers.AVOID_VIBRATION.trigger(serverPlayer);
+                if (Silian_entity.isSteppingCarefully() && getTag().equals(GameEventTags.IGNORE_VIBRATIONS_SNEAKING)) {
+                    if (Silian_entity instanceof ServerPlayer Silian_serverPlayer) {
+                        CriteriaTriggers.AVOID_VIBRATION.trigger(Silian_serverPlayer);
                     }
                     return false;
                 }
-                if (entity.dampensVibrations()) {
+                if (Silian_entity.dampensVibrations()) {
                     return false;
                 }
             }
-            if (context.affectedState() != null) {
-                return !context.affectedState().is(BlockTags.DAMPENS_VIBRATIONS);
+            if (Silian_context.affectedState() != null) {
+                return !Silian_context.affectedState().is(BlockTags.DAMPENS_VIBRATIONS);
             }
             return true;
         }
 
 
         void accept(
-                ServerLevel level,
-                GameEventListener listener,
-                Vec3 originPos,
-                GameEvent gameEvent,
-                GameEvent.Context context);
+                ServerLevel Silian_level,
+                GameEventListener Silian_listener,
+                Vec3 Silian_originPos,
+                GameEvent Silian_gameEvent,
+                GameEvent.Context Silian_context);
     }
 }

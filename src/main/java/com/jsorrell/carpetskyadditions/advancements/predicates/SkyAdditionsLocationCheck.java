@@ -15,18 +15,18 @@ import org.jetbrains.annotations.NotNull;
 
 public record SkyAdditionsLocationCheck(Optional<SkyAdditionsLocationPredicate> predicate, BlockPos offset)
     implements LootItemCondition {
-    private static final MapCodec<BlockPos> OFFSET_CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+    private static final MapCodec<BlockPos> OFFSET_CODEC = RecordCodecBuilder.mapCodec(Silian_instance -> Silian_instance.group(
             Codec.INT.optionalFieldOf("offsetX", 0).forGetter(Vec3i::getX),
             Codec.INT.optionalFieldOf("offsetY", 0).forGetter(Vec3i::getY),
             Codec.INT.optionalFieldOf("offsetZ", 0).forGetter(Vec3i::getZ))
-        .apply(instance, BlockPos::new));
+        .apply(Silian_instance, BlockPos::new));
     public static final MapCodec<SkyAdditionsLocationCheck> CODEC =
-        RecordCodecBuilder.mapCodec(instance -> instance.group(
+        RecordCodecBuilder.mapCodec(Silian_instance -> Silian_instance.group(
                 SkyAdditionsLocationPredicate.CODEC
                     .optionalFieldOf("predicate")
                     .forGetter(SkyAdditionsLocationCheck::predicate),
                 OFFSET_CODEC.forGetter(SkyAdditionsLocationCheck::offset))
-            .apply(instance, SkyAdditionsLocationCheck::new));
+            .apply(Silian_instance, SkyAdditionsLocationCheck::new));
 
     @Override
     @SuppressWarnings("unchecked")
@@ -34,14 +34,14 @@ public record SkyAdditionsLocationCheck(Optional<SkyAdditionsLocationPredicate> 
         return (MapCodec<? extends LootItemCondition>) (MapCodec<?>) CODEC;
     }
 
-    public boolean test(LootContext lootContext) {
-        Vec3 origin = lootContext.getParameter(LootContextParams.ORIGIN);
+    public boolean test(LootContext Silian_lootContext) {
+        Vec3 Silian_origin = Silian_lootContext.getParameter(LootContextParams.ORIGIN);
         return predicate.isEmpty() || predicate
             .get()
             .matches(
-                lootContext.getLevel(),
-                origin.x() + offset.getX(),
-                origin.y() + offset.getY(),
-                origin.z() + offset.getZ());
+                Silian_lootContext.getLevel(),
+                Silian_origin.x() + offset.getX(),
+                Silian_origin.y() + offset.getY(),
+                Silian_origin.z() + offset.getZ());
     }
 }

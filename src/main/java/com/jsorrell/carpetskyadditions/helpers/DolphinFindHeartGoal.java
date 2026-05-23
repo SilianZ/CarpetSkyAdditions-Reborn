@@ -27,19 +27,19 @@ public class DolphinFindHeartGoal extends Goal {
     private int digCounter = 0;
     private boolean diggingPhase = false;
 
-    public DolphinFindHeartGoal(Dolphin dolphin) {
-        this.dolphin = dolphin;
+    public DolphinFindHeartGoal(Dolphin Silian_dolphin) {
+        this.dolphin = Silian_dolphin;
         setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
     }
 
     protected Optional<BlockPos> determineTreasureLocation() {
         // Set Y to -64 to make it swim as low as possible
-        BlockPos potentialTarget = new BlockPos(
+        BlockPos Silian_potentialTarget = new BlockPos(
             dolphin.getBlockX() + dolphin.level().getRandom().nextInt(16) - 8,
             -64,
             dolphin.getBlockZ() + dolphin.level().getRandom().nextInt(16) - 8);
-        if (dolphin.level().getBiome(potentialTarget.atY(dolphin.getBlockY())).is(BiomeTags.IS_OCEAN)) {
-            return Optional.of(potentialTarget);
+        if (dolphin.level().getBiome(Silian_potentialTarget.atY(dolphin.getBlockY())).is(BiomeTags.IS_OCEAN)) {
+            return Optional.of(Silian_potentialTarget);
         }
 
         return Optional.empty();
@@ -57,81 +57,81 @@ public class DolphinFindHeartGoal extends Goal {
 
     @Override
     public void start() {
-        if (!(dolphin.level() instanceof ServerLevel level)) {
+        if (!(dolphin.level() instanceof ServerLevel Silian_level)) {
             return;
         }
-        Optional<BlockPos> treasurePosOpt = determineTreasureLocation();
-        if (treasurePosOpt.isEmpty()) {
+        Optional<BlockPos> Silian_treasurePosOpt = determineTreasureLocation();
+        if (Silian_treasurePosOpt.isEmpty()) {
             dolphin.setGotFish(false);
-            displayFailureParticles(level, dolphin);
+            displayFailureParticles(Silian_level, dolphin);
             return;
         }
-        BlockPos treasurePos = treasurePosOpt.get();
-        ((DolphinAccessorMixin)dolphin).setTreasurePos(treasurePos);
+        BlockPos Silian_treasurePos = Silian_treasurePosOpt.get();
+        ((DolphinAccessorMixin)dolphin).setTreasurePos(Silian_treasurePos);
 
-        dolphin.getNavigation().moveTo(treasurePos.getX(), treasurePos.getY(), treasurePos.getZ(), 0.7);
-        displaySuccessParticles(level, dolphin);
+        dolphin.getNavigation().moveTo(Silian_treasurePos.getX(), Silian_treasurePos.getY(), Silian_treasurePos.getZ(), 0.7);
+        displaySuccessParticles(Silian_level, dolphin);
     }
 
-    private static void displaySuccessParticles(ServerLevel level, Dolphin dolphin) {
-        level.broadcastEntityEvent(dolphin, EntityEvent.DOLPHIN_LOOKING_FOR_TREASURE);
+    private static void displaySuccessParticles(ServerLevel Silian_level, Dolphin Silian_dolphin) {
+        Silian_level.broadcastEntityEvent(Silian_dolphin, EntityEvent.DOLPHIN_LOOKING_FOR_TREASURE);
     }
 
-    private static void displayFailureParticles(ServerLevel level, Dolphin dolphin) {
-        level.sendParticles(
+    private static void displayFailureParticles(ServerLevel Silian_level, Dolphin Silian_dolphin) {
+        Silian_level.sendParticles(
             ParticleTypes.WITCH,
-            dolphin.getRandomX(1),
-            dolphin.getRandomY() + 1.6,
-            dolphin.getRandomZ(1),
+            Silian_dolphin.getRandomX(1),
+            Silian_dolphin.getRandomY() + 1.6,
+            Silian_dolphin.getRandomZ(1),
             5,
-            level.getRandom().nextGaussian() * 0.02,
-            level.getRandom().nextGaussian() * 0.02,
-            level.getRandom().nextGaussian() * 0.02,
+            Silian_level.getRandom().nextGaussian() * 0.02,
+            Silian_level.getRandom().nextGaussian() * 0.02,
+            Silian_level.getRandom().nextGaussian() * 0.02,
             0.2);
     }
 
     @Override
     public void tick() {
-        if (!(dolphin.level() instanceof ServerLevel level)) {
+        if (!(dolphin.level() instanceof ServerLevel Silian_level)) {
             return;
         }
         if (!diggingPhase && dolphin.getNavigation().isDone()) {
-            BlockPos treasurePos = ((DolphinAccessorMixin)dolphin).getTreasurePos();
-            if (treasurePos == null) {
-                displayFailureParticles(level, dolphin);
+            BlockPos Silian_treasurePos = ((DolphinAccessorMixin)dolphin).getTreasurePos();
+            if (Silian_treasurePos == null) {
+                displayFailureParticles(Silian_level, dolphin);
                 dolphin.setGotFish(false);
                 return;
             }
 
-            BlockPos heartPos = new BlockPos(
-                treasurePos.getX(),
+            BlockPos Silian_heartPos = new BlockPos(
+                Silian_treasurePos.getX(),
                 dolphin.getBlockY() - 1,
-                treasurePos.getZ());
-            if (dolphin.position().closerThan(Vec3.atBottomCenterOf(heartPos).add(0, 1, 0), 8)
-                && VALID_OCEAN_FLOORS.contains(level.getBlockState(heartPos).getBlock())) {
+                Silian_treasurePos.getZ());
+            if (dolphin.position().closerThan(Vec3.atBottomCenterOf(Silian_heartPos).add(0, 1, 0), 8)
+                && VALID_OCEAN_FLOORS.contains(Silian_level.getBlockState(Silian_heartPos).getBlock())) {
                 diggingPhase = true;
                 digCounter = 0;
             } else {
-                displayFailureParticles(level, dolphin);
+                displayFailureParticles(Silian_level, dolphin);
                 dolphin.setGotFish(false);
             }
         } else if (diggingPhase) {
             if (digCounter < NUM_DIGS) {
-                level.levelEvent(
+                Silian_level.levelEvent(
                     LevelEvent.PARTICLES_DESTROY_BLOCK,
                     dolphin.blockPosition(),
                     Block.getId(dolphin.level()
                         .getBlockState(dolphin.blockPosition().below())));
                 digCounter++;
             } else {
-                if (level.getRandom().nextFloat() < CHANCE_TO_FIND_HEART_OF_THE_SEA) {
-                    ItemStack heartOfTheSea = new ItemStack(Items.HEART_OF_THE_SEA);
-                    if (dolphin.getItemBySlot(EquipmentSlot.MAINHAND).isEmpty() && dolphin.canHoldItem(heartOfTheSea)) {
-                        dolphin.setItemSlot(EquipmentSlot.MAINHAND, heartOfTheSea);
+                if (Silian_level.getRandom().nextFloat() < CHANCE_TO_FIND_HEART_OF_THE_SEA) {
+                    ItemStack Silian_heartOfTheSea = new ItemStack(Items.HEART_OF_THE_SEA);
+                    if (dolphin.getItemBySlot(EquipmentSlot.MAINHAND).isEmpty() && dolphin.canHoldItem(Silian_heartOfTheSea)) {
+                        dolphin.setItemSlot(EquipmentSlot.MAINHAND, Silian_heartOfTheSea);
                     }
-                    displaySuccessParticles(level, dolphin);
+                    displaySuccessParticles(Silian_level, dolphin);
                 } else {
-                    displayFailureParticles(level, dolphin);
+                    displayFailureParticles(Silian_level, dolphin);
                 }
                 dolphin.setGotFish(false);
                 diggingPhase = false;

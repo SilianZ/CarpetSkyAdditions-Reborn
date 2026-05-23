@@ -40,44 +40,44 @@ public abstract class EnderMan_EndermanLeaveBlockGoalMixin {
                     ),
             cancellable = true)
     private void inject(
-            CallbackInfo ci,
-            @Local RandomSource random,
-            @Local Level world,
-            @Local(ordinal = 0) int x,
-            @Local(ordinal = 1) int y,
-            @Local(ordinal = 2) int z,
-            @Local(ordinal = 0) BlockPos placePosBottom,
-            @Local(ordinal = 0) BlockState placeStateBottom,
-            @Local(ordinal = 1) BlockPos belowPlacePos,
-            @Local(ordinal = 1) BlockState belowPosState,
-            @Local(ordinal = 2) BlockState heldBlockState) {
-        Block heldBlock = heldBlockState.getBlock();
-        if (heldBlock instanceof DoublePlantBlock || heldBlock instanceof DoorBlock) {
-            BlockPos placePosTop = placePosBottom.above();
-            BlockState placeStateTop = world.getBlockState(placePosTop);
-            if (placePosTop.getY() < world.getMaxY()
-                    && placeStateBottom.isAir()
-                    && placeStateTop.isAir()
-                    && !belowPosState.isAir()
-                    && !belowPosState.is(Blocks.BEDROCK)
-                    && belowPosState.isCollisionShapeFullBlock(world, belowPlacePos)
-                    && heldBlockState.canSurvive(world, placePosBottom)
-                    && world.getEntities(enderman, new AABB(x, y, z, x + 1.0, y + 2.0, z + 1.0))
+            CallbackInfo Silian_ci,
+            @Local RandomSource Silian_random,
+            @Local Level Silian_world,
+            @Local(ordinal = 0) int Silian_x,
+            @Local(ordinal = 1) int Silian_y,
+            @Local(ordinal = 2) int Silian_z,
+            @Local(ordinal = 0) BlockPos Silian_placePosBottom,
+            @Local(ordinal = 0) BlockState Silian_placeStateBottom,
+            @Local(ordinal = 1) BlockPos Silian_belowPlacePos,
+            @Local(ordinal = 1) BlockState Silian_belowPosState,
+            @Local(ordinal = 2) BlockState Silian_heldBlockState) {
+        Block Silian_heldBlock = Silian_heldBlockState.getBlock();
+        if (Silian_heldBlock instanceof DoublePlantBlock || Silian_heldBlock instanceof DoorBlock) {
+            BlockPos Silian_placePosTop = Silian_placePosBottom.above();
+            BlockState Silian_placeStateTop = Silian_world.getBlockState(Silian_placePosTop);
+            if (Silian_placePosTop.getY() < Silian_world.getMaxY()
+                    && Silian_placeStateBottom.isAir()
+                    && Silian_placeStateTop.isAir()
+                    && !Silian_belowPosState.isAir()
+                    && !Silian_belowPosState.is(Blocks.BEDROCK)
+                    && Silian_belowPosState.isCollisionShapeFullBlock(Silian_world, Silian_belowPlacePos)
+                    && Silian_heldBlockState.canSurvive(Silian_world, Silian_placePosBottom)
+                    && Silian_world.getEntities(enderman, new AABB(Silian_x, Silian_y, Silian_z, Silian_x + 1.0, Silian_y + 2.0, Silian_z + 1.0))
                             .isEmpty()) {
 
-                if (heldBlock instanceof DoorBlock) {
-                    boolean powered = world.hasNeighborSignal(placePosBottom) || world.hasNeighborSignal(placePosTop);
+                if (Silian_heldBlock instanceof DoorBlock) {
+                    boolean Silian_powered = Silian_world.hasNeighborSignal(Silian_placePosBottom) || Silian_world.hasNeighborSignal(Silian_placePosTop);
                     // FIXME what about facing and hinge?
-                    heldBlockState = heldBlockState
-                            .setValue(BlockStateProperties.POWERED, powered)
-                            .setValue(BlockStateProperties.OPEN, powered);
+                    Silian_heldBlockState = Silian_heldBlockState
+                            .setValue(BlockStateProperties.POWERED, Silian_powered)
+                            .setValue(BlockStateProperties.OPEN, Silian_powered);
                 }
-                world.setBlockAndUpdate(placePosBottom, heldBlockState);
-                heldBlock.setPlacedBy(world, placePosBottom, heldBlockState, enderman, ItemStack.EMPTY);
-                world.gameEvent(GameEvent.BLOCK_PLACE, placePosBottom, GameEvent.Context.of(enderman, heldBlockState));
+                Silian_world.setBlockAndUpdate(Silian_placePosBottom, Silian_heldBlockState);
+                Silian_heldBlock.setPlacedBy(Silian_world, Silian_placePosBottom, Silian_heldBlockState, enderman, ItemStack.EMPTY);
+                Silian_world.gameEvent(GameEvent.BLOCK_PLACE, Silian_placePosBottom, GameEvent.Context.of(enderman, Silian_heldBlockState));
                 enderman.setCarriedBlock(null);
             }
-            ci.cancel();
+            Silian_ci.cancel();
         }
     }
 }

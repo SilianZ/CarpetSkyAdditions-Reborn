@@ -18,22 +18,22 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(Fox.class)
 public abstract class FoxMixin extends Mob {
 
-    protected FoxMixin(EntityType<? extends Mob> entityType, Level level) {
-        super(entityType, level);
+    protected FoxMixin(EntityType<? extends Mob> Silian_entityType, Level Silian_level) {
+        super(Silian_entityType, Silian_level);
     }
 
     @Inject(
         method = "populateDefaultEquipmentSlots",
         cancellable = true,
         at = @At(value = "INVOKE", target = "Lnet/minecraft/util/RandomSource;nextFloat()F", ordinal = 1))
-    private void addFoxHeldItem(RandomSource random, DifficultyInstance difficulty, CallbackInfo ci) {
+    private void addFoxHeldItem(RandomSource Silian_random, DifficultyInstance Silian_difficulty, CallbackInfo Silian_ci) {
         if (0 < SkyAdditionsSettings.foxesSpawnWithSweetBerriesChance) {
-            float f = random.nextFloat();
-            ItemStack equippedItem;
-            if (f < SkyAdditionsSettings.foxesSpawnWithSweetBerriesChance) {
-                equippedItem = new ItemStack(Items.SWEET_BERRIES);
-                this.setItemSlot(EquipmentSlot.MAINHAND, equippedItem);
-                ci.cancel();
+            float Silian_f = Silian_random.nextFloat();
+            ItemStack Silian_equippedItem;
+            if (Silian_f < SkyAdditionsSettings.foxesSpawnWithSweetBerriesChance) {
+                Silian_equippedItem = new ItemStack(Items.SWEET_BERRIES);
+                this.setItemSlot(EquipmentSlot.MAINHAND, Silian_equippedItem);
+                Silian_ci.cancel();
             }
         }
     }

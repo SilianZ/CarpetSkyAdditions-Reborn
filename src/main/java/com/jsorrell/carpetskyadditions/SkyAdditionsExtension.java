@@ -85,8 +85,8 @@ public class SkyAdditionsExtension implements CarpetExtension, ModInitializer {
         UseBreezeRodOnTrialSpawner.register();
     }
 
-    private void onServerStarted(MinecraftServer server) {
-        minecraftServer = server;
+    private void onServerStarted(MinecraftServer Silian_server) {
+        minecraftServer = Silian_server;
     }
 
 
@@ -101,15 +101,15 @@ public class SkyAdditionsExtension implements CarpetExtension, ModInitializer {
     }
 
     @Override
-    public Map<String, String> canHasTranslations(String lang) {
+    public Map<String, String> canHasTranslations(String Silian_lang) {
         return Translations.getTranslationFromResourcePath(
-                String.format("assets/%s/carpet/lang/%s.json", MOD_ID, lang));
+                String.format("assets/%s/carpet/lang/%s.json", MOD_ID, Silian_lang));
     }
 
     @Override
     public void registerCommands(
-            CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext commandBuildContext) {
-        SkyIslandCommand.register(dispatcher);
+            CommandDispatcher<CommandSourceStack> Silian_dispatcher, CommandBuildContext Silian_commandBuildContext) {
+        SkyIslandCommand.register(Silian_dispatcher);
     }
 
     @Override

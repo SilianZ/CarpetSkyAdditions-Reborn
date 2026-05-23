@@ -8,7 +8,7 @@ import net.minecraft.world.level.levelgen.presets.WorldPreset;
 public class SkyAdditionsWorldPresets {
     public static final ResourceKey<WorldPreset> SKYBLOCK = preset("skyblock");
 
-    private static ResourceKey<WorldPreset> preset(String path) {
-        return ResourceKey.create(Registries.WORLD_PRESET, new SkyAdditionsResourceLocation(path).getResourceLocation());
+    private static ResourceKey<WorldPreset> preset(String Silian_path) {
+        return ResourceKey.create(Registries.WORLD_PRESET, new SkyAdditionsResourceLocation(Silian_path).getResourceLocation());
     }
 }

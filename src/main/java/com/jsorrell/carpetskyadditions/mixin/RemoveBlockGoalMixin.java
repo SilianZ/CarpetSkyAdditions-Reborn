@@ -39,14 +39,14 @@ public class RemoveBlockGoalMixin {
                             shift = At.Shift.AFTER)
     )
     private void placeSnifferEgg(
-            CallbackInfo ci, @Local Level level, @Local(ordinal = -0) BlockPos drownedBlockPos, @Local(ordinal = -0) BlockPos eggPos, @Local RandomSource randomSource) {
+            CallbackInfo Silian_ci, @Local Level Silian_level, @Local(ordinal = -0) BlockPos Silian_drownedBlockPos, @Local(ordinal = -0) BlockPos Silian_eggPos, @Local RandomSource Silian_randomSource) {
         if (SkyAdditionsSettings.sniffersFromDrowneds
                 && blockToRemove == Blocks.TURTLE_EGG
-                && removerMob instanceof Drowned drowned) {
-            ItemStack offhand = drowned.getItemInHand(InteractionHand.OFF_HAND);
-            if (offhand.is(Items.SNIFFER_EGG)) {
-                level.setBlockAndUpdate(eggPos, Blocks.SNIFFER_EGG.defaultBlockState());
-                offhand.shrink(1);
+                && removerMob instanceof Drowned Silian_drowned) {
+            ItemStack Silian_offhand = Silian_drowned.getItemInHand(InteractionHand.OFF_HAND);
+            if (Silian_offhand.is(Items.SNIFFER_EGG)) {
+                Silian_level.setBlockAndUpdate(Silian_eggPos, Blocks.SNIFFER_EGG.defaultBlockState());
+                Silian_offhand.shrink(1);
             }
         }
     }

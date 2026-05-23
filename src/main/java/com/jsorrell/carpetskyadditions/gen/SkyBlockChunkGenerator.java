@@ -40,16 +40,16 @@ import net.minecraft.world.level.levelgen.structure.structures.StrongholdStructu
 import org.jetbrains.annotations.NotNull;
 
 public class SkyBlockChunkGenerator extends NoiseBasedChunkGenerator {
-    public static final MapCodec<SkyBlockChunkGenerator> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+    public static final MapCodec<SkyBlockChunkGenerator> CODEC = RecordCodecBuilder.mapCodec(Silian_instance -> Silian_instance.group(
                     BiomeSource.CODEC.fieldOf("biome_source").forGetter(SkyBlockChunkGenerator::getBiomeSource),
                     NoiseGeneratorSettings.CODEC
                             .fieldOf("settings")
                             .forGetter(SkyBlockChunkGenerator::generatorSettings))
-            .apply(instance, instance.stable(SkyBlockChunkGenerator::new)));
+            .apply(Silian_instance, Silian_instance.stable(SkyBlockChunkGenerator::new)));
 
 
-    public SkyBlockChunkGenerator(BiomeSource biomeSource, Holder<NoiseGeneratorSettings> settings) {
-        super(biomeSource, settings);
+    public SkyBlockChunkGenerator(BiomeSource Silian_biomeSource, Holder<NoiseGeneratorSettings> Silian_settings) {
+        super(Silian_biomeSource, Silian_settings);
     }
 
     @Override
@@ -60,115 +60,115 @@ public class SkyBlockChunkGenerator extends NoiseBasedChunkGenerator {
 
     @Override
     public void buildSurface(
-            WorldGenRegion level, StructureManager structureManager, RandomState random, ChunkAccess chunk) {}
+            WorldGenRegion Silian_level, StructureManager Silian_structureManager, RandomState Silian_random, ChunkAccess Silian_chunk) {}
 
     @Override
     public CompletableFuture<ChunkAccess> fillFromNoise(
-            Blender blender,
-            RandomState random,
-            StructureManager structureManager,
-            ChunkAccess chunk) {
-        return CompletableFuture.completedFuture(chunk);
+            Blender Silian_blender,
+            RandomState Silian_random,
+            StructureManager Silian_structureManager,
+            ChunkAccess Silian_chunk) {
+        return CompletableFuture.completedFuture(Silian_chunk);
     }
 
     @Override
     public void applyCarvers(
-        WorldGenRegion worldGenRegion, long l, RandomState randomState, BiomeManager biomeManager, StructureManager structureManager, ChunkAccess chunkAccess) {}
+        WorldGenRegion Silian_worldGenRegion, long Silian_l, RandomState Silian_randomState, BiomeManager Silian_biomeManager, StructureManager Silian_structureManager, ChunkAccess Silian_chunkAccess) {}
 
     @Override
-    public void applyBiomeDecoration(WorldGenLevel level, ChunkAccess chunk, StructureManager structureManager) {
-        ChunkPos chunkPos = chunk.getPos();
-        SectionPos sectionPos = SectionPos.of(chunkPos, level.getMinSectionY());
-        BlockPos minChunkPos = sectionPos.origin();
-        Registry<Structure> structureRegistry = level.registryAccess().lookupOrThrow(Registries.STRUCTURE);
-        Map<Integer, List<Structure>> structuresPerStep = structureRegistry.stream()
+    public void applyBiomeDecoration(WorldGenLevel Silian_level, ChunkAccess Silian_chunk, StructureManager Silian_structureManager) {
+        ChunkPos Silian_chunkPos = Silian_chunk.getPos();
+        SectionPos Silian_sectionPos = SectionPos.of(Silian_chunkPos, Silian_level.getMinSectionY());
+        BlockPos Silian_minChunkPos = Silian_sectionPos.origin();
+        Registry<Structure> Silian_structureRegistry = Silian_level.registryAccess().lookupOrThrow(Registries.STRUCTURE);
+        Map<Integer, List<Structure>> Silian_structuresPerStep = Silian_structureRegistry.stream()
                 .collect(Collectors.groupingBy(
-                        structureType -> structureType.step().ordinal()));
-        List<FeatureSorter.StepFeatureData> featuresPerStep =
+                        Silian_structureType -> Silian_structureType.step().ordinal()));
+        List<FeatureSorter.StepFeatureData> Silian_featuresPerStep =
                 ((ChunkGeneratorAccessor) this).getFeaturesPerStep().get();
 
-        WorldgenRandom random = new WorldgenRandom(new XoroshiroRandomSource(RandomSupport.generateUniqueSeed()));
-        long decorationSeed = random.setDecorationSeed(level.getSeed(), minChunkPos.getX(), minChunkPos.getZ());
+        WorldgenRandom Silian_random = new WorldgenRandom(new XoroshiroRandomSource(RandomSupport.generateUniqueSeed()));
+        long Silian_decorationSeed = Silian_random.setDecorationSeed(Silian_level.getSeed(), Silian_minChunkPos.getX(), Silian_minChunkPos.getZ());
 
         // Get all surrounding biomes for biome-based structures
-        Set<Holder<Biome>> biomeSet = new ObjectArraySet<>();
-        ChunkPos.rangeClosed(sectionPos.chunk(), 1).forEach(curChunkPos -> {
-            ChunkAccess curChunk = level.getChunk(curChunkPos.x(), curChunkPos.z());
-            for (LevelChunkSection chunkSection : curChunk.getSections()) {
-                chunkSection.getBiomes().getAll(biomeSet::add);
+        Set<Holder<Biome>> Silian_biomeSet = new ObjectArraySet<>();
+        ChunkPos.rangeClosed(Silian_sectionPos.chunk(), 1).forEach(Silian_curChunkPos -> {
+            ChunkAccess Silian_curChunk = Silian_level.getChunk(Silian_curChunkPos.x(), Silian_curChunkPos.z());
+            for (LevelChunkSection Silian_chunkSection : Silian_curChunk.getSections()) {
+                Silian_chunkSection.getBiomes().getAll(Silian_biomeSet::add);
             }
         });
-        biomeSet.retainAll(biomeSource.possibleBiomes());
+        Silian_biomeSet.retainAll(this.biomeSource.possibleBiomes());
 
-        int numFeatures = featuresPerStep.size();
+        int Silian_numFeatures = Silian_featuresPerStep.size();
         try {
-            Registry<PlacedFeature> placedFeatures = level.registryAccess().lookupOrThrow(Registries.PLACED_FEATURE);
-            int numSteps = Math.max(GenerationStep.Decoration.values().length, numFeatures);
-            for (int genStep = 0; genStep < numSteps; ++genStep) {
-                int structureInStep = 0;
-                if (structureManager.shouldGenerateStructures()) {
-                    List<Structure> structuresForStep =
-                            structuresPerStep.getOrDefault(genStep, Collections.emptyList());
-                    for (Structure structure : structuresForStep) {
-                        random.setFeatureSeed(decorationSeed, structureInStep, genStep);
-                        Supplier<String> structureNameSupplier = () -> structureRegistry
-                                .getResourceKey(structure)
+            Registry<PlacedFeature> Silian_placedFeatures = Silian_level.registryAccess().lookupOrThrow(Registries.PLACED_FEATURE);
+            int Silian_numSteps = Math.max(GenerationStep.Decoration.values().length, Silian_numFeatures);
+            for (int Silian_genStep = 0; Silian_genStep < Silian_numSteps; ++Silian_genStep) {
+                int Silian_structureInStep = 0;
+                if (Silian_structureManager.shouldGenerateStructures()) {
+                    List<Structure> Silian_structuresForStep =
+                            Silian_structuresPerStep.getOrDefault(Silian_genStep, Collections.emptyList());
+                    for (Structure Silian_structure : Silian_structuresForStep) {
+                        Silian_random.setFeatureSeed(Silian_decorationSeed, Silian_structureInStep, Silian_genStep);
+                        Supplier<String> Silian_structureNameSupplier = () -> Silian_structureRegistry
+                                .getResourceKey(Silian_structure)
                                 .map(Object::toString)
-                                .orElseGet(structure::toString);
+                                .orElseGet(Silian_structure::toString);
                         try {
                             // Stronghold
-                            if (structure instanceof StrongholdStructure
+                            if (Silian_structure instanceof StrongholdStructure
                                     && (SkyAdditionsSettings.generateEndPortals
                                             || SkyAdditionsSettings.generateSilverfishSpawners)) {
-                                level.setCurrentlyGenerating(structureNameSupplier);
-                                structureManager
-                                        .startsForStructure(sectionPos, structure)
-                                        .forEach(structureStart -> {
-                                            for (StructurePiece piece : structureStart.getPieces()) {
-                                                if (piece.isCloseToChunk(chunkPos, 0)
-                                                        && piece.getType()
+                                Silian_level.setCurrentlyGenerating(Silian_structureNameSupplier);
+                                Silian_structureManager
+                                        .startsForStructure(Silian_sectionPos, Silian_structure)
+                                        .forEach(Silian_structureStart -> {
+                                            for (StructurePiece Silian_piece : Silian_structureStart.getPieces()) {
+                                                if (Silian_piece.isCloseToChunk(Silian_chunkPos, 0)
+                                                        && Silian_piece.getType()
                                                                 == StructurePieceType.STRONGHOLD_PORTAL_ROOM) {
-                                                    BoundingBox chunkBox =
-                                                            ChunkGeneratorAccessor.getWritableArea(chunk);
+                                                    BoundingBox Silian_chunkBox =
+                                                            ChunkGeneratorAccessor.getWritableArea(Silian_chunk);
                                                     if (SkyAdditionsSettings.generateEndPortals) {
-                                                        new SkyBlockStructures.EndPortalStructure(piece)
-                                                                .generate(level, chunkBox, random);
+                                                        new SkyBlockStructures.EndPortalStructure(Silian_piece)
+                                                                .generate(Silian_level, Silian_chunkBox, Silian_random);
                                                     }
 
                                                     if (SkyAdditionsSettings.generateSilverfishSpawners) {
-                                                        new SkyBlockStructures.SilverfishSpawnerStructure(piece)
-                                                                .generate(level, chunkBox, random);
+                                                        new SkyBlockStructures.SilverfishSpawnerStructure(Silian_piece)
+                                                                .generate(Silian_level, Silian_chunkBox, Silian_random);
                                                     }
                                                 }
                                             }
                                         });
-                            } else if (structure instanceof JigsawStructure) {
-                                Holder<StructureTemplatePool> startPool = ((JigsawStructureAccessor) structure).getStartPool();
+                            } else if (Silian_structure instanceof JigsawStructure) {
+                                Holder<StructureTemplatePool> Silian_startPool = ((JigsawStructureAccessor) Silian_structure).getStartPool();
                                 // Bastion Remnants
                                 if (SkyAdditionsSettings.generateMagmaCubeSpawners
-                                        && startPool.is(Identifier.withDefaultNamespace("bastion/starts"))) {
-                                    level.setCurrentlyGenerating(structureNameSupplier);
-                                    structureManager
-                                            .startsForStructure(sectionPos, structure)
-                                            .forEach(structureStart -> {
-                                                for (StructurePiece piece : structureStart.getPieces()) {
-                                                    if (piece.isCloseToChunk(chunkPos, 0)
-                                                            && piece instanceof PoolElementStructurePiece poolPiece) {
-                                                        if (poolPiece.getElement()
-                                                                instanceof SinglePoolElement singlePoolElement) {
-                                                            Identifier pieceId = ((SinglePoolElementAccessor)
-                                                                            singlePoolElement)
+                                        && Silian_startPool.is(Identifier.withDefaultNamespace("bastion/starts"))) {
+                                    Silian_level.setCurrentlyGenerating(Silian_structureNameSupplier);
+                                    Silian_structureManager
+                                            .startsForStructure(Silian_sectionPos, Silian_structure)
+                                            .forEach(Silian_structureStart -> {
+                                                for (StructurePiece Silian_piece : Silian_structureStart.getPieces()) {
+                                                    if (Silian_piece.isCloseToChunk(Silian_chunkPos, 0)
+                                                            && Silian_piece instanceof PoolElementStructurePiece Silian_poolPiece) {
+                                                        if (Silian_poolPiece.getElement()
+                                                                instanceof SinglePoolElement Silian_singlePoolElement) {
+                                                            Identifier Silian_pieceId = ((SinglePoolElementAccessor)
+                                                                            Silian_singlePoolElement)
                                                                     .getTemplate()
                                                                     .left()
                                                                     .orElseThrow(AssertionError::new);
-                                                            if (pieceId.equals(Identifier.withDefaultNamespace(
+                                                            if (Silian_pieceId.equals(Identifier.withDefaultNamespace(
                                                                     "bastion/treasure/bases/lava_basin"))) {
-                                                                new SkyBlockStructures.MagmaCubeSpawner(piece)
+                                                                new SkyBlockStructures.MagmaCubeSpawner(Silian_piece)
                                                                         .generate(
-                                                                                level,
+                                                                                Silian_level,
                                                                                 ChunkGeneratorAccessor.getWritableArea(
-                                                                                        chunk),
-                                                                                random);
+                                                                                        Silian_chunk),
+                                                                                Silian_random);
                                                             }
                                                         }
                                                     }
@@ -176,32 +176,32 @@ public class SkyBlockChunkGenerator extends NoiseBasedChunkGenerator {
                                             });
                                     // Ancient Cities
                                 } else if (SkyAdditionsSettings.generateAncientCityPortals
-                                        && startPool.is(Identifier.withDefaultNamespace("ancient_city/city_center"))) {
-                                    level.setCurrentlyGenerating(structureNameSupplier);
-                                    structureManager
-                                            .startsForStructure(sectionPos, structure)
-                                            .forEach(structureStart -> {
-                                                for (StructurePiece piece : structureStart.getPieces()) {
-                                                    if (piece.isCloseToChunk(chunkPos, 0)
-                                                            && piece instanceof PoolElementStructurePiece poolPiece) {
-                                                        if (poolPiece.getElement()
-                                                                instanceof SinglePoolElement singlePoolElement) {
-                                                            Identifier pieceId = ((SinglePoolElementAccessor)
-                                                                            singlePoolElement)
+                                        && Silian_startPool.is(Identifier.withDefaultNamespace("ancient_city/city_center"))) {
+                                    Silian_level.setCurrentlyGenerating(Silian_structureNameSupplier);
+                                    Silian_structureManager
+                                            .startsForStructure(Silian_sectionPos, Silian_structure)
+                                            .forEach(Silian_structureStart -> {
+                                                for (StructurePiece Silian_piece : Silian_structureStart.getPieces()) {
+                                                    if (Silian_piece.isCloseToChunk(Silian_chunkPos, 0)
+                                                            && Silian_piece instanceof PoolElementStructurePiece Silian_poolPiece) {
+                                                        if (Silian_poolPiece.getElement()
+                                                                instanceof SinglePoolElement Silian_singlePoolElement) {
+                                                            Identifier Silian_pieceId = ((SinglePoolElementAccessor)
+                                                                            Silian_singlePoolElement)
                                                                     .getTemplate()
                                                                     .left()
                                                                     .orElseThrow(AssertionError::new);
-                                                            if (pieceId.getNamespace()
+                                                            if (Silian_pieceId.getNamespace()
                                                                             .equals("minecraft")
-                                                                    && pieceId.getPath()
+                                                                    && Silian_pieceId.getPath()
                                                                             .startsWith(
                                                                                     "ancient_city/city_center/city_center")) {
-                                                                new SkyBlockStructures.AncientCityPortalStructure(piece)
+                                                                new SkyBlockStructures.AncientCityPortalStructure(Silian_piece)
                                                                         .generate(
-                                                                                level,
+                                                                                Silian_level,
                                                                                 ChunkGeneratorAccessor.getWritableArea(
-                                                                                        chunk),
-                                                                                random);
+                                                                                        Silian_chunk),
+                                                                                Silian_random);
                                                             }
                                                         }
                                                     }
@@ -209,32 +209,32 @@ public class SkyBlockChunkGenerator extends NoiseBasedChunkGenerator {
                                             });
                                 }
                                 //Trial Chambers
-                                else if (SkyAdditionsSettings.generateTrialChambers && startPool.is(Identifier.withDefaultNamespace("trial_chambers/chamber/end"))){
-                                    level.setCurrentlyGenerating(structureNameSupplier);
-                                    structureManager
-                                        .startsForStructure(sectionPos, structure)
-                                        .forEach(structureStart -> {
-                                            for (StructurePiece piece : structureStart.getPieces()) {
-                                                if (piece.isCloseToChunk(chunkPos, 0)
-                                                    && piece instanceof PoolElementStructurePiece poolPiece) {
-                                                    if (poolPiece.getElement()
-                                                        instanceof SinglePoolElement singlePoolElement) {
-                                                        Identifier pieceId = ((SinglePoolElementAccessor)
-                                                            singlePoolElement)
+                                else if (SkyAdditionsSettings.generateTrialChambers && Silian_startPool.is(Identifier.withDefaultNamespace("trial_chambers/chamber/end"))){
+                                    Silian_level.setCurrentlyGenerating(Silian_structureNameSupplier);
+                                    Silian_structureManager
+                                        .startsForStructure(Silian_sectionPos, Silian_structure)
+                                        .forEach(Silian_structureStart -> {
+                                            for (StructurePiece Silian_piece : Silian_structureStart.getPieces()) {
+                                                if (Silian_piece.isCloseToChunk(Silian_chunkPos, 0)
+                                                    && Silian_piece instanceof PoolElementStructurePiece Silian_poolPiece) {
+                                                    if (Silian_poolPiece.getElement()
+                                                        instanceof SinglePoolElement Silian_singlePoolElement) {
+                                                        Identifier Silian_pieceId = ((SinglePoolElementAccessor)
+                                                            Silian_singlePoolElement)
                                                             .getTemplate()
                                                             .left()
                                                             .orElseThrow(AssertionError::new);
-                                                        if (pieceId.getNamespace()
+                                                        if (Silian_pieceId.getNamespace()
                                                             .equals("minecraft")
-                                                            && pieceId.getPath()
+                                                            && Silian_pieceId.getPath()
                                                             .startsWith(
                                                                 "trial_chambers/corridor/entrance")) {
-                                                            new SkyBlockStructures.TrialChamberEntrance(piece)
+                                                            new SkyBlockStructures.TrialChamberEntrance(Silian_piece)
                                                                 .generate(
-                                                                    level,
+                                                                    Silian_level,
                                                                     ChunkGeneratorAccessor.getWritableArea(
-                                                                        chunk),
-                                                                    random);
+                                                                        Silian_chunk),
+                                                                    Silian_random);
                                                         }/*else if (pieceId.getNamespace()
                                                             .equals("minecraft")
                                                             && pieceId.getPath()
@@ -265,76 +265,76 @@ public class SkyBlockChunkGenerator extends NoiseBasedChunkGenerator {
                                 }
 
                             }
-                        } catch (Exception e) {
-                            CrashReport crashReport = CrashReport.forThrowable(e, "Feature placement");
-                            crashReport.addCategory("Feature").setDetail("Description", structureNameSupplier::get);
-                            throw new ReportedException(crashReport);
+                        } catch (Exception Silian_e) {
+                            CrashReport Silian_crashReport = CrashReport.forThrowable(Silian_e, "Feature placement");
+                            Silian_crashReport.addCategory("Feature").setDetail("Description", Silian_structureNameSupplier::get);
+                            throw new ReportedException(Silian_crashReport);
                         }
-                        ++structureInStep;
+                        ++Silian_structureInStep;
                     }
                 }
-                if (genStep >= numFeatures) continue;
-                IntArraySet intSet = new IntArraySet();
-                for (Holder<Biome> biome : biomeSet) {
-                    List<HolderSet<PlacedFeature>> biomeFeatureStepList = ((ChunkGeneratorAccessor) this)
+                if (Silian_genStep >= Silian_numFeatures) continue;
+                IntArraySet Silian_intSet = new IntArraySet();
+                for (Holder<Biome> Silian_biome : Silian_biomeSet) {
+                    List<HolderSet<PlacedFeature>> Silian_biomeFeatureStepList = ((ChunkGeneratorAccessor) this)
                             .getGenerationSettingsGetter()
-                            .apply(biome)
+                            .apply(Silian_biome)
                             .features();
-                    if (genStep < biomeFeatureStepList.size()) {
-                        HolderSet<PlacedFeature> biomeFeaturesForStep = biomeFeatureStepList.get(genStep);
-                        FeatureSorter.StepFeatureData indexedFeature = featuresPerStep.get(genStep);
-                        biomeFeaturesForStep.stream()
+                    if (Silian_genStep < Silian_biomeFeatureStepList.size()) {
+                        HolderSet<PlacedFeature> Silian_biomeFeaturesForStep = Silian_biomeFeatureStepList.get(Silian_genStep);
+                        FeatureSorter.StepFeatureData Silian_indexedFeature = Silian_featuresPerStep.get(Silian_genStep);
+                        Silian_biomeFeaturesForStep.stream()
                                 .map(Holder::value)
-                                .forEach(placedFeature ->
-                                        intSet.add(indexedFeature.indexMapping().applyAsInt(placedFeature)));
+                                .forEach(Silian_placedFeature ->
+                                        Silian_intSet.add(Silian_indexedFeature.indexMapping().applyAsInt(Silian_placedFeature)));
                     }
                 }
-                int n = intSet.size();
-                int[] is = intSet.toIntArray();
-                Arrays.sort(is);
-                FeatureSorter.StepFeatureData indexedFeature = featuresPerStep.get(genStep);
-                for (int o = 0; o < n; ++o) {
-                    int p = is[o];
-                    PlacedFeature placedFeature = indexedFeature.features().get(p);
-                    Supplier<String> placedFeatureNameSupplier = () -> placedFeatures
-                            .getResourceKey(placedFeature)
+                int Silian_n = Silian_intSet.size();
+                int[] Silian_is = Silian_intSet.toIntArray();
+                Arrays.sort(Silian_is);
+                FeatureSorter.StepFeatureData Silian_indexedFeature = Silian_featuresPerStep.get(Silian_genStep);
+                for (int Silian_o = 0; Silian_o < Silian_n; ++Silian_o) {
+                    int Silian_p = Silian_is[Silian_o];
+                    PlacedFeature Silian_placedFeature = Silian_indexedFeature.features().get(Silian_p);
+                    Supplier<String> Silian_placedFeatureNameSupplier = () -> Silian_placedFeatures
+                            .getResourceKey(Silian_placedFeature)
                             .map(Object::toString)
-                            .orElseGet(placedFeature::toString);
-                    random.setFeatureSeed(decorationSeed, p, genStep);
+                            .orElseGet(Silian_placedFeature::toString);
+                    Silian_random.setFeatureSeed(Silian_decorationSeed, Silian_p, Silian_genStep);
                     try {
                         // Random End Gateways
                         if (SkyAdditionsSettings.generateRandomEndGateways
-                                && placedFeature.feature().is(Identifier.withDefaultNamespace("end_gateway_return"))) {
-                            level.setCurrentlyGenerating(placedFeatureNameSupplier);
-                            placedFeature.placeWithBiomeCheck(level, this, random, minChunkPos);
+                                && Silian_placedFeature.feature().is(Identifier.withDefaultNamespace("end_gateway_return"))) {
+                            Silian_level.setCurrentlyGenerating(Silian_placedFeatureNameSupplier);
+                            Silian_placedFeature.placeWithBiomeCheck(Silian_level, this, Silian_random, Silian_minChunkPos);
                         }
-                    } catch (Exception e) {
-                        CrashReport crashReport = CrashReport.forThrowable(e, "Feature placement");
-                        crashReport.addCategory("Feature").setDetail("Description", placedFeatureNameSupplier::get);
-                        throw new ReportedException(crashReport);
+                    } catch (Exception Silian_e) {
+                        CrashReport Silian_crashReport = CrashReport.forThrowable(Silian_e, "Feature placement");
+                        Silian_crashReport.addCategory("Feature").setDetail("Description", Silian_placedFeatureNameSupplier::get);
+                        throw new ReportedException(Silian_crashReport);
                     }
                 }
             }
-            level.setCurrentlyGenerating(null);
-        } catch (Exception e) {
-            CrashReport crashReport = CrashReport.forThrowable(e, "Biome decoration");
-            crashReport
+            Silian_level.setCurrentlyGenerating(null);
+        } catch (Exception Silian_e) {
+            CrashReport Silian_crashReport = CrashReport.forThrowable(Silian_e, "Biome decoration");
+            Silian_crashReport
                     .addCategory("Generation")
-                    .setDetail("CenterX", chunkPos.x())
-                    .setDetail("CenterZ", chunkPos.z())
-                    .setDetail("Seed", decorationSeed);
-            throw new ReportedException(crashReport);
+                    .setDetail("CenterX", Silian_chunkPos.x())
+                    .setDetail("CenterZ", Silian_chunkPos.z())
+                    .setDetail("Seed", Silian_decorationSeed);
+            throw new ReportedException(Silian_crashReport);
         }
     }
 
     @Override
-    public void spawnOriginalMobs(WorldGenRegion level) {}
+    public void spawnOriginalMobs(WorldGenRegion Silian_level) {}
 
-    public int getBaseHeightInEquivalentNoiseWorld(int x, int z, Heightmap.Types heightmap, WorldGenLevel level) {
-        RandomState randomState = RandomState.create(
+    public int getBaseHeightInEquivalentNoiseWorld(int Silian_x, int Silian_z, Heightmap.Types Silian_heightmap, WorldGenLevel Silian_level) {
+        RandomState Silian_randomState = RandomState.create(
                 generatorSettings().value(),
-                level.registryAccess().lookupOrThrow(Registries.NOISE),
-                level.getSeed());
-        return super.getBaseHeight(x, z, heightmap, level, randomState);
+                Silian_level.registryAccess().lookupOrThrow(Registries.NOISE),
+                Silian_level.getSeed());
+        return super.getBaseHeight(Silian_x, Silian_z, Silian_heightmap, Silian_level, Silian_randomState);
     }
 }

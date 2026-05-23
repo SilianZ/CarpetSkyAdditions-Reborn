@@ -55,9 +55,9 @@ public class SkyAdditionsSettings {
         }
 
         @Override
-        public Optional<FieldPair> fix(FieldPair fieldPair) {
-            fieldPair.setName("tallFlowersFromWanderingTrader");
-            return Optional.of(fieldPair);
+        public Optional<FieldPair> fix(FieldPair Silian_fieldPair) {
+            Silian_fieldPair.setName("tallFlowersFromWanderingTrader");
+            return Optional.of(Silian_fieldPair);
         }
     }
 
@@ -112,9 +112,9 @@ public class SkyAdditionsSettings {
         }
 
         @Override
-        public Optional<FieldPair> fix(FieldPair fieldPair) {
-            fieldPair.setName("shulkerSpawnsOnDragonKill");
-            return Optional.of(fieldPair);
+        public Optional<FieldPair> fix(FieldPair Silian_fieldPair) {
+            Silian_fieldPair.setName("shulkerSpawnsOnDragonKill");
+            return Optional.of(Silian_fieldPair);
         }
     }
 
@@ -140,18 +140,18 @@ public class SkyAdditionsSettings {
         }
 
         @Override
-        public Optional<FieldPair> fix(FieldPair fieldPair) {
-            if (fieldPair.getName().equals("foxesSpawnWithBerries")) {
-                fieldPair.setName("foxesSpawnWithSweetBerriesChance");
+        public Optional<FieldPair> fix(FieldPair Silian_fieldPair) {
+            if (Silian_fieldPair.getName().equals("foxesSpawnWithBerries")) {
+                Silian_fieldPair.setName("foxesSpawnWithSweetBerriesChance");
 
-                if ("true".equalsIgnoreCase(fieldPair.getValue())) {
-                    fieldPair.setValue("0.2");
-                } else if ("false".equalsIgnoreCase(fieldPair.getValue())) {
-                    fieldPair.setValue("0");
+                if ("true".equalsIgnoreCase(Silian_fieldPair.getValue())) {
+                    Silian_fieldPair.setValue("0.2");
+                } else if ("false".equalsIgnoreCase(Silian_fieldPair.getValue())) {
+                    Silian_fieldPair.setValue("0");
                 }
             }
 
-            return Optional.of(fieldPair);
+            return Optional.of(Silian_fieldPair);
         }
     }
 
@@ -189,9 +189,9 @@ public class SkyAdditionsSettings {
         }
 
         @Override
-        public Optional<FieldPair> fix(FieldPair fieldPair) {
-            fieldPair.setName("allayableVexes");
-            return Optional.of(fieldPair);
+        public Optional<FieldPair> fix(FieldPair Silian_fieldPair) {
+            Silian_fieldPair.setName("allayableVexes");
+            return Optional.of(Silian_fieldPair);
         }
     }
 
@@ -214,11 +214,11 @@ public class SkyAdditionsSettings {
     private static class RenewableDeepslateSetting extends Validator<String> {
         @Override
         public String validate(
-                CommandSourceStack source, CarpetRule<String> currentRule, String newValue, String string) {
-            SkyAdditionsSettings.doRenewableDeepslate = !"false".equalsIgnoreCase(newValue);
-            SkyAdditionsSettings.renewableDeepslateFromSplash = "true".equalsIgnoreCase(newValue);
+                CommandSourceStack Silian_source, CarpetRule<String> Silian_currentRule, String Silian_newValue, String Silian_string) {
+            SkyAdditionsSettings.doRenewableDeepslate = !"false".equalsIgnoreCase(Silian_newValue);
+            SkyAdditionsSettings.renewableDeepslateFromSplash = "true".equalsIgnoreCase(Silian_newValue);
 
-            return newValue;
+            return Silian_newValue;
         }
     }
 
@@ -251,11 +251,11 @@ public class SkyAdditionsSettings {
     private static class SuspiciousSniffersSetting extends Validator<String> {
         @Override
         public String validate(
-                CommandSourceStack source, CarpetRule<String> currentRule, String newValue, String string) {
-            SkyAdditionsSettings.doSuspiciousSniffers = !"false".equalsIgnoreCase(newValue);
-            SkyAdditionsSettings.ironFromSniffers = "true".equalsIgnoreCase(newValue);
+                CommandSourceStack Silian_source, CarpetRule<String> Silian_currentRule, String Silian_newValue, String Silian_string) {
+            SkyAdditionsSettings.doSuspiciousSniffers = !"false".equalsIgnoreCase(Silian_newValue);
+            SkyAdditionsSettings.ironFromSniffers = "true".equalsIgnoreCase(Silian_newValue);
 
-            return newValue;
+            return Silian_newValue;
         }
     }
 
@@ -282,8 +282,8 @@ public class SkyAdditionsSettings {
     public static class WanderingTraderSpawnChanceValidator extends Validator<Double> {
         @Override
         public Double validate(
-                CommandSourceStack source, CarpetRule<Double> currentRule, Double newValue, String string) {
-            return (0.025 <= newValue && newValue <= 1) ? newValue : null;
+                CommandSourceStack Silian_source, CarpetRule<Double> Silian_currentRule, Double Silian_newValue, String Silian_string) {
+            return (0.025 <= Silian_newValue && Silian_newValue <= 1) ? Silian_newValue : null;
         }
 
         @Override
@@ -302,8 +302,8 @@ public class SkyAdditionsSettings {
     /* Wandering Trader Spawn Rate */
     public static class POSITIVE_NUMBER<T extends Number> extends Validator<T> {
         @Override
-        public T validate(CommandSourceStack source, CarpetRule<T> currentRule, T newValue, String string) {
-            return 0 < newValue.doubleValue() ? newValue : null;
+        public T validate(CommandSourceStack Silian_source, CarpetRule<T> Silian_currentRule, T Silian_newValue, String Silian_string) {
+            return 0 < Silian_newValue.doubleValue() ? Silian_newValue : null;
         }
 
         @Override
@@ -323,35 +323,35 @@ public class SkyAdditionsSettings {
      * Returns a map of all rules and their default values for dynamic application.
      */
     public static Map<String, Object> getRules() {
-        Map<String, Object> rules = new HashMap<>();
-        rules.put("coralErosion", true);
-        rules.put("allayableVexes", true);
-        rules.put("renewableDragonHeads", true);
-        rules.put("suspiciousSniffers", true);
-        rules.put("tallFlowersFromWanderingTrader", true);
-        rules.put("spreadingSmallDripleaves", true);
-        rules.put("spreadingCoral", true);
-        rules.put("shulkerSpawnsOnDragonKill", true);
-        rules.put("renewableSwiftSneak", true);
-        rules.put("traderCamels", true);
-        rules.put("renewableDeepslate", true);
-        rules.put("renewableNetherrack", true);
-        rules.put("lightningElectrifiesVines", true);
-        rules.put("renewableEchoShards", true);
-        rules.put("foxesSpawnWithSweetBerriesChance", 0.2);
-        rules.put("saplingsDieOnSand", true);
-        rules.put("doDeadBushToBush", true);
-        rules.put("renewableHeartsOfTheSea", true);
-        rules.put("renewableDiamonds", true);
-        rules.put("rammingWart", true);
-        rules.put("hugeMushroomsSpreadMycelium", true);
-        rules.put("renewableBuddingAmethysts", true);
-        rules.put("poisonousPotatoesConvertSpiders", true);
-        rules.put("sniffersFromDrowneds", true);
-        rules.put("gatewaysSpawnChorus", true);
-        rules.put("blazeToBreeze", true);
-        rules.put("paleBlossomCreakingHeart", true);
+        Map<String, Object> Silian_rules = new HashMap<>();
+        Silian_rules.put("coralErosion", true);
+        Silian_rules.put("allayableVexes", true);
+        Silian_rules.put("renewableDragonHeads", true);
+        Silian_rules.put("suspiciousSniffers", true);
+        Silian_rules.put("tallFlowersFromWanderingTrader", true);
+        Silian_rules.put("spreadingSmallDripleaves", true);
+        Silian_rules.put("spreadingCoral", true);
+        Silian_rules.put("shulkerSpawnsOnDragonKill", true);
+        Silian_rules.put("renewableSwiftSneak", true);
+        Silian_rules.put("traderCamels", true);
+        Silian_rules.put("renewableDeepslate", true);
+        Silian_rules.put("renewableNetherrack", true);
+        Silian_rules.put("lightningElectrifiesVines", true);
+        Silian_rules.put("renewableEchoShards", true);
+        Silian_rules.put("foxesSpawnWithSweetBerriesChance", 0.2);
+        Silian_rules.put("saplingsDieOnSand", true);
+        Silian_rules.put("doDeadBushToBush", true);
+        Silian_rules.put("renewableHeartsOfTheSea", true);
+        Silian_rules.put("renewableDiamonds", true);
+        Silian_rules.put("rammingWart", true);
+        Silian_rules.put("hugeMushroomsSpreadMycelium", true);
+        Silian_rules.put("renewableBuddingAmethysts", true);
+        Silian_rules.put("poisonousPotatoesConvertSpiders", true);
+        Silian_rules.put("sniffersFromDrowneds", true);
+        Silian_rules.put("gatewaysSpawnChorus", true);
+        Silian_rules.put("blazeToBreeze", true);
+        Silian_rules.put("paleBlossomCreakingHeart", true);
 
-        return rules;
+        return Silian_rules;
     }
 }

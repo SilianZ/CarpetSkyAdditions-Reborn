@@ -25,24 +25,24 @@ public abstract class FallingBlockEntityMixin extends Entity {
     @Shadow
     private BlockState blockState;
 
-    public FallingBlockEntityMixin(EntityType<?> entityType, Level level) {
-        super(entityType, level);
+    public FallingBlockEntityMixin(EntityType<?> Silian_entityType, Level Silian_level) {
+        super(Silian_entityType, Silian_level);
     }
 
     @Unique
-    private void compactEntityToDiamonds(Entity entity) {
-        if (entity instanceof ItemEntity e
-                && e.getItem().is(Items.COAL_BLOCK)
-                && 64 <= e.getItem().getCount()) {
-            int numCoalBlocks = e.getItem().getCount();
-            int numDiamonds = numCoalBlocks / 64;
-            int remainingCoalBlocks = numCoalBlocks % 64;
-            ItemEntity diamondEntity =
-                    new ItemEntity(e.level(), e.getX(), e.getY(), e.getZ(), new ItemStack(Items.DIAMOND, numDiamonds));
-            diamondEntity.setDefaultPickUpDelay();
-            e.level().addFreshEntity(diamondEntity);
+    private void compactEntityToDiamonds(Entity Silian_entity) {
+        if (Silian_entity instanceof ItemEntity Silian_e
+                && Silian_e.getItem().is(Items.COAL_BLOCK)
+                && 64 <= Silian_e.getItem().getCount()) {
+            int Silian_numCoalBlocks = Silian_e.getItem().getCount();
+            int Silian_numDiamonds = Silian_numCoalBlocks / 64;
+            int Silian_remainingCoalBlocks = Silian_numCoalBlocks % 64;
+            ItemEntity Silian_diamondEntity =
+                    new ItemEntity(Silian_e.level(), Silian_e.getX(), Silian_e.getY(), Silian_e.getZ(), new ItemStack(Items.DIAMOND, Silian_numDiamonds));
+            Silian_diamondEntity.setDefaultPickUpDelay();
+            Silian_e.level().addFreshEntity(Silian_diamondEntity);
 
-            e.getItem().setCount(remainingCoalBlocks);
+            Silian_e.getItem().setCount(Silian_remainingCoalBlocks);
         }
     }
 
@@ -50,13 +50,13 @@ public abstract class FallingBlockEntityMixin extends Entity {
             method = "causeFallDamage",
             at = @At(value = "INVOKE", target = "Ljava/util/List;forEach(Ljava/util/function/Consumer;)V"))
     private void compactCoalToDiamonds(
-            double fallDistance, float multiplier, DamageSource source, CallbackInfoReturnable<Boolean> cir) {
+            double Silian_fallDistance, float Silian_multiplier, DamageSource Silian_source, CallbackInfoReturnable<Boolean> Silian_cir) {
         if (SkyAdditionsSettings.renewableDiamonds) {
             if (blockState.is(BlockTags.ANVIL)) {
-                Predicate<Entity> coalBlockPredicate = entity -> entity instanceof ItemEntity itemEntity
-                        && itemEntity.getItem().is(Items.COAL_BLOCK);
+                Predicate<Entity> Silian_coalBlockPredicate = Silian_entity -> Silian_entity instanceof ItemEntity Silian_itemEntity
+                        && Silian_itemEntity.getItem().is(Items.COAL_BLOCK);
                 this.level()
-                        .getEntities(this, this.getBoundingBox(), coalBlockPredicate)
+                        .getEntities(this, this.getBoundingBox(), Silian_coalBlockPredicate)
                         .forEach(this::compactEntityToDiamonds);
             }
         }

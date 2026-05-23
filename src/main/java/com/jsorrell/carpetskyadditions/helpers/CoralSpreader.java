@@ -25,78 +25,78 @@ public abstract class CoralSpreader {
     public static final double TARGET_CONTINENTALNESS = -0.3;
 
     // Returns a suitability value in the range of 0 to 1
-    public static double calculateCoralSuitability(ServerLevel level, BlockPos pos) {
+    public static double calculateCoralSuitability(ServerLevel Silian_level, BlockPos Silian_pos) {
 
-        if (level.dimension() != Level.OVERWORLD)  {
+        if (Silian_level.dimension() != Level.OVERWORLD)  {
             return 0;
         }
 
-        ServerChunkCache chunkCache = level.getChunkSource();
-        if (chunkCache.getGenerator() instanceof NoiseBasedChunkGenerator) {
-            NoiseRouter noiseRouter = chunkCache.randomState().router();
-            DensityFunction.SinglePointContext context =
-                    new DensityFunction.SinglePointContext(pos.getX(), pos.getY(), pos.getZ());
-            double temp = noiseRouter.temperature().compute(context);
-            double continentalness = noiseRouter.continents().compute(context);
-            double squaredDifference =
-                    (Mth.square(temp - TARGET_TEMP) + Mth.square(continentalness - TARGET_CONTINENTALNESS));
-            return Mth.clamp(1 - squaredDifference, 0, 1);
+        ServerChunkCache Silian_chunkCache = Silian_level.getChunkSource();
+        if (Silian_chunkCache.getGenerator() instanceof NoiseBasedChunkGenerator) {
+            NoiseRouter Silian_noiseRouter = Silian_chunkCache.randomState().router();
+            DensityFunction.SinglePointContext Silian_context =
+                    new DensityFunction.SinglePointContext(Silian_pos.getX(), Silian_pos.getY(), Silian_pos.getZ());
+            double Silian_temp = Silian_noiseRouter.temperature().compute(Silian_context);
+            double Silian_continentalness = Silian_noiseRouter.continents().compute(Silian_context);
+            double Silian_squaredDifference =
+                    (Mth.square(Silian_temp - TARGET_TEMP) + Mth.square(Silian_continentalness - TARGET_CONTINENTALNESS));
+            return Mth.clamp(1 - Silian_squaredDifference, 0, 1);
         }
         return 0.5;
     }
 
-    private static List<Block> getPossibleConversions(ServerLevel level, BlockPos pos, RandomSource random) {
+    private static List<Block> getPossibleConversions(ServerLevel Silian_level, BlockPos Silian_pos, RandomSource Silian_random) {
         // Find all coral blocks within a 3x3
-        Multiset<Block> blockMap = HashMultiset.create(BuiltInRegistries.BLOCK
+        Multiset<Block> Silian_blockMap = HashMultiset.create(BuiltInRegistries.BLOCK
                 .get(BlockTags.CORAL_BLOCKS)
                 .orElseThrow()
                 .size());
         BlockPos.betweenClosedStream(-1, -1, -1, 1, 1, 1)
-                .map(pos::offset)
-                .map(level::getBlockState)
-                .filter(b -> b.is(BlockTags.CORAL_BLOCKS))
-                .forEach(b -> blockMap.add(b.getBlock()));
+                .map(Silian_pos::offset)
+                .map(Silian_level::getBlockState)
+                .filter(Silian_b -> Silian_b.is(BlockTags.CORAL_BLOCKS))
+                .forEach(Silian_b -> Silian_blockMap.add(Silian_b.getBlock()));
         // Choose one with at least 8 occurences
-        return blockMap.entrySet().stream()
-                .filter(e -> 8 <= e.getCount())
+        return Silian_blockMap.entrySet().stream()
+                .filter(Silian_e -> 8 <= Silian_e.getCount())
                 .map(Multiset.Entry::getElement)
                 .toList();
     }
 
-    public static boolean isConvertible(ServerLevel level, BlockPos pos) {
-        return !getPossibleConversions(level, pos, level.getRandom()).isEmpty();
+    public static boolean isConvertible(ServerLevel Silian_level, BlockPos Silian_pos) {
+        return !getPossibleConversions(Silian_level, Silian_pos, Silian_level.getRandom()).isEmpty();
     }
 
     public static class CustomCalciteBlock extends Block {
 
-        public CustomCalciteBlock(BlockBehaviour.Properties properties) {
-            super(properties);
+        public CustomCalciteBlock(BlockBehaviour.Properties Silian_properties) {
+            super(Silian_properties);
         }
 
         @Override
-        public boolean isRandomlyTicking(BlockState state) {
+        public boolean isRandomlyTicking(BlockState Silian_state) {
             return true;
         }
 
-        private static float successChanceFromSuitability(double suitability) {
-            final float minSuccessChance = 0.01f;
-            final float maxSuccessChance = 0.5f;
-            return Mth.lerp((float) Mth.square(suitability), minSuccessChance, maxSuccessChance);
+        private static float successChanceFromSuitability(double Silian_suitability) {
+            final float Silian_minSuccessChance = 0.01f;
+            final float Silian_maxSuccessChance = 0.5f;
+            return Mth.lerp((float) Mth.square(Silian_suitability), Silian_minSuccessChance, Silian_maxSuccessChance);
         }
 
         @Override
-        public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+        public void randomTick(BlockState Silian_state, ServerLevel Silian_level, BlockPos Silian_pos, RandomSource Silian_random) {
             if (!SkyAdditionsSettings.spreadingCoral) return;
-            if (!Blocks.TUBE_CORAL_BLOCK.defaultBlockState().canSurvive(level, pos)) return;
-            double suitability = calculateCoralSuitability(level, pos);
-            float successChance = successChanceFromSuitability(suitability);
-            if (successChance < random.nextFloat()) return;
+            if (!Blocks.TUBE_CORAL_BLOCK.defaultBlockState().canSurvive(Silian_level, Silian_pos)) return;
+            double Silian_suitability = calculateCoralSuitability(Silian_level, Silian_pos);
+            float Silian_successChance = successChanceFromSuitability(Silian_suitability);
+            if (Silian_successChance < Silian_random.nextFloat()) return;
 
-            List<Block> validCorals = getPossibleConversions(level, pos, random);
-            if (validCorals.isEmpty()) return;
+            List<Block> Silian_validCorals = getPossibleConversions(Silian_level, Silian_pos, Silian_random);
+            if (Silian_validCorals.isEmpty()) return;
 
-            Block coralBlock = validCorals.get(random.nextInt(validCorals.size()));
-            level.setBlockAndUpdate(pos, coralBlock.defaultBlockState());
+            Block Silian_coralBlock = Silian_validCorals.get(Silian_random.nextInt(Silian_validCorals.size()));
+            Silian_level.setBlockAndUpdate(Silian_pos, Silian_coralBlock.defaultBlockState());
         }
     }
 }

@@ -16,18 +16,18 @@ public class GenerateGeodeTrigger extends SimpleCriterionTrigger<GenerateGeodeTr
         return GenerateGeodeTrigger.Conditions.CODEC;
     }
 
-      public void trigger(ServerPlayer player) {
-        trigger(player, conditions -> true);
+      public void trigger(ServerPlayer Silian_player) {
+        trigger(Silian_player, Silian_conditions -> true);
     }
 
     public static record Conditions(Optional<ContextAwarePredicate> player)
             implements SimpleCriterionTrigger.SimpleInstance {
 
         public static final Codec<GenerateGeodeTrigger.Conditions> CODEC = RecordCodecBuilder.create(
-                instance -> instance.group(
+                Silian_instance -> Silian_instance.group(
                         Codec.optionalField("player", EntityPredicate.ADVANCEMENT_CODEC, false)
                                 .forGetter(GenerateGeodeTrigger.Conditions::player))
-                        .apply(instance, GenerateGeodeTrigger.Conditions::new));
+                        .apply(Silian_instance, GenerateGeodeTrigger.Conditions::new));
 
     }
 }

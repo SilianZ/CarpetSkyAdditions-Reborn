@@ -21,8 +21,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(BaseCoralWallFanBlock.class)
 public class BaseCoralWallFanBlockMixin extends BaseCoralFanBlock {
-    public BaseCoralWallFanBlockMixin(BlockBehaviour.Properties settings) {
-        super(settings);
+    public BaseCoralWallFanBlockMixin(BlockBehaviour.Properties Silian_settings) {
+        super(Silian_settings);
     }
 
     @Unique
@@ -33,10 +33,10 @@ public class BaseCoralWallFanBlockMixin extends BaseCoralFanBlock {
 
     @Inject(method = "updateShape", at = @At(value = "HEAD"))
     private void scheduleTickOnBlockUpdate(
-        BlockState blockState, LevelReader levelReader, ScheduledTickAccess scheduledTickAccess, BlockPos blockPos, Direction direction, BlockPos blockPos2, BlockState blockState2, RandomSource randomSource,
-            CallbackInfoReturnable<BlockState> cir) {
+        BlockState Silian_blockState, LevelReader Silian_levelReader, ScheduledTickAccess Silian_scheduledTickAccess, BlockPos Silian_blockPos, Direction Silian_direction, BlockPos Silian_blockPos2, BlockState Silian_blockState2, RandomSource Silian_randomSource,
+            CallbackInfoReturnable<BlockState> Silian_cir) {
         if (SkyAdditionsSettings.coralErosion && !isCoralWallFan()) {
-            scheduledTickAccess.scheduleTick(blockPos, this, DeadCoralToSandHelper.getSandDropDelay(randomSource));
+            Silian_scheduledTickAccess.scheduleTick(Silian_blockPos, this, DeadCoralToSandHelper.getSandDropDelay(Silian_randomSource));
         }
     }
 }

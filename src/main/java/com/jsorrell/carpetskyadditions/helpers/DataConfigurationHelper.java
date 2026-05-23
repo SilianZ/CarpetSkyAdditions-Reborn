@@ -9,29 +9,29 @@ import net.minecraft.world.level.DataPackConfig;
 import net.minecraft.world.level.WorldDataConfiguration;
 
 public class DataConfigurationHelper {
-    public static WorldDataConfiguration updateDataConfiguration(WorldDataConfiguration dc) {
-        SkyAdditionsConfig config =
+    public static WorldDataConfiguration updateDataConfiguration(WorldDataConfiguration Silian_dc) {
+        SkyAdditionsConfig Silian_config =
                 AutoConfig.getConfigHolder(SkyAdditionsConfig.class).get();
-        if (config.enableDatapackByDefault) {
-            List<String> enabled = new ArrayList<>(dc.dataPacks().getEnabled());
-            List<String> disabled = new ArrayList<>(dc.dataPacks().getDisabled());
+        if (Silian_config.enableDatapackByDefault) {
+            List<String> Silian_enabled = new ArrayList<>(Silian_dc.dataPacks().getEnabled());
+            List<String> Silian_disabled = new ArrayList<>(Silian_dc.dataPacks().getDisabled());
 
-            String skyBlock = SkyAdditionsDataPacks.SKYBLOCK.toString();
-            String acacia = SkyAdditionsDataPacks.SKYBLOCK_ACACIA.toString();
+            String Silian_skyBlock = SkyAdditionsDataPacks.SKYBLOCK.toString();
+            String Silian_acacia = SkyAdditionsDataPacks.SKYBLOCK_ACACIA.toString();
 
-            if (!enabled.contains(skyBlock)) {
-                enabled.add(skyBlock);
-                disabled.remove(skyBlock);
+            if (!Silian_enabled.contains(Silian_skyBlock)) {
+                Silian_enabled.add(Silian_skyBlock);
+                Silian_disabled.remove(Silian_skyBlock);
             }
 
-            if (config.getInitialTreeType() == SkyAdditionsConfig.InitialTreeType.ACACIA) {
-                if (!enabled.contains(acacia)) {
-                    enabled.add(acacia);
-                    disabled.remove(acacia);
+            if (Silian_config.getInitialTreeType() == SkyAdditionsConfig.InitialTreeType.ACACIA) {
+                if (!Silian_enabled.contains(Silian_acacia)) {
+                    Silian_enabled.add(Silian_acacia);
+                    Silian_disabled.remove(Silian_acacia);
                 }
             }
-            return new WorldDataConfiguration(new DataPackConfig(enabled, disabled), dc.enabledFeatures());
+            return new WorldDataConfiguration(new DataPackConfig(Silian_enabled, Silian_disabled), Silian_dc.enabledFeatures());
         }
-        return dc;
+        return Silian_dc;
     }
 }

@@ -9,8 +9,8 @@ import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfigur
 public record LocatableStructureFeatureConfiguration(Identifier structure, BlockPos pos)
         implements FeatureConfiguration {
     public static final Codec<LocatableStructureFeatureConfiguration> CODEC =
-            RecordCodecBuilder.create(instance -> instance.group(
-                            Identifier.CODEC.fieldOf("structure").forGetter(config -> config.structure),
-                            BlockPos.CODEC.fieldOf("pos").forGetter(config -> config.pos))
-                    .apply(instance, LocatableStructureFeatureConfiguration::new));
+            RecordCodecBuilder.create(Silian_instance -> Silian_instance.group(
+                            Identifier.CODEC.fieldOf("structure").forGetter(Silian_config -> Silian_config.structure),
+                            BlockPos.CODEC.fieldOf("pos").forGetter(Silian_config -> Silian_config.pos))
+                    .apply(Silian_instance, LocatableStructureFeatureConfiguration::new));
 }

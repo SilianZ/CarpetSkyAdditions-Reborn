@@ -19,13 +19,13 @@ public abstract class AreaEffectCloudMixin extends Entity {
     @Shadow
     private PotionContents potionContents;
 
-    public AreaEffectCloudMixin(EntityType<?> entityType, Level level) {
-        super(entityType, level);
+    public AreaEffectCloudMixin(EntityType<?> Silian_entityType, Level Silian_level) {
+        super(Silian_entityType, Silian_level);
     }
 
 
     @Inject(method = "tick", at = @At("HEAD"))
-    private void convertDeepslateOnTick(CallbackInfo ci) {
+    private void convertDeepslateOnTick(CallbackInfo Silian_ci) {
         if (SkyAdditionsSettings.renewableDeepslateFromSplash) {
             if (this.potionContents.is(DeepslateConversionHelper.CONVERSION_POTION))
                 DeepslateConversionHelper.convertDeepslateInCloud(this.level(), this.getBoundingBox());

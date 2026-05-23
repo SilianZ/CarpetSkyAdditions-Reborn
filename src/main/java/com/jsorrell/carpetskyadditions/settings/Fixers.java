@@ -13,88 +13,88 @@ import java.util.*;
 
 public final class Fixers {
     // TODO should we also fix global defaults?
-    public static void fixSettings(Path rootSavePath) throws IOException {
-        Map<String, ArrayList<SettingFixer>> fixerMap = getFixerMap();
-        if (fixerMap.size() == 0) return;
+    public static void fixSettings(Path Silian_rootSavePath) throws IOException {
+        Map<String, ArrayList<SettingFixer>> Silian_fixerMap = getFixerMap();
+        if (Silian_fixerMap.size() == 0) return;
 
-        Path configPath = rootSavePath.resolve(SkyAdditionsExtension.MOD_ID + ".conf");
+        Path Silian_configPath = Silian_rootSavePath.resolve(SkyAdditionsExtension.MOD_ID + ".conf");
         // Read from File
-        List<String> rules;
+        List<String> Silian_rules;
         try {
-            rules = new ArrayList<>(Files.readAllLines(configPath, StandardCharsets.UTF_8));
-        } catch (NoSuchFileException e) {
+            Silian_rules = new ArrayList<>(Files.readAllLines(Silian_configPath, StandardCharsets.UTF_8));
+        } catch (NoSuchFileException Silian_e) {
             return;
         }
 
-        boolean rulesWereChanged = false;
+        boolean Silian_rulesWereChanged = false;
 
-        for (int i = 0; i < rules.size(); ++i) {
+        for (int Silian_i = 0; Silian_i < Silian_rules.size(); ++Silian_i) {
             // Parse rule
-            String ruleLine = rules.get(i);
-            ruleLine = ruleLine.replaceAll("[\\r\\n]", "");
+            String Silian_ruleLine = Silian_rules.get(Silian_i);
+            Silian_ruleLine = Silian_ruleLine.replaceAll("[\\r\\n]", "");
 
             // This shouldn't really happen, but it's best to not modify a locked conf
-            if ("locked".equalsIgnoreCase(ruleLine)) {
+            if ("locked".equalsIgnoreCase(Silian_ruleLine)) {
                 return;
             }
-            FieldPair fieldPair = new FieldPair(ruleLine);
+            FieldPair Silian_fieldPair = new FieldPair(Silian_ruleLine);
 
             // Apply fixers in memory
-            List<SettingFixer> fixers = fixerMap.get(fieldPair.getName());
-            if (fixers == null) continue;
+            List<SettingFixer> Silian_fixers = Silian_fixerMap.get(Silian_fieldPair.getName());
+            if (Silian_fixers == null) continue;
 
-            FieldPair oldFieldPair = new FieldPair(fieldPair);
+            FieldPair Silian_oldFieldPair = new FieldPair(Silian_fieldPair);
 
-            boolean remove = false;
-            for (SettingFixer fixer : fixers) {
-                Optional<FieldPair> fieldPairOpt = fixer.fix(fieldPair);
-                if (fieldPairOpt.isEmpty()) {
-                    remove = true;
+            boolean Silian_remove = false;
+            for (SettingFixer Silian_fixer : Silian_fixers) {
+                Optional<FieldPair> Silian_fieldPairOpt = Silian_fixer.fix(Silian_fieldPair);
+                if (Silian_fieldPairOpt.isEmpty()) {
+                    Silian_remove = true;
                     break;
                 }
-                fieldPair = fieldPairOpt.get();
+                Silian_fieldPair = Silian_fieldPairOpt.get();
             }
 
-            if (remove) {
-                rulesWereChanged = true;
-                rules.set(i, null);
-                SkyAdditionsSettings.LOG.info("Removing old rule " + oldFieldPair.getName());
-            } else if (!fieldPair.equals(oldFieldPair)) {
-                rulesWereChanged = true;
-                rules.set(i, fieldPair.asConfigLine());
-                SkyAdditionsSettings.LOG.info("Changing old rule \"" + oldFieldPair + "\" to \"" + fieldPair + "\"");
+            if (Silian_remove) {
+                Silian_rulesWereChanged = true;
+                Silian_rules.set(Silian_i, null);
+                SkyAdditionsSettings.LOG.info("Removing old rule " + Silian_oldFieldPair.getName());
+            } else if (!Silian_fieldPair.equals(Silian_oldFieldPair)) {
+                Silian_rulesWereChanged = true;
+                Silian_rules.set(Silian_i, Silian_fieldPair.asConfigLine());
+                SkyAdditionsSettings.LOG.info("Changing old rule \"" + Silian_oldFieldPair + "\" to \"" + Silian_fieldPair + "\"");
             }
         }
 
         // Write back to file
-        if (rulesWereChanged) {
-            Files.write(configPath, Iterables.filter(rules, Objects::nonNull), StandardCharsets.UTF_8);
+        if (Silian_rulesWereChanged) {
+            Files.write(Silian_configPath, Iterables.filter(Silian_rules, Objects::nonNull), StandardCharsets.UTF_8);
         }
     }
 
     private static Map<String, ArrayList<SettingFixer>> getFixerMap() {
-        Map<String, ArrayList<SettingFixer>> fixerMap = new HashMap<>();
-        for (Field field : SkyAdditionsSettings.class.getDeclaredFields()) {
-            SkyAdditionsSetting settingAnnotation = field.getAnnotation(SkyAdditionsSetting.class);
-            if (settingAnnotation == null || settingAnnotation.fixer().length == 0) continue;
-            for (int i = 0; i < settingAnnotation.fixer().length; ++i) {
-                Class<? extends SettingFixer> fixerClass = settingAnnotation.fixer()[i];
+        Map<String, ArrayList<SettingFixer>> Silian_fixerMap = new HashMap<>();
+        for (Field Silian_field : SkyAdditionsSettings.class.getDeclaredFields()) {
+            SkyAdditionsSetting Silian_settingAnnotation = Silian_field.getAnnotation(SkyAdditionsSetting.class);
+            if (Silian_settingAnnotation == null || Silian_settingAnnotation.fixer().length == 0) continue;
+            for (int Silian_i = 0; Silian_i < Silian_settingAnnotation.fixer().length; ++Silian_i) {
+                Class<? extends SettingFixer> Silian_fixerClass = Silian_settingAnnotation.fixer()[Silian_i];
                 try {
-                    Constructor<? extends SettingFixer> fixerConstructor = fixerClass.getDeclaredConstructor();
-                    fixerConstructor.setAccessible(true);
-                    SettingFixer fixer = fixerConstructor.newInstance();
-                    Set<String> fieldNames = new HashSet<>(List.of(fixer.names()));
+                    Constructor<? extends SettingFixer> Silian_fixerConstructor = Silian_fixerClass.getDeclaredConstructor();
+                    Silian_fixerConstructor.setAccessible(true);
+                    SettingFixer Silian_fixer = Silian_fixerConstructor.newInstance();
+                    Set<String> Silian_fieldNames = new HashSet<>(List.of(Silian_fixer.names()));
 
-                    for (String name : fieldNames) {
-                        ArrayList<SettingFixer> fixerList = fixerMap.getOrDefault(name, new ArrayList<>());
-                        fixerList.add(fixerConstructor.newInstance());
-                        fixerMap.put(name, fixerList);
+                    for (String Silian_name : Silian_fieldNames) {
+                        ArrayList<SettingFixer> Silian_fixerList = Silian_fixerMap.getOrDefault(Silian_name, new ArrayList<>());
+                        Silian_fixerList.add(Silian_fixerConstructor.newInstance());
+                        Silian_fixerMap.put(Silian_name, Silian_fixerList);
                     }
-                } catch (ReflectiveOperationException e) {
-                    throw new RuntimeException(e);
+                } catch (ReflectiveOperationException Silian_e) {
+                    throw new RuntimeException(Silian_e);
                 }
             }
         }
-        return fixerMap;
+        return Silian_fixerMap;
     }
 }

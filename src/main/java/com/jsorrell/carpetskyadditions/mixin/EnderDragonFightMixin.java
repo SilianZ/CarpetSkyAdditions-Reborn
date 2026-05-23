@@ -32,13 +32,13 @@ public class EnderDragonFightMixin {
     private @Nullable BlockPos exitPortalLocation;
 
     @Inject(method = "spawnExitPortal", at = @At(value = "HEAD"))
-    private void setExitPortalLocation(boolean openPortal, CallbackInfo ci) {
-        if (level.getChunkSource().getGenerator() instanceof SkyBlockChunkGenerator chunkGenerator) {
+    private void setExitPortalLocation(boolean Silian_openPortal, CallbackInfo Silian_ci) {
+        if (level.getChunkSource().getGenerator() instanceof SkyBlockChunkGenerator Silian_chunkGenerator) {
             if (exitPortalLocation == null) {
-                int y = chunkGenerator.getBaseHeightInEquivalentNoiseWorld(
+                int Silian_y = Silian_chunkGenerator.getBaseHeightInEquivalentNoiseWorld(
                                 0, 0, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, level)
                         - 1;
-                exitPortalLocation = BlockPos.ZERO.atY(y);
+                exitPortalLocation = BlockPos.ZERO.atY(Silian_y);
             }
         }
     }
@@ -50,13 +50,13 @@ public class EnderDragonFightMixin {
                             value = "FIELD",
                             target = "Lnet/minecraft/world/level/dimension/end/EnderDragonFight;hasPreviouslyKilledDragon:Z",
                             opcode = Opcodes.PUTFIELD))
-    private void spawnShulkerOnDragonReKill(EnderDragon dragon, CallbackInfo ci) {
+    private void spawnShulkerOnDragonReKill(EnderDragon Silian_dragon, CallbackInfo Silian_ci) {
         if (SkyAdditionsSettings.shulkerSpawnsOnDragonKill && exitPortalLocation != null) {
-            BlockPos shulkerPosition = exitPortalLocation.offset(0, 4, 0);
-            if (hasPreviouslyKilledDragon && level.getBlockState(shulkerPosition).isAir()) {
-                Shulker shulker = EntityType.SHULKER.create(level, null, shulkerPosition, EntitySpawnReason.EVENT, true, false);
-                if (level.noCollision(shulker)) {
-                    level.addFreshEntity(shulker);
+            BlockPos Silian_shulkerPosition = exitPortalLocation.offset(0, 4, 0);
+            if (hasPreviouslyKilledDragon && level.getBlockState(Silian_shulkerPosition).isAir()) {
+                Shulker Silian_shulker = EntityType.SHULKER.create(level, null, Silian_shulkerPosition, EntitySpawnReason.EVENT, true, false);
+                if (level.noCollision(Silian_shulker)) {
+                    level.addFreshEntity(Silian_shulker);
                 }
             }
         }

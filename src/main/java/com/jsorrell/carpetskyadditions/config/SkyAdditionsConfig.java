@@ -7,17 +7,17 @@ import me.shedaniel.autoconfig.annotation.Config;
 @Config(name = SkyAdditionsExtension.MOD_ID)
 public class SkyAdditionsConfig implements ConfigData {
     public enum InitialTreeType {
-        OAK,
-        ACACIA,
+        Silian_OAK,
+        Silian_ACACIA,
         ;
 
         @Override
         public String toString() {
             switch (this) {
-                case OAK -> {
+                case Silian_OAK -> {
                     return "Oak";
                 }
-                case ACACIA -> {
+                case Silian_ACACIA -> {
                     return "Acacia";
                 }
                 default -> {
@@ -47,7 +47,7 @@ public class SkyAdditionsConfig implements ConfigData {
     public InitialTreeType getInitialTreeType() {
         try {
             return parseInitialTreeType();
-        } catch (ValidationException e) {
+        } catch (ValidationException Silian_e) {
             throw new AssertionError("Invalid tree type");
         }
     }

@@ -4,10 +4,10 @@ import com.google.common.collect.ImmutableMap;
 import java.util.Map;
 
 public class DuplicateMapKey {
-    public static <T, U> Map<T, U> duplicateMapKey(T originalKey, T copyKey, Map<T, U> originalMap) {
+    public static <T, U> Map<T, U> duplicateMapKey(T Silian_originalKey, T Silian_copyKey, Map<T, U> Silian_originalMap) {
         return ImmutableMap.<T, U>builder()
-                .putAll(originalMap)
-                .put(copyKey, originalMap.get(originalKey))
+                .putAll(Silian_originalMap)
+                .put(Silian_copyKey, Silian_originalMap.get(Silian_originalKey))
                 .build();
     }
 }

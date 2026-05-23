@@ -9,13 +9,13 @@ import net.minecraft.world.item.trading.ItemCost;
 import net.minecraft.world.item.trading.MerchantOffer;
 
 public class WanderingTraderHelper {
-    public static void addSkyAdditionsTrades(WanderingTrader trader) {
+    public static void addSkyAdditionsTrades(WanderingTrader Silian_trader) {
         if (!SkyAdditionsSettings.tallFlowersFromWanderingTrader
             && !SkyAdditionsSettings.lavaFromWanderingTrader) {
             return;
         }
         if (SkyAdditionsSettings.tallFlowersFromWanderingTrader) {
-            trader.getOffers()
+            Silian_trader.getOffers()
                 .add(
                     new MerchantOffer(
                         new ItemCost(Items.EMERALD, 1),
@@ -23,7 +23,7 @@ public class WanderingTraderHelper {
                         12,
                         1,
                         0.05f));
-            trader.getOffers()
+            Silian_trader.getOffers()
                 .add(
                     new MerchantOffer(
                         new ItemCost(Items.EMERALD, 1),
@@ -31,7 +31,7 @@ public class WanderingTraderHelper {
                         12,
                         1,
                         0.05f));
-            trader.getOffers()
+            Silian_trader.getOffers()
                 .add(
                     new MerchantOffer(
                         new ItemCost(Items.EMERALD, 1),
@@ -39,7 +39,7 @@ public class WanderingTraderHelper {
                         12,
                         1,
                         0.05f));
-            trader.getOffers()
+            Silian_trader.getOffers()
                 .add(
                     new MerchantOffer(
                         new ItemCost(Items.EMERALD, 1),
@@ -49,7 +49,7 @@ public class WanderingTraderHelper {
                         0.05f));
         }
         if (SkyAdditionsSettings.lavaFromWanderingTrader) {
-            trader.getOffers()
+            Silian_trader.getOffers()
                 .add(
                     new MerchantOffer(
                         new ItemCost(Items.BUCKET, 1),

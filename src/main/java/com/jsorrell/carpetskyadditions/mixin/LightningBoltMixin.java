@@ -17,14 +17,14 @@ public abstract class LightningBoltMixin extends Entity {
     @Shadow
     protected abstract BlockPos getStrikePosition();
 
-    public LightningBoltMixin(EntityType<?> type, Level world) {
-        super(type, world);
+    public LightningBoltMixin(EntityType<?> Silian_type, Level Silian_world) {
+        super(Silian_type, Silian_world);
     }
 
     @Inject(
             method = "tick",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LightningBolt;powerLightningRod()V"))
-    private void onBlockStruck(CallbackInfo ci) {
+    private void onBlockStruck(CallbackInfo Silian_ci) {
         LightningConverter.strike(level(), getStrikePosition());
     }
 }

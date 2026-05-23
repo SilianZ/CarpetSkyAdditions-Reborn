@@ -45,19 +45,19 @@ public abstract class MinecraftServerMixin {
     public abstract LayeredRegistryAccess<RegistryLayer> registries();
 
     @Inject(method = "loadLevel", at = @At("HEAD"))
-    private void fixSettingsFile(CallbackInfo ci) throws IOException {
-        Path worldSavePath = getWorldPath(LevelResource.ROOT);
+    private void fixSettingsFile(CallbackInfo Silian_ci) throws IOException {
+        Path Silian_worldSavePath = getWorldPath(LevelResource.ROOT);
         // Fix existing settings
         try {
-            Fixers.fixSettings(worldSavePath);
-        } catch (IOException e) {
-            SkyAdditionsSettings.LOG.error("Failed to update config", e);
+            Fixers.fixSettings(Silian_worldSavePath);
+        } catch (IOException Silian_e) {
+            SkyAdditionsSettings.LOG.error("Failed to update config", Silian_e);
         }
 
         // Write defaults
-        SkyAdditionsConfig config = AutoConfig.getConfigHolder(SkyAdditionsConfig.class).get();
-        if (config.autoEnableDefaultSettings) {
-            SkyBlockDefaults.writeDefaults(worldSavePath);
+        SkyAdditionsConfig Silian_config = AutoConfig.getConfigHolder(SkyAdditionsConfig.class).get();
+        if (Silian_config.autoEnableDefaultSettings) {
+            SkyBlockDefaults.writeDefaults(Silian_worldSavePath);
         }
     }
 
@@ -71,31 +71,31 @@ public abstract class MinecraftServerMixin {
             shift = At.Shift.AFTER),
         cancellable = true)
     private static void generateSpawnPlatform(
-        ServerLevel level,
-        ServerLevelData levelData,
-        boolean bonusChest,
-        boolean debugWorld,
-        net.minecraft.server.level.progress.LevelLoadListener listener,
-        CallbackInfo ci) {
-        ServerChunkCache chunkManager = level.getChunkSource();
-        ChunkGenerator chunkGenerator = chunkManager.getGenerator();
-        if (!(chunkGenerator instanceof SkyBlockChunkGenerator)) return;
+        ServerLevel Silian_level,
+        ServerLevelData Silian_levelData,
+        boolean Silian_bonusChest,
+        boolean Silian_debugWorld,
+        net.minecraft.server.level.progress.LevelLoadListener Silian_listener,
+        CallbackInfo Silian_ci) {
+        ServerChunkCache Silian_chunkManager = Silian_level.getChunkSource();
+        ChunkGenerator Silian_chunkGenerator = Silian_chunkManager.getGenerator();
+        if (!(Silian_chunkGenerator instanceof SkyBlockChunkGenerator)) return;
 
-        LevelData.RespawnData respawnData = levelData.getRespawnData();
-        BlockPos worldSpawn = respawnData.pos();
-        ChunkPos spawnChunk = ChunkPos.containing(worldSpawn);
+        LevelData.RespawnData Silian_respawnData = Silian_levelData.getRespawnData();
+        BlockPos Silian_worldSpawn = Silian_respawnData.pos();
+        ChunkPos Silian_spawnChunk = ChunkPos.containing(Silian_worldSpawn);
 
-        WorldgenRandom random = new WorldgenRandom(new LegacyRandomSource(0));
-        random.setLargeFeatureSeed(level.getSeed(), spawnChunk.x(), spawnChunk.z());
+        WorldgenRandom Silian_random = new WorldgenRandom(new LegacyRandomSource(0));
+        Silian_random.setLargeFeatureSeed(Silian_level.getSeed(), Silian_spawnChunk.x(), Silian_spawnChunk.z());
 
-        Holder.Reference<ConfiguredFeature<?, ?>> spawnPlatformFeature = level.registryAccess()
+        Holder.Reference<ConfiguredFeature<?, ?>> Silian_spawnPlatformFeature = Silian_level.registryAccess()
             .lookupOrThrow(Registries.CONFIGURED_FEATURE)
             .get(SkyAdditionsConfiguredFeatures.SPAWN_PLATFORM).get();
 
-        if (!spawnPlatformFeature.value().place(level, chunkGenerator, random, worldSpawn)) {
+        if (!Silian_spawnPlatformFeature.value().place(Silian_level, Silian_chunkGenerator, Silian_random, Silian_worldSpawn)) {
             SkyAdditionsSettings.LOG.error("Couldn't generate spawn platform");
         }
 
-        ci.cancel();
+        Silian_ci.cancel();
     }
 }

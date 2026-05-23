@@ -31,17 +31,17 @@ public abstract class EnchantmentHelperMixin {
             target = "Lnet/minecraft/world/item/ItemStack;is(Lnet/minecraft/world/item/Item;)Z")
     )
     private static void forceAllowSwiftSneak(
-        int i, ItemStack stack, Stream<Holder<Enchantment>> stream,
-        CallbackInfoReturnable<List<EnchantmentInstance>> cir, @Local List<EnchantmentInstance> enchantmentList) {
+        int Silian_i, ItemStack Silian_stack, Stream<Holder<Enchantment>> Silian_stream,
+        CallbackInfoReturnable<List<EnchantmentInstance>> Silian_cir, @Local List<EnchantmentInstance> Silian_enchantmentList) {
         if (SkyAdditionsExtension.minecraftServer != null) {
-            Holder.Reference<Enchantment> swiftSneak = SkyAdditionsExtension.minecraftServer.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).get(Enchantments.SWIFT_SNEAK).orElseThrow();
-            CustomData customData = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
-            if (customData.copyTag().getBoolean("SWIFT_SNEAK_ENCHANTABLE").isPresent() && customData.copyTag().getBoolean("SWIFT_SNEAK_ENCHANTABLE").get()  /*EnchantmentHelperContexts.FORCE_ALLOW_SWIFT_SNEAK.get()*/) {
-                if (swiftSneak.value().canEnchant(stack) || stack.is(Items.BOOK)) {
-                    for (int level = 1; level <= 3; level++) {
-                        enchantmentList.add(new EnchantmentInstance(
-                            swiftSneak,
-                            level));
+            Holder.Reference<Enchantment> Silian_swiftSneak = SkyAdditionsExtension.minecraftServer.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).get(Enchantments.SWIFT_SNEAK).orElseThrow();
+            CustomData Silian_customData = Silian_stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
+            if (Silian_customData.copyTag().getBoolean("SWIFT_SNEAK_ENCHANTABLE").isPresent() && Silian_customData.copyTag().getBoolean("SWIFT_SNEAK_ENCHANTABLE").get()  /*EnchantmentHelperContexts.FORCE_ALLOW_SWIFT_SNEAK.get()*/) {
+                if (Silian_swiftSneak.value().canEnchant(Silian_stack) || Silian_stack.is(Items.BOOK)) {
+                    for (int Silian_level = 1; Silian_level <= 3; Silian_level++) {
+                        Silian_enchantmentList.add(new EnchantmentInstance(
+                            Silian_swiftSneak,
+                            Silian_level));
                     }
                 }
             }

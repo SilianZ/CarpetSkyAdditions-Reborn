@@ -17,10 +17,10 @@ import java.util.Optional;
 public class ConvertSpiderTrigger extends SimpleCriterionTrigger<ConvertSpiderTrigger.Conditions> {
 
 
-    public void trigger(ServerPlayer player, Spider spider, CaveSpider caveSpider) {
-        LootContext spiderLootContext = EntityPredicate.createContext(player, spider);
-        LootContext caveSpiderLootContext = EntityPredicate.createContext(player, caveSpider);
-        trigger(player, conditions -> conditions.matches(spiderLootContext, caveSpiderLootContext));
+    public void trigger(ServerPlayer Silian_player, Spider Silian_spider, CaveSpider Silian_caveSpider) {
+        LootContext Silian_spiderLootContext = EntityPredicate.createContext(Silian_player, Silian_spider);
+        LootContext Silian_caveSpiderLootContext = EntityPredicate.createContext(Silian_player, Silian_caveSpider);
+        trigger(Silian_player, Silian_conditions -> Silian_conditions.matches(Silian_spiderLootContext, Silian_caveSpiderLootContext));
     }
 
     @Override
@@ -31,21 +31,21 @@ public class ConvertSpiderTrigger extends SimpleCriterionTrigger<ConvertSpiderTr
                                     Optional<ContextAwarePredicate> caveSpider) implements SimpleCriterionTrigger.SimpleInstance {
 
         public static final Codec<ConvertSpiderTrigger.Conditions> CODEC = RecordCodecBuilder.create(
-                instance -> instance.group(
+                Silian_instance -> Silian_instance.group(
                         Codec.optionalField("player",EntityPredicate.ADVANCEMENT_CODEC, false)
                                 .forGetter(ConvertSpiderTrigger.Conditions::player),
                         Codec.optionalField("spider",EntityPredicate.ADVANCEMENT_CODEC, false)
                                 .forGetter(ConvertSpiderTrigger.Conditions::spider),
                         Codec.optionalField("caveSpider",EntityPredicate.ADVANCEMENT_CODEC, false)
                                 .forGetter(ConvertSpiderTrigger.Conditions::caveSpider))
-                        .apply(instance, ConvertSpiderTrigger.Conditions::new));
+                        .apply(Silian_instance, ConvertSpiderTrigger.Conditions::new));
 
-        public boolean matches(LootContext spiderContext, LootContext caveSpiderContext) {
+        public boolean matches(LootContext Silian_spiderContext, LootContext Silian_caveSpiderContext) {
                 // Check if spider and caveSpider predicates are present and match their contexts
-                boolean spiderMatches = spider.map(predicate -> predicate.matches(spiderContext)).orElse(true);
-                boolean caveSpiderMatches = caveSpider.map(predicate -> predicate.matches(caveSpiderContext)).orElse(true);
+                boolean Silian_spiderMatches = spider.map(Silian_predicate -> Silian_predicate.matches(Silian_spiderContext)).orElse(true);
+                boolean Silian_caveSpiderMatches = caveSpider.map(Silian_predicate -> Silian_predicate.matches(Silian_caveSpiderContext)).orElse(true);
 
-                return spiderMatches && caveSpiderMatches;
+                return Silian_spiderMatches && Silian_caveSpiderMatches;
         }
     }
 }

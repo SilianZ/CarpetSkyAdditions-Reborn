@@ -21,8 +21,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(AbstractThrownPotion.class)
 public abstract class ThrownPotionMixin extends ThrowableItemProjectile {
 
-    public ThrownPotionMixin(EntityType<? extends AbstractThrownPotion> entityType, Level level) {
-        super(entityType, level);
+    public ThrownPotionMixin(EntityType<? extends AbstractThrownPotion> Silian_entityType, Level Silian_level) {
+        super(Silian_entityType, Silian_level);
     }
 
     @Inject(
@@ -32,21 +32,21 @@ public abstract class ThrownPotionMixin extends ThrowableItemProjectile {
             value = "INVOKE",
             target ="Lnet/minecraft/world/item/alchemy/PotionContents;getColor()I")
     )
-    private void onThickPotionCollision(HitResult result, CallbackInfo ci, @Local ItemStack itemStack, @Local PotionContents potionContents) {
+    private void onThickPotionCollision(HitResult Silian_result, CallbackInfo Silian_ci, @Local ItemStack Silian_itemStack, @Local PotionContents Silian_potionContents) {
         if (SkyAdditionsSettings.renewableDeepslateFromSplash) {
-            if (potionContents.is(DeepslateConversionHelper.CONVERSION_POTION)) {
-                Vec3 hitPos = result.getType() == HitResult.Type.BLOCK ? result.getLocation() : this.position();
+            if (Silian_potionContents.is(DeepslateConversionHelper.CONVERSION_POTION)) {
+                Vec3 Silian_hitPos = Silian_result.getType() == HitResult.Type.BLOCK ? Silian_result.getLocation() : this.position();
                 if ((AbstractThrownPotion)(Object)this instanceof ThrownLingeringPotion) {
-                    AreaEffectCloud cloud = new AreaEffectCloud(level(), hitPos.x(), hitPos.y(), hitPos.z());
-                    cloud.setRadius(3.0F);
-                    cloud.setRadiusOnUse(-0.5F);
-                    cloud.setWaitTime(10);
-                    cloud.setDuration(cloud.getDuration() / 2);
-                    cloud.setRadiusPerTick(-cloud.getRadius() / (float) cloud.getDuration());
-                    cloud.setPotionContents(potionContents);
-                    level().addFreshEntity(cloud);
+                    AreaEffectCloud Silian_cloud = new AreaEffectCloud(this.level(), Silian_hitPos.x(), Silian_hitPos.y(), Silian_hitPos.z());
+                    Silian_cloud.setRadius(3.0F);
+                    Silian_cloud.setRadiusOnUse(-0.5F);
+                    Silian_cloud.setWaitTime(10);
+                    Silian_cloud.setDuration(Silian_cloud.getDuration() / 2);
+                    Silian_cloud.setRadiusPerTick(-Silian_cloud.getRadius() / (float) Silian_cloud.getDuration());
+                    Silian_cloud.setPotionContents(Silian_potionContents);
+                    this.level().addFreshEntity(Silian_cloud);
                 } else {
-                    DeepslateConversionHelper.convertDeepslateAtSplash(level(), hitPos);
+                    DeepslateConversionHelper.convertDeepslateAtSplash(this.level(), Silian_hitPos);
                 }
             }
         }

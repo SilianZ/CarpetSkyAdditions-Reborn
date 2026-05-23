@@ -12,58 +12,58 @@ import net.minecraft.network.chat.Component;
 public class ModMenuIntegration implements ModMenuApi {
     @Override
     public ConfigScreenFactory<?> getModConfigScreenFactory() {
-        return parent -> {
-            ConfigBuilder builder = ConfigBuilder.create()
-                    .setParentScreen(parent)
+        return Silian_parent -> {
+            ConfigBuilder Silian_builder = ConfigBuilder.create()
+                    .setParentScreen(Silian_parent)
                     .setTitle(Component.translatable("carpetskyadditions.config.title"));
 
-            ConfigHolder<SkyAdditionsConfig> configHolder = AutoConfig.getConfigHolder(SkyAdditionsConfig.class);
-            builder.setSavingRunnable(configHolder::save);
+            ConfigHolder<SkyAdditionsConfig> Silian_configHolder = AutoConfig.getConfigHolder(SkyAdditionsConfig.class);
+            Silian_builder.setSavingRunnable(Silian_configHolder::save);
 
-            SkyAdditionsConfig config = configHolder.get();
+            SkyAdditionsConfig Silian_config = Silian_configHolder.get();
 
-            ConfigEntryBuilder entryBuilder = builder.entryBuilder();
+            ConfigEntryBuilder Silian_entryBuilder = Silian_builder.entryBuilder();
 
-            ConfigCategory newWorldCategory =
-                    builder.getOrCreateCategory(Component.translatable("carpetskyadditions.config.category.newWorld"));
+            ConfigCategory Silian_newWorldCategory =
+                    Silian_builder.getOrCreateCategory(Component.translatable("carpetskyadditions.config.category.newWorld"));
 
-            newWorldCategory.addEntry(entryBuilder
+            Silian_newWorldCategory.addEntry(Silian_entryBuilder
                     .startBooleanToggle(
                             Component.translatable("carpetskyadditions.config.option.defaultToSkyBlockWorld"),
-                            config.defaultToSkyBlockWorld)
+                            Silian_config.defaultToSkyBlockWorld)
                     .setDefaultValue(false)
-                    .setSaveConsumer(newValue -> config.defaultToSkyBlockWorld = newValue)
+                    .setSaveConsumer(Silian_newValue -> Silian_config.defaultToSkyBlockWorld = Silian_newValue)
                     .build());
 
-            newWorldCategory.addEntry(entryBuilder
+            Silian_newWorldCategory.addEntry(Silian_entryBuilder
                     .startBooleanToggle(
                             Component.translatable("carpetskyadditions.config.option.enableDatapackByDefault"),
-                            config.enableDatapackByDefault)
+                            Silian_config.enableDatapackByDefault)
                     .setDefaultValue(false)
-                    .setSaveConsumer(newValue -> config.enableDatapackByDefault = newValue)
+                    .setSaveConsumer(Silian_newValue -> Silian_config.enableDatapackByDefault = Silian_newValue)
                     .build());
 
-            newWorldCategory.addEntry(entryBuilder
+            Silian_newWorldCategory.addEntry(Silian_entryBuilder
                     .startEnumSelector(
                             Component.translatable("carpetskyadditions.config.option.initialTreeType"),
                             SkyAdditionsConfig.InitialTreeType.class,
-                            config.getInitialTreeType())
-                    .setEnumNameProvider(tree -> Component.translatable(
-                            "carpetskyadditions.tree." + tree.name().toLowerCase()))
+                            Silian_config.getInitialTreeType())
+                    .setEnumNameProvider(Silian_tree -> Component.translatable(
+                            "carpetskyadditions.tree." + Silian_tree.name().toLowerCase()))
                     .setDefaultValue(SkyAdditionsConfig.InitialTreeType.OAK)
                     .setTooltip(Component.translatable("carpetskyadditions.config.option.initialTreeType.tooltip"))
-                    .setSaveConsumer(newValue -> config.initialTreeType = newValue.toString())
+                    .setSaveConsumer(Silian_newValue -> Silian_config.initialTreeType = Silian_newValue.toString())
                     .build());
 
-            newWorldCategory.addEntry(entryBuilder
+            Silian_newWorldCategory.addEntry(Silian_entryBuilder
                     .startBooleanToggle(
                             Component.translatable("carpetskyadditions.config.option.autoEnableDefaultSettings"),
-                            config.autoEnableDefaultSettings)
+                            Silian_config.autoEnableDefaultSettings)
                     .setDefaultValue(true)
-                    .setSaveConsumer(newValue -> config.autoEnableDefaultSettings = newValue)
+                    .setSaveConsumer(Silian_newValue -> Silian_config.autoEnableDefaultSettings = Silian_newValue)
                     .build());
 
-            return builder.build();
+            return Silian_builder.build();
         };
     }
 }

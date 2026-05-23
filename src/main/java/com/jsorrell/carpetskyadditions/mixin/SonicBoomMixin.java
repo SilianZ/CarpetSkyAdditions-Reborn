@@ -16,11 +16,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(SonicBoom.class)
 public class SonicBoomMixin {
     @Inject(method = "lambda$tick$2", at = @At(value = "TAIL"), remap = false)
-    private static void dropEchoShard(Warden warden, ServerLevel level, LivingEntity target, CallbackInfo ci) {
+    private static void dropEchoShard(Warden Silian_warden, ServerLevel Silian_level, LivingEntity Silian_target, CallbackInfo Silian_ci) {
         if (SkyAdditionsSettings.renewableEchoShards) {
-            if (target instanceof Dolphin || target instanceof Bat) {
-                if (target.isDeadOrDying()) {
-                    target.spawnAtLocation(level, Items.ECHO_SHARD);
+            if (Silian_target instanceof Dolphin || Silian_target instanceof Bat) {
+                if (Silian_target.isDeadOrDying()) {
+                    Silian_target.spawnAtLocation(Silian_level, Items.ECHO_SHARD);
                 }
             }
         }

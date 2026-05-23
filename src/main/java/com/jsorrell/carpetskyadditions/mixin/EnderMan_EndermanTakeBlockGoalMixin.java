@@ -30,19 +30,19 @@ public abstract class EnderMan_EndermanTakeBlockGoalMixin {
 //            locals = LocalCapture.CAPTURE_FAILSOFT,
             cancellable = true)
     private void inject(
-            CallbackInfo ci,
-            @Local RandomSource random,
-            @Local Level level,
-            @Local(ordinal = 0) int x,
-            @Local(ordinal = 1) int y,
-            @Local(ordinal = 2) int z,
-            @Local BlockPos targetBlockPos,
-            @Local BlockState targetBlockState) {
-        Block targetBlock = targetBlockState.getBlock();
-        if (targetBlock instanceof DoublePlantBlock || targetBlock instanceof DoorBlock) {
+            CallbackInfo Silian_ci,
+            @Local RandomSource Silian_random,
+            @Local Level Silian_level,
+            @Local(ordinal = 0) int Silian_x,
+            @Local(ordinal = 1) int Silian_y,
+            @Local(ordinal = 2) int Silian_z,
+            @Local BlockPos Silian_targetBlockPos,
+            @Local BlockState Silian_targetBlockState) {
+        Block Silian_targetBlock = Silian_targetBlockState.getBlock();
+        if (Silian_targetBlock instanceof DoublePlantBlock || Silian_targetBlock instanceof DoorBlock) {
             // Only allow picking up the bottom half
-            if (targetBlockState.getValue(BlockStateProperties.DOUBLE_BLOCK_HALF) == DoubleBlockHalf.UPPER) {
-                ci.cancel();
+            if (Silian_targetBlockState.getValue(BlockStateProperties.DOUBLE_BLOCK_HALF) == DoubleBlockHalf.UPPER) {
+                Silian_ci.cancel();
             }
         }
     }

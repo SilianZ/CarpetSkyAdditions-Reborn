@@ -36,61 +36,61 @@ public abstract class WanderingTraderMixin extends AbstractVillager {
     @Unique
     private boolean wasRiding = false;
 
-    public WanderingTraderMixin(EntityType<? extends AbstractVillager> entityType, Level level) {
-        super(entityType, level);
+    public WanderingTraderMixin(EntityType<? extends AbstractVillager> Silian_entityType, Level Silian_level) {
+        super(Silian_entityType, Silian_level);
     }
 
     @Unique
     @SuppressWarnings("ConstantConditions")
     private WanderingTrader asTrader() {
-        if ((AbstractVillager) this instanceof WanderingTrader wanderingTrader) {
-            return wanderingTrader;
+        if ((AbstractVillager) this instanceof WanderingTrader Silian_wanderingTrader) {
+            return Silian_wanderingTrader;
         } else {
             throw new AssertionError("Not wandering trader");
         }
     }
 
     @Inject(method = "updateTrades", at = @At("TAIL"))
-    private void addSkyAdditionsTrades(net.minecraft.server.level.ServerLevel serverLevel, CallbackInfo ci) {
+    private void addSkyAdditionsTrades(net.minecraft.server.level.ServerLevel Silian_serverLevel, CallbackInfo Silian_ci) {
         WanderingTraderHelper.addSkyAdditionsTrades(asTrader());
     }
 
     @Override
-    public void remove(RemovalReason reason) {
-        Camel traderCamel = TraderCamelHelper.getTraderCamel(asTrader());
-        if (traderCamel != null) {
+    public void remove(RemovalReason Silian_reason) {
+        Camel Silian_traderCamel = TraderCamelHelper.getTraderCamel(asTrader());
+        if (Silian_traderCamel != null) {
             // Despawn trader camel when trader despawns
-            if (reason == RemovalReason.DISCARDED) {
-                traderCamel.discard();
+            if (Silian_reason == RemovalReason.DISCARDED) {
+                Silian_traderCamel.discard();
             }
         }
-        super.remove(reason);
+        super.remove(Silian_reason);
     }
 
     @Inject(method = "aiStep", at = @At("HEAD"))
-    private void onAiStep(CallbackInfo ci) {
-        boolean isRiding = this.isPassenger();
-        if (isRiding && !wasRiding) {
+    private void onAiStep(CallbackInfo Silian_ci) {
+        boolean Silian_isRiding = this.isPassenger();
+        if (Silian_isRiding && !wasRiding) {
             onMounted();
         }
-        wasRiding = isRiding;
+        wasRiding = Silian_isRiding;
     }
 
     @Unique
     private void onMounted() {
-        Camel traderCamel = TraderCamelHelper.getTraderCamel(asTrader());
-        if (traderCamel != null) {
-            ((CamelInterface) traderCamel).carpetSkyAdditions$makeTraderCamel();
+        Camel Silian_traderCamel = TraderCamelHelper.getTraderCamel(asTrader());
+        if (Silian_traderCamel != null) {
+            ((CamelInterface) Silian_traderCamel).carpetSkyAdditions$makeTraderCamel();
             reregisterGoalsForMountedTrader();
         }
     }
 
     @Override
     public void stopRiding() {
-        Camel traderCamel = TraderCamelHelper.getTraderCamel(asTrader());
+        Camel Silian_traderCamel = TraderCamelHelper.getTraderCamel(asTrader());
         super.stopRiding();
-        if (traderCamel != null) {
-            ((CamelInterface) traderCamel).carpetSkyAdditions$makeStandaloneCamel();
+        if (Silian_traderCamel != null) {
+            ((CamelInterface) Silian_traderCamel).carpetSkyAdditions$makeStandaloneCamel();
             reregisterGoalsForUnmountedTrader();
         }
     }
@@ -102,8 +102,8 @@ public abstract class WanderingTraderMixin extends AbstractVillager {
     @Unique
     private void reregisterGoalsForMountedTrader() {
         goalSelector.getAvailableGoals().forEach(WrappedGoal::stop);
-        double s = 8.0;
-        goalSelector.removeAllGoals(g -> true);
+        double Silian_s = 8.0;
+        goalSelector.removeAllGoals(Silian_g -> true);
 
         // Goals
         goalSelector.addGoal(
@@ -112,27 +112,27 @@ public abstract class WanderingTraderMixin extends AbstractVillager {
                         this,
                         PotionContents.createItemStack(Items.POTION, Potions.INVISIBILITY),
                         SoundEvents.WANDERING_TRADER_DISAPPEARED,
-                        wanderingTrader -> this.level().isDarkOutside() && !wanderingTrader.isInvisible()));
+                        Silian_wanderingTrader -> this.level().isDarkOutside() && !Silian_wanderingTrader.isInvisible()));
         goalSelector.addGoal(
                 0,
                 new UseItemGoal<>(
                         this,
                         new ItemStack(Items.MILK_BUCKET),
                         SoundEvents.WANDERING_TRADER_REAPPEARED,
-                        wanderingTrader -> this.level().isBrightOutside() && wanderingTrader.isInvisible()));
+                        Silian_wanderingTrader -> this.level().isBrightOutside() && Silian_wanderingTrader.isInvisible()));
         goalSelector.addGoal(1, new TraderCamelHelper.TradeWithPlayerWhileMountedGoal(this));
-        goalSelector.addGoal(1, new AvoidEntityGoal<>(this, Zombie.class, 8.0F, 0.5 * s, 0.5 * s));
-        goalSelector.addGoal(1, new AvoidEntityGoal<>(this, Evoker.class, 12.0F, 0.5 * s, 0.5 * s));
-        goalSelector.addGoal(1, new AvoidEntityGoal<>(this, Vindicator.class, 8.0F, 0.5 * s, 0.5 * s));
-        goalSelector.addGoal(1, new AvoidEntityGoal<>(this, Vex.class, 8.0F, 0.5 * s, 0.5 * s));
-        goalSelector.addGoal(1, new AvoidEntityGoal<>(this, Pillager.class, 15.0F, 0.5 * s, 0.5 * s));
-        goalSelector.addGoal(1, new AvoidEntityGoal<>(this, Illusioner.class, 12.0F, 0.5 * s, 0.5 * s));
-        goalSelector.addGoal(1, new AvoidEntityGoal<>(this, Zoglin.class, 10.0F, 0.5 * s, 0.5 * s));
-        goalSelector.addGoal(1, new PanicGoal(this, 0.5 * s));
+        goalSelector.addGoal(1, new AvoidEntityGoal<>(this, Zombie.class, 8.0F, 0.5 * Silian_s, 0.5 * Silian_s));
+        goalSelector.addGoal(1, new AvoidEntityGoal<>(this, Evoker.class, 12.0F, 0.5 * Silian_s, 0.5 * Silian_s));
+        goalSelector.addGoal(1, new AvoidEntityGoal<>(this, Vindicator.class, 8.0F, 0.5 * Silian_s, 0.5 * Silian_s));
+        goalSelector.addGoal(1, new AvoidEntityGoal<>(this, Vex.class, 8.0F, 0.5 * Silian_s, 0.5 * Silian_s));
+        goalSelector.addGoal(1, new AvoidEntityGoal<>(this, Pillager.class, 15.0F, 0.5 * Silian_s, 0.5 * Silian_s));
+        goalSelector.addGoal(1, new AvoidEntityGoal<>(this, Illusioner.class, 12.0F, 0.5 * Silian_s, 0.5 * Silian_s));
+        goalSelector.addGoal(1, new AvoidEntityGoal<>(this, Zoglin.class, 10.0F, 0.5 * Silian_s, 0.5 * Silian_s));
+        goalSelector.addGoal(1, new PanicGoal(this, 0.5 * Silian_s));
         goalSelector.addGoal(1, new LookAtTradingPlayerGoal(this));
-        goalSelector.addGoal(2, new TraderCamelHelper.MountedTraderWanderToPositionGoal(asTrader(), 2.0, 0.35 * s));
-        goalSelector.addGoal(4, new MoveTowardsRestrictionGoal(this, 0.35 * s));
-        goalSelector.addGoal(8, new WaterAvoidingRandomStrollGoal(this, 0.35 * s));
+        goalSelector.addGoal(2, new TraderCamelHelper.MountedTraderWanderToPositionGoal(asTrader(), 2.0, 0.35 * Silian_s));
+        goalSelector.addGoal(4, new MoveTowardsRestrictionGoal(this, 0.35 * Silian_s));
+        goalSelector.addGoal(8, new WaterAvoidingRandomStrollGoal(this, 0.35 * Silian_s));
         goalSelector.addGoal(9, new InteractGoal(this, Player.class, 3.0F, 1.0F));
         // Remove this to stop the trader staring at the camel
         // goalSelector.addGoal(10, new LookAtPlayerGoal(this, Mob.class, 8.0F));
@@ -141,7 +141,7 @@ public abstract class WanderingTraderMixin extends AbstractVillager {
     @Unique
     private void reregisterGoalsForUnmountedTrader() {
         goalSelector.getAvailableGoals().forEach(WrappedGoal::stop);
-        goalSelector.removeAllGoals(g -> true);
+        goalSelector.removeAllGoals(Silian_g -> true);
         registerGoals();
     }
 }
